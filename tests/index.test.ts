@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'gmt/core/api-promise';
+import { APIPromise } from 'gmt-typescript-sdk/core/api-promise';
 
 import util from 'node:util';
-import Gmt from 'gmt';
-import { APIUserAbortError } from 'gmt';
+import Gmt from 'gmt-typescript-sdk';
+import { APIUserAbortError } from 'gmt-typescript-sdk';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {

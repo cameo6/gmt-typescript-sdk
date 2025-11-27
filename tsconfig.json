@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "gmt/*": ["./src/*"],
-      "gmt": ["./src/index.ts"]
+      "gmt-typescript-sdk/*": ["./src/*"],
+      "gmt-typescript-sdk": ["./src/index.ts"]
     },
     "noEmit": true,
 

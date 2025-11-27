@@ -1,5 +1,5 @@
 {
-  "name": "gmt",
+  "name": "gmt-typescript-sdk",
   "version": "0.0.1",
   "description": "The official TypeScript library for the Gmt API",
   "author": "Gmt <https://t.me/GetMyTGSUPbot>",

@@ -1,7 +1,7 @@
 import iconv from 'iconv-lite';
-import { stringify } from 'gmt/internal/qs';
-import { encode } from 'gmt/internal/qs/utils';
-import { StringifyOptions } from 'gmt/internal/qs/types';
+import { stringify } from 'gmt-typescript-sdk/internal/qs';
+import { encode } from 'gmt-typescript-sdk/internal/qs/utils';
+import { StringifyOptions } from 'gmt-typescript-sdk/internal/qs/types';
 import { empty_test_cases } from './empty-keys-cases';
 import assert from 'assert';
 
