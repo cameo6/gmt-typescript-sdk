@@ -1,6 +1,6 @@
 {
   "name": "gmt",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "The official TypeScript library for the Gmt API",
   "author": "Gmt <https://t.me/GetMyTGSUPbot>",
   "types": "dist/index.d.ts",
