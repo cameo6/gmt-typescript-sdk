@@ -7,6 +7,8 @@ export {
   type AccountListCountriesResponse,
   type AccountListParams,
   type AccountListCountriesParams,
+  type AccountListResponsesPageNumber,
+  type AccountListCountriesResponsesPageNumber,
 } from './accounts';
 export { Profile, type ProfileRetrieveResponse } from './profile';
 export {
@@ -17,5 +19,6 @@ export {
   type PurchaseRequestVerificationCodeResponse,
   type PurchaseCreateParams,
   type PurchaseListParams,
+  type PurchaseListResponsesPageNumber,
 } from './purchases';
 export { Service, type ServiceGetServerTimeResponse, type ServiceHealthCheckResponse } from './service';
