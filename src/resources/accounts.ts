@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { PageNumber, type PageNumberParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -17,8 +18,11 @@ export class Accounts extends APIResource {
   /**
    * Returns paginated list of accounts with filtering and sorting options.
    */
-  list(query: AccountListParams, options?: RequestOptions): APIPromise<AccountListResponse> {
-    return this._client.get('/v1/accounts/', { query, ...options });
+  list(
+    query: AccountListParams,
+    options?: RequestOptions,
+  ): PagePromise<AccountListResponsesPageNumber, AccountListResponse> {
+    return this._client.getAPIList('/v1/accounts/', PageNumber<AccountListResponse>, { query, ...options });
   }
 
   /**
@@ -28,10 +32,17 @@ export class Accounts extends APIResource {
   listCountries(
     query: AccountListCountriesParams,
     options?: RequestOptions,
-  ): APIPromise<AccountListCountriesResponse> {
-    return this._client.get('/v1/accounts/countries', { query, ...options });
+  ): PagePromise<AccountListCountriesResponsesPageNumber, AccountListCountriesResponse> {
+    return this._client.getAPIList('/v1/accounts/countries', PageNumber<AccountListCountriesResponse>, {
+      query,
+      ...options,
+    });
   }
 }
+
+export type AccountListResponsesPageNumber = PageNumber<AccountListResponse>;
+
+export type AccountListCountriesResponsesPageNumber = PageNumber<AccountListCountriesResponse>;
 
 export interface AccountRetrieveResponse {
   /**
@@ -89,187 +100,91 @@ export namespace AccountRetrieveResponse {
   }
 }
 
-/**
- * Successful response.
- */
 export interface AccountListResponse {
-  items: Array<AccountListResponse.Item>;
+  /**
+   * Indicates if account is available for purchase.
+   */
+  available: boolean;
 
-  pagination: AccountListResponse.Pagination;
+  /**
+   * ISO 3166-1 alpha-2 country code (e.g., US, RU, GB).
+   */
+  country_code: string;
+
+  display_name: AccountListResponse.DisplayName;
+
+  price: AccountListResponse.Price;
 }
 
 export namespace AccountListResponse {
-  export interface Item {
+  export interface DisplayName {
     /**
-     * Indicates if account is available for purchase.
+     * Name in English.
      */
-    available: boolean;
+    en: string;
 
     /**
-     * ISO 3166-1 alpha-2 country code (e.g., US, RU, GB).
+     * Name in Russian.
      */
-    country_code: string;
-
-    display_name: Item.DisplayName;
-
-    price: Item.Price;
+    ru: string;
   }
 
-  export namespace Item {
-    export interface DisplayName {
-      /**
-       * Name in English.
-       */
-      en: string;
-
-      /**
-       * Name in Russian.
-       */
-      ru: string;
-    }
-
-    export interface Price {
-      /**
-       * Monetary amount as a string with up to 2 decimal places.
-       */
-      amount: string;
-
-      /**
-       * ISO 4217 currency code.
-       */
-      currency_code: string;
-    }
-  }
-
-  export interface Pagination {
+  export interface Price {
     /**
-     * Current page number.
+     * Monetary amount as a string with up to 2 decimal places.
      */
-    current_page: number;
+    amount: string;
 
     /**
-     * Whether there is a next page.
+     * ISO 4217 currency code.
      */
-    has_next: boolean;
-
-    /**
-     * Whether there is a previous page.
-     */
-    has_previous: boolean;
-
-    /**
-     * Number of items per page (max 50).
-     */
-    page_size: number;
-
-    /**
-     * Total number of items.
-     */
-    total_items: number;
-
-    /**
-     * Total number of pages.
-     */
-    total_pages: number;
+    currency_code: string;
   }
 }
 
-/**
- * List of available countries with pricing information.
- */
 export interface AccountListCountriesResponse {
-  items: Array<AccountListCountriesResponse.Item>;
+  /**
+   * Whether the country is available for purchase.
+   */
+  available: boolean;
 
-  pagination: AccountListCountriesResponse.Pagination;
+  /**
+   * Country code (ISO 3166-1 alpha-2).
+   */
+  country_code: string;
+
+  display_name: AccountListCountriesResponse.DisplayName;
+
+  price: AccountListCountriesResponse.Price;
 }
 
 export namespace AccountListCountriesResponse {
-  export interface Item {
+  export interface DisplayName {
     /**
-     * Whether the country is available for purchase.
+     * Name in English.
      */
-    available: boolean;
+    en: string;
 
     /**
-     * Country code (ISO 3166-1 alpha-2).
+     * Name in Russian.
      */
-    country_code: string;
-
-    display_name: Item.DisplayName;
-
-    price: Item.Price;
+    ru: string;
   }
 
-  export namespace Item {
-    export interface DisplayName {
-      /**
-       * Name in English.
-       */
-      en: string;
-
-      /**
-       * Name in Russian.
-       */
-      ru: string;
-    }
-
-    export interface Price {
-      /**
-       * Monetary amount as a string with up to 2 decimal places.
-       */
-      amount: string;
-
-      /**
-       * ISO 4217 currency code.
-       */
-      currency_code: string;
-    }
-  }
-
-  export interface Pagination {
+  export interface Price {
     /**
-     * Current page number.
+     * Monetary amount as a string with up to 2 decimal places.
      */
-    current_page: number;
+    amount: string;
 
     /**
-     * Whether there is a next page.
+     * ISO 4217 currency code.
      */
-    has_next: boolean;
-
-    /**
-     * Whether there is a previous page.
-     */
-    has_previous: boolean;
-
-    /**
-     * Number of items per page (max 50).
-     */
-    page_size: number;
-
-    /**
-     * Total number of items.
-     */
-    total_items: number;
-
-    /**
-     * Total number of pages.
-     */
-    total_pages: number;
+    currency_code: string;
   }
 }
 
-export interface AccountListParams {
-  /**
-   * Page number (starts from 1).
-   */
-  page: number;
-
-  /**
-   * Number of items per page (max 50).
-   */
-  page_size: number;
-
+export interface AccountListParams extends PageNumberParams {
   /**
    * Sort order for accounts.
    */
@@ -281,17 +196,7 @@ export interface AccountListParams {
   country_code?: string | Array<string>;
 }
 
-export interface AccountListCountriesParams {
-  /**
-   * Page number (starts from 1).
-   */
-  page: number;
-
-  /**
-   * Number of items per page (max 50).
-   */
-  page_size: number;
-
+export interface AccountListCountriesParams extends PageNumberParams {
   /**
    * Sort order for accounts.
    */
@@ -308,6 +213,8 @@ export declare namespace Accounts {
     type AccountRetrieveResponse as AccountRetrieveResponse,
     type AccountListResponse as AccountListResponse,
     type AccountListCountriesResponse as AccountListCountriesResponse,
+    type AccountListResponsesPageNumber as AccountListResponsesPageNumber,
+    type AccountListCountriesResponsesPageNumber as AccountListCountriesResponsesPageNumber,
     type AccountListParams as AccountListParams,
     type AccountListCountriesParams as AccountListCountriesParams,
   };

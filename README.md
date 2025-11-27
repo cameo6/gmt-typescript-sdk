@@ -122,6 +122,37 @@ On timeout, an `APIConnectionTimeoutError` is thrown.
 
 Note that requests which time out will be [retried twice by default](#retries).
 
+## Auto-pagination
+
+List methods in the Gmt API are paginated.
+You can use the `for await … of` syntax to iterate through items across all pages:
+
+```ts
+async function fetchAllPurchaseListResponses(params) {
+  const allPurchaseListResponses = [];
+  // Automatically fetches more pages as needed.
+  for await (const purchaseListResponse of client.purchases.list({ page: 1, page_size: 100 })) {
+    allPurchaseListResponses.push(purchaseListResponse);
+  }
+  return allPurchaseListResponses;
+}
+```
+
+Alternatively, you can request a single page at a time:
+
+```ts
+let page = await client.purchases.list({ page: 1, page_size: 100 });
+for (const purchaseListResponse of page.items) {
+  console.log(purchaseListResponse);
+}
+
+// Convenience methods are provided for manually paginating:
+while (page.hasNextPage()) {
+  page = await page.getNextPage();
+  // ...
+}
+```
+
 ## Advanced Usage
 
 ### Accessing raw Response data (e.g., headers)
