@@ -14,14 +14,18 @@ import * as Opts from './internal/request-options';
 import * as qs from './internal/qs';
 import { VERSION } from './version';
 import * as Errors from './core/error';
+import * as Pagination from './core/pagination';
+import { AbstractPage, type PageNumberParams, PageNumberResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
   AccountListCountriesParams,
   AccountListCountriesResponse,
+  AccountListCountriesResponsesPageNumber,
   AccountListParams,
   AccountListResponse,
+  AccountListResponsesPageNumber,
   AccountRetrieveResponse,
   Accounts,
 } from './resources/accounts';
@@ -31,6 +35,7 @@ import {
   PurchaseCreateResponse,
   PurchaseListParams,
   PurchaseListResponse,
+  PurchaseListResponsesPageNumber,
   PurchaseRequestVerificationCodeResponse,
   PurchaseRetrieveResponse,
   Purchases,
@@ -485,6 +490,25 @@ export class Gmt {
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
 
+  getAPIList<Item, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
+    path: string,
+    Page: new (...args: any[]) => PageClass,
+    opts?: RequestOptions,
+  ): Pagination.PagePromise<PageClass, Item> {
+    return this.requestAPIList(Page, { method: 'get', path, ...opts });
+  }
+
+  requestAPIList<
+    Item = unknown,
+    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
+  >(
+    Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
+    options: FinalRequestOptions,
+  ): Pagination.PagePromise<PageClass, Item> {
+    const request = this.makeRequest(options, null, undefined);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as Gmt, request, Page);
+  }
+
   async fetchWithTimeout(
     url: RequestInfo,
     init: RequestInit | undefined,
@@ -731,6 +755,9 @@ Gmt.Purchases = Purchases;
 export declare namespace Gmt {
   export type RequestOptions = Opts.RequestOptions;
 
+  export import PageNumber = Pagination.PageNumber;
+  export { type PageNumberParams as PageNumberParams, type PageNumberResponse as PageNumberResponse };
+
   export {
     Service as Service,
     type ServiceGetServerTimeResponse as ServiceGetServerTimeResponse,
@@ -742,6 +769,8 @@ export declare namespace Gmt {
     type AccountRetrieveResponse as AccountRetrieveResponse,
     type AccountListResponse as AccountListResponse,
     type AccountListCountriesResponse as AccountListCountriesResponse,
+    type AccountListResponsesPageNumber as AccountListResponsesPageNumber,
+    type AccountListCountriesResponsesPageNumber as AccountListCountriesResponsesPageNumber,
     type AccountListParams as AccountListParams,
     type AccountListCountriesParams as AccountListCountriesParams,
   };
@@ -754,6 +783,7 @@ export declare namespace Gmt {
     type PurchaseRetrieveResponse as PurchaseRetrieveResponse,
     type PurchaseListResponse as PurchaseListResponse,
     type PurchaseRequestVerificationCodeResponse as PurchaseRequestVerificationCodeResponse,
+    type PurchaseListResponsesPageNumber as PurchaseListResponsesPageNumber,
     type PurchaseCreateParams as PurchaseCreateParams,
     type PurchaseListParams as PurchaseListParams,
   };
