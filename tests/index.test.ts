@@ -298,13 +298,13 @@ describe('instantiate client', () => {
     test('empty env variable', () => {
       process.env['GMT_BASE_URL'] = ''; // empty
       const client = new Gmt({ apiKey: 'My API Key' });
-      expect(client.baseURL).toEqual('https://api.example.com');
+      expect(client.baseURL).toEqual('https://api.getmytg.com');
     });
 
     test('blank env variable', () => {
       process.env['GMT_BASE_URL'] = '  '; // blank
       const client = new Gmt({ apiKey: 'My API Key' });
-      expect(client.baseURL).toEqual('https://api.example.com');
+      expect(client.baseURL).toEqual('https://api.getmytg.com');
     });
 
     test('in request options', () => {

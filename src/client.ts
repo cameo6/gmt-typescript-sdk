@@ -146,7 +146,7 @@ export class Gmt {
    * API Client for interfacing with the Gmt API.
    *
    * @param {string | undefined} [opts.apiKey=process.env['GMT_API_KEY'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['GMT_BASE_URL'] ?? https://api.example.com] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['GMT_BASE_URL'] ?? https://api.getmytg.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -168,7 +168,7 @@ export class Gmt {
     const options: ClientOptions = {
       apiKey,
       ...opts,
-      baseURL: baseURL || `https://api.example.com`,
+      baseURL: baseURL || `https://api.getmytg.com`,
     };
 
     this.baseURL = options.baseURL!;
@@ -214,7 +214,7 @@ export class Gmt {
    * Check whether the base URL is set to its default.
    */
   #baseURLOverridden(): boolean {
-    return this.baseURL !== 'https://api.example.com';
+    return this.baseURL !== 'https://api.getmytg.com';
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
