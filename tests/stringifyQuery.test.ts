@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { Gmt } from 'gmt';
+import { Gmt } from 'gmt-typescript-sdk';
 
 const { stringifyQuery } = Gmt.prototype as any;
 
