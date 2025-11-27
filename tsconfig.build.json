@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "gmt/*": ["./dist/src/*"],
-      "gmt": ["./dist/src/index.ts"]
+      "gmt-typescript-sdk/*": ["./dist/src/*"],
+      "gmt-typescript-sdk": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

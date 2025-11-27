@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'gmt/internal/uploads';
-import { toFile } from 'gmt/core/uploads';
+import { multipartFormRequestOptions, createForm } from 'gmt-typescript-sdk/internal/uploads';
+import { toFile } from 'gmt-typescript-sdk/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

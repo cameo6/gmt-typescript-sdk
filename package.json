@@ -1,12 +1,12 @@
 {
-  "name": "gmt",
-  "version": "0.0.1",
+  "name": "gmt-typescript-sdk",
+  "version": "0.1.0",
   "description": "The official TypeScript library for the Gmt API",
   "author": "Gmt <https://t.me/GetMyTGSUPbot>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",
-  "repository": "github:stainless-sdks/gmt-typescript",
+  "repository": "github:cameo6/gmt-typescript-sdk",
   "license": "Apache-2.0",
   "packageManager": "pnpm@10.14.0",
   "files": [
