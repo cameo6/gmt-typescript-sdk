@@ -156,6 +156,11 @@ export interface AccountListCountriesResponse {
   display_name: AccountListCountriesResponse.DisplayName;
 
   price: AccountListCountriesResponse.Price;
+
+  /**
+   * Name of the account provider for this country.
+   */
+  provider: string;
 }
 
 export namespace AccountListCountriesResponse {
