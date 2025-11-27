@@ -145,7 +145,7 @@ export class Gmt {
   /**
    * API Client for interfacing with the Gmt API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['GMT_API_KEY'] ?? undefined]
+   * @param {string | undefined} [opts.apiKey=process.env['x-api-key'] ?? undefined]
    * @param {string} [opts.baseURL=process.env['GMT_BASE_URL'] ?? https://api.getmytg.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -156,12 +156,12 @@ export class Gmt {
    */
   constructor({
     baseURL = readEnv('GMT_BASE_URL'),
-    apiKey = readEnv('GMT_API_KEY'),
+    apiKey = readEnv('x-api-key'),
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
       throw new Errors.GmtError(
-        "The GMT_API_KEY environment variable is missing or empty; either provide it, or instantiate the Gmt client with an apiKey option, like new Gmt({ apiKey: 'My API Key' }).",
+        "The x-api-key environment variable is missing or empty; either provide it, or instantiate the Gmt client with an apiKey option, like new Gmt({ apiKey: 'My API Key' }).",
       );
     }
 
