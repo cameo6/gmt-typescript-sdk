@@ -115,11 +115,11 @@ export interface PageNumberResponse<Item> {
 
 export namespace PageNumberResponse {
   export interface Pagination {
-    current_page?: number;
+    current_page: number;
 
-    has_next?: boolean;
+    has_next: boolean;
 
-    total_pages?: number;
+    total_pages: number;
   }
 }
 
