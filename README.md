@@ -22,9 +22,7 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import Gmt from 'gmt-typescript-sdk';
 
-const client = new Gmt({
-  apiKey: process.env['x-api-key'], // This is the default and can be omitted
-});
+const client = new Gmt();
 
 const response = await client.service.healthCheck();
 
@@ -39,9 +37,7 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import Gmt from 'gmt-typescript-sdk';
 
-const client = new Gmt({
-  apiKey: process.env['x-api-key'], // This is the default and can be omitted
-});
+const client = new Gmt();
 
 const response: Gmt.ServiceHealthCheckResponse = await client.service.healthCheck();
 ```
