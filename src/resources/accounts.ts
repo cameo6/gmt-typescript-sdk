@@ -198,7 +198,7 @@ export interface AccountListParams extends PageNumberParams {
   /**
    * Filter by country codes (comma-separated, e.g., 'US,RU,GB').
    */
-  country_code?: string | Array<string>;
+  country_code?: string;
 }
 
 export interface AccountListCountriesParams extends PageNumberParams {
@@ -210,7 +210,7 @@ export interface AccountListCountriesParams extends PageNumberParams {
   /**
    * Filter by country codes (comma-separated, e.g., 'US,RU,GB').
    */
-  country_code?: string | Array<string>;
+  country_code?: string;
 }
 
 export declare namespace Accounts {
