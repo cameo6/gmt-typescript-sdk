@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.5.1 (2025-12-06)
+
+Full Changelog: [v0.5.0...v0.5.1](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.5.0...v0.5.1)
+
+### Bug Fixes
+
+* **mcp:** return correct lines on typescript errors ([537a2da](https://github.com/cameo6/gmt-typescript-sdk/commit/537a2da720cb4036adcc41a1dcaa5719c062c143))
+
+
+### Chores
+
+* **client:** fix logger property type ([60b7174](https://github.com/cameo6/gmt-typescript-sdk/commit/60b71746267b128f336ee5dfbe3d89fc7ac8d1bc))
+* **internal:** codegen related update ([9465c2e](https://github.com/cameo6/gmt-typescript-sdk/commit/9465c2e3079089d3e0c612ef2abde834dbc4cc24))
+* **internal:** configure pnpm minimumReleaseAge to 1 day ([a0d1e41](https://github.com/cameo6/gmt-typescript-sdk/commit/a0d1e4161167fa72d70c5e36e255d0c905358a1f))
+* **internal:** upgrade eslint ([26bf8df](https://github.com/cameo6/gmt-typescript-sdk/commit/26bf8df4e4cf6b7f2a1d7e87116a005983fd9050))
+
 ## 0.5.0 (2025-11-28)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.4.0...v0.5.0)
