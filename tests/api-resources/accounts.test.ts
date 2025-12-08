@@ -38,7 +38,7 @@ describe('resource accounts', () => {
       page: 1,
       page_size: 50,
       sort: 'price_asc',
-      country_code: 'US,RU',
+      country_codes: 'US,RU,GB',
     });
   });
 
@@ -60,7 +60,7 @@ describe('resource accounts', () => {
       page: 1,
       page_size: 50,
       sort: 'price_asc',
-      country_code: 'US,RU',
+      country_codes: 'US,RU,GB',
     });
   });
 });
