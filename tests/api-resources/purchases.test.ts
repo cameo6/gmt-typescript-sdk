@@ -55,6 +55,18 @@ describe('resource purchases', () => {
   });
 
   // Prism tests are disabled
+  test.skip('refund', async () => {
+    const responsePromise = client.purchases.refund(12345);
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
   test.skip('requestVerificationCode', async () => {
     const responsePromise = client.purchases.requestVerificationCode(12345, {});
     const rawResponse = await responsePromise.asResponse();
