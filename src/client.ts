@@ -41,6 +41,7 @@ import {
   Purchases,
 } from './resources/purchases';
 import { Service, ServiceGetServerTimeResponse, ServiceHealthCheckResponse } from './resources/service';
+import { WebhookTestParams, WebhookTestResponse, Webhooks } from './resources/webhooks';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -761,12 +762,14 @@ export class Gmt {
   accounts: API.Accounts = new API.Accounts(this);
   profile: API.Profile = new API.Profile(this);
   purchases: API.Purchases = new API.Purchases(this);
+  webhooks: API.Webhooks = new API.Webhooks(this);
 }
 
 Gmt.Service = Service;
 Gmt.Accounts = Accounts;
 Gmt.Profile = Profile;
 Gmt.Purchases = Purchases;
+Gmt.Webhooks = Webhooks;
 
 export declare namespace Gmt {
   export type RequestOptions = Opts.RequestOptions;
@@ -803,5 +806,11 @@ export declare namespace Gmt {
     type PurchaseCreateParams as PurchaseCreateParams,
     type PurchaseListParams as PurchaseListParams,
     type PurchaseRequestVerificationCodeParams as PurchaseRequestVerificationCodeParams,
+  };
+
+  export {
+    Webhooks as Webhooks,
+    type WebhookTestResponse as WebhookTestResponse,
+    type WebhookTestParams as WebhookTestParams,
   };
 }
