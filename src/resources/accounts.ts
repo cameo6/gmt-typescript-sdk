@@ -156,11 +156,6 @@ export interface AccountListCountriesResponse {
   display_name: AccountListCountriesResponse.DisplayName;
 
   price: AccountListCountriesResponse.Price;
-
-  /**
-   * Name of the account provider for this country.
-   */
-  provider: string;
 }
 
 export namespace AccountListCountriesResponse {
@@ -196,9 +191,10 @@ export interface AccountListParams extends PageNumberParams {
   sort: 'price_asc' | 'price_desc' | 'name_asc' | 'name_desc';
 
   /**
-   * Filter by country codes (comma-separated, e.g., 'US,RU,GB').
+   * Filter by country codes. Comma-separated list of ISO 3166-1 alpha-2 codes (e.g.,
+   * 'US,RU,GB').
    */
-  country_code?: string;
+  country_codes?: string;
 }
 
 export interface AccountListCountriesParams extends PageNumberParams {
@@ -208,9 +204,10 @@ export interface AccountListCountriesParams extends PageNumberParams {
   sort: 'price_asc' | 'price_desc' | 'name_asc' | 'name_desc';
 
   /**
-   * Filter by country codes (comma-separated, e.g., 'US,RU,GB').
+   * Filter by country codes. Comma-separated list of ISO 3166-1 alpha-2 codes (e.g.,
+   * 'US,RU,GB').
    */
-  country_code?: string;
+  country_codes?: string;
 }
 
 export declare namespace Accounts {

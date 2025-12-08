@@ -56,7 +56,7 @@ describe('resource purchases', () => {
 
   // Prism tests are disabled
   test.skip('requestVerificationCode', async () => {
-    const responsePromise = client.purchases.requestVerificationCode(12345);
+    const responsePromise = client.purchases.requestVerificationCode(12345, {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
