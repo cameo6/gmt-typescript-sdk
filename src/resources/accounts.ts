@@ -60,6 +60,11 @@ export interface AccountRetrieveResponse {
   display_name: AccountRetrieveResponse.DisplayName;
 
   price: AccountRetrieveResponse.Price;
+
+  /**
+   * Account tags (e.g., HIGH_QUALITY for premium accounts).
+   */
+  tags: Array<'HIGH_QUALITY' | 'HIGH_DEMAND'>;
 }
 
 export namespace AccountRetrieveResponse {
@@ -114,6 +119,11 @@ export interface AccountListResponse {
   display_name: AccountListResponse.DisplayName;
 
   price: AccountListResponse.Price;
+
+  /**
+   * Account tags (e.g., HIGH_QUALITY for premium accounts).
+   */
+  tags: Array<'HIGH_QUALITY' | 'HIGH_DEMAND'>;
 }
 
 export namespace AccountListResponse {
@@ -156,6 +166,11 @@ export interface AccountListCountriesResponse {
   display_name: AccountListCountriesResponse.DisplayName;
 
   price: AccountListCountriesResponse.Price;
+
+  /**
+   * Account tags (e.g., HIGH_QUALITY for premium accounts).
+   */
+  tags: Array<'HIGH_QUALITY' | 'HIGH_DEMAND'>;
 }
 
 export namespace AccountListCountriesResponse {
