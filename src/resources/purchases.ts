@@ -103,6 +103,11 @@ export class Purchases extends APIResource {
    * **Provider timeout.** Code retrieval may take 5-30 seconds depending on provider
    * availability.
    *
+   * **Webhook notification.** Optionally provide `callback_url` to receive a POST
+   * webhook when code is retrieved. See [Webhooks](#tag/webhooks) section for
+   * payload structure and **Models** section for `WebhookSuccessPayload` /
+   * `WebhookFailedPayload` schemas.
+   *
    * @example
    * ```ts
    * const response =
@@ -111,9 +116,13 @@ export class Purchases extends APIResource {
    */
   requestVerificationCode(
     purchaseID: number,
+    body: PurchaseRequestVerificationCodeParams,
     options?: RequestOptions,
   ): APIPromise<PurchaseRequestVerificationCodeResponse> {
-    return this._client.post(path`/v1/purchases/${purchaseID}/request-code`, options);
+    return this._client.post(
+      path`/v1/purchases/${purchaseID}/request-code`,
+      maybeMultipartFormRequestOptions({ body, ...options }, this._client),
+    );
   }
 }
 
@@ -540,142 +549,177 @@ export namespace PurchaseListResponse {
 }
 
 export interface PurchaseRequestVerificationCodeResponse {
-  /**
-   * Unique purchase identifier.
-   */
-  id: number;
+  code_request: PurchaseRequestVerificationCodeResponse.CodeRequest;
 
-  /**
-   * ISO 3166-1 alpha-2 country code.
-   */
-  country_code: string;
-
-  /**
-   * Purchase creation time in ISO 8601 format (UTC).
-   */
-  created_at: string;
-
-  display_name: PurchaseRequestVerificationCodeResponse.DisplayName;
-
-  /**
-   * **E.164 International Format.** Phone number with country code prefix (e.g.,
-   * `+12025550123` for US, `+79991234567` for Russia).
-   *
-   * **Usage.** This is your Telegram account login. Use it with `verification.code`
-   * and `verification.password` to access the account.
-   */
-  phone_number: string;
-
-  /**
-   * **Final Price After Discount.** The actual amount deducted from your balance,
-   * with your personal discount already applied.
-   *
-   * **To see pricing breakdown before purchase.** Check
-   * `GET /accounts/:country_code` which shows both discounted price and original
-   * `base_price`.
-   *
-   * **Discount eligibility.** Based on your total successful purchase count. Higher
-   * volume = bigger discounts.
-   */
-  price: PurchaseRequestVerificationCodeResponse.Price;
-
-  /**
-   * **Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code
-   * request) or `ERROR` (provider failure). Any status can transition to `REFUND`
-   * via admin action.
-   *
-   * **Important.** Status is immutable once set to `SUCCESS`, `ERROR`, or `REFUND`.
-   *
-   * **Filter options**
-   *
-   * - `PENDING` - code not requested.
-   * - `SUCCESS` - code ready.
-   * - `ERROR` - provider failed.
-   * - `REFUND` - money returned.
-   */
-  status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND';
-
-  /**
-   * **Verification Credentials.** Login credentials for the purchased Telegram
-   * account. Initially `null` after purchase creation.
-   *
-   * **Availability.** Populated after calling `POST /purchases/:id/request-code`.
-   * Once received, credentials are permanent and cannot be re-requested.
-   *
-   * **Security.** Verification data is only visible to the purchase owner.
-   */
-  verification: PurchaseRequestVerificationCodeResponse.Verification | null;
+  purchase: PurchaseRequestVerificationCodeResponse.Purchase;
 }
 
 export namespace PurchaseRequestVerificationCodeResponse {
-  export interface DisplayName {
+  export interface CodeRequest {
     /**
-     * Name in English.
+     * Current attempt number
      */
-    en: string;
+    attempt: number;
 
     /**
-     * Name in Russian.
+     * Maximum number of attempts
      */
-    ru: string;
+    max_attempts: number;
+
+    /**
+     * ISO timestamp of next attempt (null if not scheduled)
+     */
+    next_attempt_at: string | null;
+
+    /**
+     * Seconds until next attempt (null if not scheduled)
+     */
+    retry_after: number | null;
+
+    /**
+     * Current status of the code request
+     */
+    status: 'not_requested' | 'pending' | 'success' | 'failed';
   }
 
-  /**
-   * **Final Price After Discount.** The actual amount deducted from your balance,
-   * with your personal discount already applied.
-   *
-   * **To see pricing breakdown before purchase.** Check
-   * `GET /accounts/:country_code` which shows both discounted price and original
-   * `base_price`.
-   *
-   * **Discount eligibility.** Based on your total successful purchase count. Higher
-   * volume = bigger discounts.
-   */
-  export interface Price {
+  export interface Purchase {
     /**
-     * Monetary amount as a string with up to 2 decimal places.
+     * Unique purchase identifier.
      */
-    amount: string;
+    id: number;
 
     /**
-     * ISO 4217 currency code.
+     * ISO 3166-1 alpha-2 country code.
      */
-    currency_code: string;
+    country_code: string;
+
+    /**
+     * Purchase creation time in ISO 8601 format (UTC).
+     */
+    created_at: string;
+
+    display_name: Purchase.DisplayName;
+
+    /**
+     * **E.164 International Format.** Phone number with country code prefix (e.g.,
+     * `+12025550123` for US, `+79991234567` for Russia).
+     *
+     * **Usage.** This is your Telegram account login. Use it with `verification.code`
+     * and `verification.password` to access the account.
+     */
+    phone_number: string;
+
+    /**
+     * **Final Price After Discount.** The actual amount deducted from your balance,
+     * with your personal discount already applied.
+     *
+     * **To see pricing breakdown before purchase.** Check
+     * `GET /accounts/:country_code` which shows both discounted price and original
+     * `base_price`.
+     *
+     * **Discount eligibility.** Based on your total successful purchase count. Higher
+     * volume = bigger discounts.
+     */
+    price: Purchase.Price;
+
+    /**
+     * **Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code
+     * request) or `ERROR` (provider failure). Any status can transition to `REFUND`
+     * via admin action.
+     *
+     * **Important.** Status is immutable once set to `SUCCESS`, `ERROR`, or `REFUND`.
+     *
+     * **Filter options**
+     *
+     * - `PENDING` - code not requested.
+     * - `SUCCESS` - code ready.
+     * - `ERROR` - provider failed.
+     * - `REFUND` - money returned.
+     */
+    status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND';
+
+    /**
+     * **Verification Credentials.** Login credentials for the purchased Telegram
+     * account. Initially `null` after purchase creation.
+     *
+     * **Availability.** Populated after calling `POST /purchases/:id/request-code`.
+     * Once received, credentials are permanent and cannot be re-requested.
+     *
+     * **Security.** Verification data is only visible to the purchase owner.
+     */
+    verification: Purchase.Verification | null;
   }
 
-  /**
-   * **Verification Credentials.** Login credentials for the purchased Telegram
-   * account. Initially `null` after purchase creation.
-   *
-   * **Availability.** Populated after calling `POST /purchases/:id/request-code`.
-   * Once received, credentials are permanent and cannot be re-requested.
-   *
-   * **Security.** Verification data is only visible to the purchase owner.
-   */
-  export interface Verification {
-    /**
-     * Verification code for account.
-     */
-    code: string;
+  export namespace Purchase {
+    export interface DisplayName {
+      /**
+       * Name in English.
+       */
+      en: string;
+
+      /**
+       * Name in Russian.
+       */
+      ru: string;
+    }
 
     /**
-     * Account password.
+     * **Final Price After Discount.** The actual amount deducted from your balance,
+     * with your personal discount already applied.
+     *
+     * **To see pricing breakdown before purchase.** Check
+     * `GET /accounts/:country_code` which shows both discounted price and original
+     * `base_price`.
+     *
+     * **Discount eligibility.** Based on your total successful purchase count. Higher
+     * volume = bigger discounts.
      */
-    password: string;
+    export interface Price {
+      /**
+       * Monetary amount as a string with up to 2 decimal places.
+       */
+      amount: string;
+
+      /**
+       * ISO 4217 currency code.
+       */
+      currency_code: string;
+    }
 
     /**
-     * **Code Retrieval Timestamp.** Marks when verification code was successfully
-     * fetched from the provider (not when purchase was created).
+     * **Verification Credentials.** Login credentials for the purchased Telegram
+     * account. Initially `null` after purchase creation.
      *
-     * **Example timeline.**
+     * **Availability.** Populated after calling `POST /purchases/:id/request-code`.
+     * Once received, credentials are permanent and cannot be re-requested.
      *
-     * - `created_at`: `2024-11-19T10:00:00Z` (purchase created)
-     * - `received_at`: `2024-11-19T10:05:02Z` (code requested 5 minutes later)
-     *
-     * **Note.** These timestamps may be identical if code is requested immediately
-     * after purchase.
+     * **Security.** Verification data is only visible to the purchase owner.
      */
-    received_at: string;
+    export interface Verification {
+      /**
+       * Verification code for account.
+       */
+      code: string;
+
+      /**
+       * Account password.
+       */
+      password: string;
+
+      /**
+       * **Code Retrieval Timestamp.** Marks when verification code was successfully
+       * fetched from the provider (not when purchase was created).
+       *
+       * **Example timeline.**
+       *
+       * - `created_at`: `2024-11-19T10:00:00Z` (purchase created)
+       * - `received_at`: `2024-11-19T10:05:02Z` (code requested 5 minutes later)
+       *
+       * **Note.** These timestamps may be identical if code is requested immediately
+       * after purchase.
+       */
+      received_at: string;
+    }
   }
 }
 
@@ -704,6 +748,18 @@ export interface PurchaseListParams extends PageNumberParams {
   status?: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND';
 }
 
+export interface PurchaseRequestVerificationCodeParams {
+  /**
+   * URL to receive webhook notification when code is received. POST request will be
+   * sent with either `WebhookSuccessPayload` or `WebhookFailedPayload`.
+   *
+   * **Retry policy.** If your endpoint does not return HTTP 200, webhook will be
+   * retried up to 3 times with delays: immediately, after 10 seconds, after 30
+   * seconds. Any non-200 response triggers retry.
+   */
+  callback_url?: string;
+}
+
 export declare namespace Purchases {
   export {
     type PurchaseCreateResponse as PurchaseCreateResponse,
@@ -713,5 +769,6 @@ export declare namespace Purchases {
     type PurchaseListResponsesPageNumber as PurchaseListResponsesPageNumber,
     type PurchaseCreateParams as PurchaseCreateParams,
     type PurchaseListParams as PurchaseListParams,
+    type PurchaseRequestVerificationCodeParams as PurchaseRequestVerificationCodeParams,
   };
 }

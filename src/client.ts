@@ -35,6 +35,7 @@ import {
   PurchaseListParams,
   PurchaseListResponse,
   PurchaseListResponsesPageNumber,
+  PurchaseRequestVerificationCodeParams,
   PurchaseRequestVerificationCodeResponse,
   PurchaseRetrieveResponse,
   Purchases,
@@ -801,5 +802,6 @@ export declare namespace Gmt {
     type PurchaseListResponsesPageNumber as PurchaseListResponsesPageNumber,
     type PurchaseCreateParams as PurchaseCreateParams,
     type PurchaseListParams as PurchaseListParams,
+    type PurchaseRequestVerificationCodeParams as PurchaseRequestVerificationCodeParams,
   };
 }

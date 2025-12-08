@@ -19,6 +19,7 @@ export {
   type PurchaseRequestVerificationCodeResponse,
   type PurchaseCreateParams,
   type PurchaseListParams,
+  type PurchaseRequestVerificationCodeParams,
   type PurchaseListResponsesPageNumber,
 } from './purchases';
 export { Service, type ServiceGetServerTimeResponse, type ServiceHealthCheckResponse } from './service';

@@ -48,4 +48,4 @@ Methods:
 - <code title="post /v1/purchases/">client.purchases.<a href="./src/resources/purchases.ts">create</a>({ ...params }) -> PurchaseCreateResponse</code>
 - <code title="get /v1/purchases/{purchase_id}">client.purchases.<a href="./src/resources/purchases.ts">retrieve</a>(purchaseID) -> PurchaseRetrieveResponse</code>
 - <code title="get /v1/purchases/">client.purchases.<a href="./src/resources/purchases.ts">list</a>({ ...params }) -> PurchaseListResponsesPageNumber</code>
-- <code title="post /v1/purchases/{purchase_id}/request-code">client.purchases.<a href="./src/resources/purchases.ts">requestVerificationCode</a>(purchaseID) -> PurchaseRequestVerificationCodeResponse</code>
+- <code title="post /v1/purchases/{purchase_id}/request-code">client.purchases.<a href="./src/resources/purchases.ts">requestVerificationCode</a>(purchaseID, { ...params }) -> PurchaseRequestVerificationCodeResponse</code>
