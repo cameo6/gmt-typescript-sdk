@@ -49,3 +49,13 @@ Methods:
 - <code title="get /v1/purchases/{purchase_id}">client.purchases.<a href="./src/resources/purchases.ts">retrieve</a>(purchaseID) -> PurchaseRetrieveResponse</code>
 - <code title="get /v1/purchases/">client.purchases.<a href="./src/resources/purchases.ts">list</a>({ ...params }) -> PurchaseListResponsesPageNumber</code>
 - <code title="post /v1/purchases/{purchase_id}/request-code">client.purchases.<a href="./src/resources/purchases.ts">requestVerificationCode</a>(purchaseID, { ...params }) -> PurchaseRequestVerificationCodeResponse</code>
+
+# Webhooks
+
+Types:
+
+- <code><a href="./src/resources/webhooks.ts">WebhookTestResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/webhooks/test">client.webhooks.<a href="./src/resources/webhooks.ts">test</a>({ ...params }) -> WebhookTestResponse</code>

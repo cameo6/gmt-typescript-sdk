@@ -1,4 +1,4 @@
-configured_endpoints: 10
+configured_endpoints: 11
 openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/gmt%2Fgmt-fccf71658cd920757614df261662fa041fe8a017aba0e7b916dce84456600ac5.yml
 openapi_spec_hash: a193d9336330ba542e2e8126f6386461
-config_hash: d8573c02f8f6e76d2ef3d6707f2141d8
+config_hash: 5aa10649a6c8e32b05d8cc903b6e9d50

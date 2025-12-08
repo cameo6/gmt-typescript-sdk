@@ -23,3 +23,4 @@ export {
   type PurchaseListResponsesPageNumber,
 } from './purchases';
 export { Service, type ServiceGetServerTimeResponse, type ServiceHealthCheckResponse } from './service';
+export { Webhooks, type WebhookTestResponse, type WebhookTestParams } from './webhooks';
