@@ -88,6 +88,23 @@ export class Purchases extends APIResource {
   }
 
   /**
+   * Refunds a purchase if verification code was not received within 20 minutes.
+   *
+   * **Requirements:**
+   *
+   * - Status `PENDING`, code not received
+   * - At least 20 minutes since purchase creation
+   *
+   * @example
+   * ```ts
+   * const response = await client.purchases.refund(12345);
+   * ```
+   */
+  refund(purchaseID: number, options?: RequestOptions): APIPromise<PurchaseRefundResponse> {
+    return this._client.post(path`/v1/purchases/${purchaseID}/refund`, options);
+  }
+
+  /**
    * Requests verification code and password from provider. Updates purchase status
    * to SUCCESS.
    *
@@ -548,6 +565,188 @@ export namespace PurchaseListResponse {
   }
 }
 
+export interface PurchaseRefundResponse {
+  purchase: PurchaseRefundResponse.Purchase;
+
+  refund: PurchaseRefundResponse.Refund;
+}
+
+export namespace PurchaseRefundResponse {
+  export interface Purchase {
+    /**
+     * Unique purchase identifier.
+     */
+    id: number;
+
+    /**
+     * ISO 3166-1 alpha-2 country code.
+     */
+    country_code: string;
+
+    /**
+     * Purchase creation time in ISO 8601 format (UTC).
+     */
+    created_at: string;
+
+    display_name: Purchase.DisplayName;
+
+    /**
+     * **E.164 International Format.** Phone number with country code prefix (e.g.,
+     * `+12025550123` for US, `+79991234567` for Russia).
+     *
+     * **Usage.** This is your Telegram account login. Use it with `verification.code`
+     * and `verification.password` to access the account.
+     */
+    phone_number: string;
+
+    /**
+     * **Final Price After Discount.** The actual amount deducted from your balance,
+     * with your personal discount already applied.
+     *
+     * **To see pricing breakdown before purchase.** Check
+     * `GET /accounts/:country_code` which shows both discounted price and original
+     * `base_price`.
+     *
+     * **Discount eligibility.** Based on your total successful purchase count. Higher
+     * volume = bigger discounts.
+     */
+    price: Purchase.Price;
+
+    /**
+     * **Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code
+     * request) or `ERROR` (provider failure). Any status can transition to `REFUND`
+     * via admin action.
+     *
+     * **Important.** Status is immutable once set to `SUCCESS`, `ERROR`, or `REFUND`.
+     *
+     * **Filter options**
+     *
+     * - `PENDING` - code not requested.
+     * - `SUCCESS` - code ready.
+     * - `ERROR` - provider failed.
+     * - `REFUND` - money returned.
+     */
+    status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND';
+
+    /**
+     * **Verification Credentials.** Login credentials for the purchased Telegram
+     * account. Initially `null` after purchase creation.
+     *
+     * **Availability.** Populated after calling `POST /purchases/:id/request-code`.
+     * Once received, credentials are permanent and cannot be re-requested.
+     *
+     * **Security.** Verification data is only visible to the purchase owner.
+     */
+    verification: Purchase.Verification | null;
+  }
+
+  export namespace Purchase {
+    export interface DisplayName {
+      /**
+       * Name in English.
+       */
+      en: string;
+
+      /**
+       * Name in Russian.
+       */
+      ru: string;
+    }
+
+    /**
+     * **Final Price After Discount.** The actual amount deducted from your balance,
+     * with your personal discount already applied.
+     *
+     * **To see pricing breakdown before purchase.** Check
+     * `GET /accounts/:country_code` which shows both discounted price and original
+     * `base_price`.
+     *
+     * **Discount eligibility.** Based on your total successful purchase count. Higher
+     * volume = bigger discounts.
+     */
+    export interface Price {
+      /**
+       * Monetary amount as a string with up to 2 decimal places.
+       */
+      amount: string;
+
+      /**
+       * ISO 4217 currency code.
+       */
+      currency_code: string;
+    }
+
+    /**
+     * **Verification Credentials.** Login credentials for the purchased Telegram
+     * account. Initially `null` after purchase creation.
+     *
+     * **Availability.** Populated after calling `POST /purchases/:id/request-code`.
+     * Once received, credentials are permanent and cannot be re-requested.
+     *
+     * **Security.** Verification data is only visible to the purchase owner.
+     */
+    export interface Verification {
+      /**
+       * Verification code for account.
+       */
+      code: string;
+
+      /**
+       * Account password.
+       */
+      password: string;
+
+      /**
+       * **Code Retrieval Timestamp.** Marks when verification code was successfully
+       * fetched from the provider (not when purchase was created).
+       *
+       * **Example timeline.**
+       *
+       * - `created_at`: `2024-11-19T10:00:00Z` (purchase created)
+       * - `received_at`: `2024-11-19T10:05:02Z` (code requested 5 minutes later)
+       *
+       * **Note.** These timestamps may be identical if code is requested immediately
+       * after purchase.
+       */
+      received_at: string;
+    }
+  }
+
+  export interface Refund {
+    /**
+     * Refunded amount (full purchase price)
+     */
+    amount: Refund.Amount;
+
+    /**
+     * Refund reason
+     */
+    reason: string;
+
+    /**
+     * Refund timestamp in ISO 8601 format
+     */
+    refunded_at: string;
+  }
+
+  export namespace Refund {
+    /**
+     * Refunded amount (full purchase price)
+     */
+    export interface Amount {
+      /**
+       * Monetary amount as a string with up to 2 decimal places.
+       */
+      amount: string;
+
+      /**
+       * ISO 4217 currency code.
+       */
+      currency_code: string;
+    }
+  }
+}
+
 export interface PurchaseRequestVerificationCodeResponse {
   code_request: PurchaseRequestVerificationCodeResponse.CodeRequest;
 
@@ -765,6 +964,7 @@ export declare namespace Purchases {
     type PurchaseCreateResponse as PurchaseCreateResponse,
     type PurchaseRetrieveResponse as PurchaseRetrieveResponse,
     type PurchaseListResponse as PurchaseListResponse,
+    type PurchaseRefundResponse as PurchaseRefundResponse,
     type PurchaseRequestVerificationCodeResponse as PurchaseRequestVerificationCodeResponse,
     type PurchaseListResponsesPageNumber as PurchaseListResponsesPageNumber,
     type PurchaseCreateParams as PurchaseCreateParams,
