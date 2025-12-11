@@ -165,6 +165,11 @@ export interface AccountListCountriesResponse {
 
   display_name: AccountListCountriesResponse.DisplayName;
 
+  /**
+   * Country flag emoji.
+   */
+  emoji: string;
+
   price: AccountListCountriesResponse.Price;
 
   /**
