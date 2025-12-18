@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.6.0 (2025-12-18)
+
+Full Changelog: [v0.5.1...v0.6.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.5.1...v0.6.0)
+
+### Features
+
+* **api:** add refund repository ([a287dab](https://github.com/cameo6/gmt-typescript-sdk/commit/a287dab9bdfeb012e986bc5470b441527c740e34))
+* **api:** add webhooks endpoint ([18ea157](https://github.com/cameo6/gmt-typescript-sdk/commit/18ea1572c2085a323c54d97e4d6b4d320ec359a4))
+* **api:** api update ([c7f5f9a](https://github.com/cameo6/gmt-typescript-sdk/commit/c7f5f9a34157ec6979d7d1156ffe14b35712434b))
+* **api:** api update ([380a133](https://github.com/cameo6/gmt-typescript-sdk/commit/380a133c7ab77c372073a6e457f5637d014f8aad))
+* **api:** api update ([281ba24](https://github.com/cameo6/gmt-typescript-sdk/commit/281ba24beaf314fc3092776a5ebbddd8c4b921ac))
+
+
+### Bug Fixes
+
+* **mcp:** correct code tool API endpoint ([688c160](https://github.com/cameo6/gmt-typescript-sdk/commit/688c16095585e1213c550d28ae8e5274a70e3e76))
+
+
+### Chores
+
+* **internal:** codegen related update ([fca4a0c](https://github.com/cameo6/gmt-typescript-sdk/commit/fca4a0c85bf1457b486f31f15703322acc70f35b))
+
 ## 0.5.1 (2025-12-06)
 
 Full Changelog: [v0.5.0...v0.5.1](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.5.0...v0.5.1)
