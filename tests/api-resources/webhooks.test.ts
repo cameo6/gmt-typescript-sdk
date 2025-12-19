@@ -10,10 +10,7 @@ const client = new Gmt({
 describe('resource webhooks', () => {
   // Prism tests are disabled
   test.skip('test: only required params', async () => {
-    const responsePromise = client.webhooks.test({
-      type: 'success',
-      url: 'https://example.com/webhooks/handler',
-    });
+    const responsePromise = client.webhooks.test({ url: 'https://example.com/webhooks/handler' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -26,8 +23,8 @@ describe('resource webhooks', () => {
   // Prism tests are disabled
   test.skip('test: required and optional params', async () => {
     const response = await client.webhooks.test({
-      type: 'success',
       url: 'https://example.com/webhooks/handler',
+      type: 'success',
     });
   });
 });
