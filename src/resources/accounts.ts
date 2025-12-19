@@ -19,7 +19,7 @@ export class Accounts extends APIResource {
    * Returns paginated list of accounts with filtering and sorting options.
    */
   list(
-    query: AccountListParams,
+    query: AccountListParams | null | undefined = {},
     options?: RequestOptions,
   ): PagePromise<AccountListResponsesPageNumber, AccountListResponse> {
     return this._client.getAPIList('/v1/accounts/', PageNumber<AccountListResponse>, { query, ...options });
@@ -30,7 +30,7 @@ export class Accounts extends APIResource {
    * availability. No authentication required.
    */
   listCountries(
-    query: AccountListCountriesParams,
+    query: AccountListCountriesParams | null | undefined = {},
     options?: RequestOptions,
   ): PagePromise<AccountListCountriesResponsesPageNumber, AccountListCountriesResponse> {
     return this._client.getAPIList('/v1/accounts/countries', PageNumber<AccountListCountriesResponse>, {
@@ -206,28 +206,28 @@ export namespace AccountListCountriesResponse {
 
 export interface AccountListParams extends PageNumberParams {
   /**
-   * Sort order for accounts.
-   */
-  sort: 'price_asc' | 'price_desc' | 'name_asc' | 'name_desc';
-
-  /**
    * Filter by country codes. Comma-separated list of ISO 3166-1 alpha-2 codes (e.g.,
    * 'US,RU,GB').
    */
   country_codes?: string;
+
+  /**
+   * Sort order for accounts.
+   */
+  sort?: 'price_asc' | 'price_desc' | 'name_asc' | 'name_desc';
 }
 
 export interface AccountListCountriesParams extends PageNumberParams {
   /**
-   * Sort order for accounts.
-   */
-  sort: 'price_asc' | 'price_desc' | 'name_asc' | 'name_desc';
-
-  /**
    * Filter by country codes. Comma-separated list of ISO 3166-1 alpha-2 codes (e.g.,
    * 'US,RU,GB').
    */
   country_codes?: string;
+
+  /**
+   * Sort order for accounts.
+   */
+  sort?: 'price_asc' | 'price_desc' | 'name_asc' | 'name_desc';
 }
 
 export declare namespace Accounts {
