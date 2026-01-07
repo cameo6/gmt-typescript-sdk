@@ -54,7 +54,11 @@ describe('resource purchases', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.purchases.list(
-        { page: 1, page_size: 50, status: 'SUCCESS' },
+        {
+          page: 1,
+          page_size: 50,
+          status: 'SUCCESS',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Gmt.NotFoundError);
