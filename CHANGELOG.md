@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.7.1 (2026-01-08)
+
+Full Changelog: [v0.7.0...v0.7.1](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.7.0...v0.7.1)
+
+### Chores
+
+* break long lines in snippets into multiline ([e87727a](https://github.com/cameo6/gmt-typescript-sdk/commit/e87727a918f28843541c3eec253b19e048df3240))
+* **internal:** codegen related update ([5200609](https://github.com/cameo6/gmt-typescript-sdk/commit/52006090ae1e5a501ca2b13866ac22dd6cc37ab7))
+
 ## 0.7.0 (2025-12-19)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.6.0...v0.7.0)
