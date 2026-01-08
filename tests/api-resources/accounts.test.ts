@@ -37,7 +37,12 @@ describe('resource accounts', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.accounts.list(
-        { country_codes: 'US,RU,GB', page: 1, page_size: 50, sort: 'price_asc' },
+        {
+          country_codes: 'US,RU,GB',
+          page: 1,
+          page_size: 50,
+          sort: 'price_asc',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Gmt.NotFoundError);
@@ -60,7 +65,12 @@ describe('resource accounts', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.accounts.listCountries(
-        { country_codes: 'US,RU,GB', page: 1, page_size: 50, sort: 'price_asc' },
+        {
+          country_codes: 'US,RU,GB',
+          page: 1,
+          page_size: 50,
+          sort: 'price_asc',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Gmt.NotFoundError);
