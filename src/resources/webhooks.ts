@@ -26,6 +26,7 @@ export class Webhooks extends APIResource {
    * @example
    * ```ts
    * const response = await client.webhooks.test({
+   *   type: 'success',
    *   url: 'https://example.com/webhooks/handler',
    * });
    * ```
@@ -70,14 +71,14 @@ export interface WebhookTestResponse {
 
 export interface WebhookTestParams {
   /**
+   * Webhook payload type to send: `success` or `failed`.
+   */
+  type: 'success' | 'failed';
+
+  /**
    * Webhook endpoint URL. Must be a valid URL.
    */
   url: string;
-
-  /**
-   * Webhook payload type to send: `success` or `failed`.
-   */
-  type?: 'success' | 'failed';
 }
 
 export declare namespace Webhooks {
