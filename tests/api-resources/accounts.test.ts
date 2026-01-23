@@ -21,8 +21,12 @@ describe('resource accounts', () => {
   });
 
   // Prism tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.accounts.list();
+  test.skip('list: only required params', async () => {
+    const responsePromise = client.accounts.list({
+      page: 1,
+      page_size: 50,
+      sort: 'price_asc',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -33,24 +37,22 @@ describe('resource accounts', () => {
   });
 
   // Prism tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.accounts.list(
-        {
-          country_codes: 'US,RU,GB',
-          page: 1,
-          page_size: 50,
-          sort: 'price_asc',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Gmt.NotFoundError);
+  test.skip('list: required and optional params', async () => {
+    const response = await client.accounts.list({
+      page: 1,
+      page_size: 50,
+      sort: 'price_asc',
+      country_codes: 'US,RU,GB',
+    });
   });
 
   // Prism tests are disabled
-  test.skip('listCountries', async () => {
-    const responsePromise = client.accounts.listCountries();
+  test.skip('listCountries: only required params', async () => {
+    const responsePromise = client.accounts.listCountries({
+      page: 1,
+      page_size: 50,
+      sort: 'price_asc',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -61,18 +63,12 @@ describe('resource accounts', () => {
   });
 
   // Prism tests are disabled
-  test.skip('listCountries: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.accounts.listCountries(
-        {
-          country_codes: 'US,RU,GB',
-          page: 1,
-          page_size: 50,
-          sort: 'price_asc',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Gmt.NotFoundError);
+  test.skip('listCountries: required and optional params', async () => {
+    const response = await client.accounts.listCountries({
+      page: 1,
+      page_size: 50,
+      sort: 'price_asc',
+      country_codes: 'US,RU,GB',
+    });
   });
 });

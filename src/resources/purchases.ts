@@ -73,13 +73,15 @@ export class Purchases extends APIResource {
    * @example
    * ```ts
    * // Automatically fetches more pages as needed.
-   * for await (const purchaseListResponse of client.purchases.list()) {
+   * for await (const purchaseListResponse of client.purchases.list(
+   *   { page: 1, page_size: 50 },
+   * )) {
    *   // ...
    * }
    * ```
    */
   list(
-    query: PurchaseListParams | null | undefined = {},
+    query: PurchaseListParams,
     options?: RequestOptions,
   ): PagePromise<PurchaseListResponsesPageNumber, PurchaseListResponse> {
     return this._client.getAPIList('/v1/purchases/', PageNumber<PurchaseListResponse>, { query, ...options });
