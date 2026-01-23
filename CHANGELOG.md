@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.8.0 (2026-01-23)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* **api:** api update ([c9bf65a](https://github.com/cameo6/gmt-typescript-sdk/commit/c9bf65a1992ebc725c929e35baa3fdda23844bcb))
+
+
+### Chores
+
+* break long lines in snippets into multiline ([e87727a](https://github.com/cameo6/gmt-typescript-sdk/commit/e87727a918f28843541c3eec253b19e048df3240))
+* **internal:** codegen related update ([5200609](https://github.com/cameo6/gmt-typescript-sdk/commit/52006090ae1e5a501ca2b13866ac22dd6cc37ab7))
+* **internal:** update `actions/checkout` version ([fed8d38](https://github.com/cameo6/gmt-typescript-sdk/commit/fed8d381dc5a1ef3203f7700dfaf533b535d929c))
+* **internal:** update lock file ([aa915c3](https://github.com/cameo6/gmt-typescript-sdk/commit/aa915c3b0e4b0668f3abe04a90131dabcd1fea87))
+* **internal:** upgrade babel, qs, js-yaml ([1df3ed1](https://github.com/cameo6/gmt-typescript-sdk/commit/1df3ed177bc80ccd7e2e56d79da23f36ef8af87b))
+* **internal:** upgrade brace-expansion and @babel/helpers ([959a8b4](https://github.com/cameo6/gmt-typescript-sdk/commit/959a8b4970bf07f3d9e52d187799ff27214a480d))
+
 ## 0.7.0 (2025-12-19)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.6.0...v0.7.0)
