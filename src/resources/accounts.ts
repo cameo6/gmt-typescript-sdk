@@ -221,7 +221,7 @@ export interface AccountListCountriesParams extends PageNumberParams {
   /**
    * Sort order for accounts.
    */
-  sort: 'price_asc' | 'price_desc' | 'name_asc' | 'name_desc';
+  sort: 'price_asc' | 'price_desc' | 'name_asc' | 'name_desc' | 'popularity_asc' | 'popularity_desc';
 
   /**
    * Filter by country codes. Comma-separated list of ISO 3166-1 alpha-2 codes (e.g.,

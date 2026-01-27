@@ -18,6 +18,11 @@ export class Profile extends APIResource {
  * Successful response.
  */
 export interface ProfileRetrieveResponse {
+  /**
+   * User Database ID
+   */
+  id: string;
+
   balance: ProfileRetrieveResponse.Balance;
 
   /**
@@ -27,14 +32,19 @@ export interface ProfileRetrieveResponse {
 
   discount: ProfileRetrieveResponse.Discount;
 
+  /**
+   * Web username
+   */
+  login: string | null;
+
   referral: ProfileRetrieveResponse.Referral;
 
   statistics: ProfileRetrieveResponse.Statistics;
 
   /**
-   * User's Telegram ID
+   * User's Telegram ID (null for web-only users)
    */
-  telegram_id: string;
+  telegram_id: string | null;
 
   /**
    * User's Telegram username
