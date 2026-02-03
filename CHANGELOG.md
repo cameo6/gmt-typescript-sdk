@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.1 (2026-02-03)
+
+Full Changelog: [v0.9.0...v0.9.1](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.9.0...v0.9.1)
+
+### Bug Fixes
+
+* **client:** avoid memory leak with abort signals ([159465b](https://github.com/cameo6/gmt-typescript-sdk/commit/159465ba342f78150784137b7013525270e6b489))
+
 ## 0.9.0 (2026-01-27)
 
 Full Changelog: [v0.8.0...v0.9.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.8.0...v0.9.0)
