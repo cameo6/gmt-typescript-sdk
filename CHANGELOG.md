@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.9.2 (2026-02-06)
+
+Full Changelog: [v0.9.1...v0.9.2](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.9.1...v0.9.2)
+
+### Bug Fixes
+
+* **client:** avoid removing abort listener too early ([830c6cd](https://github.com/cameo6/gmt-typescript-sdk/commit/830c6cda4fea8a9a6973a400ef89aacae4143f4d))
+
+
+### Chores
+
+* **client:** do not parse responses with empty content-length ([4312648](https://github.com/cameo6/gmt-typescript-sdk/commit/43126481c96c33a5ed026129d67a395c94f44617))
+* **client:** restructure abort controller binding ([c826dc0](https://github.com/cameo6/gmt-typescript-sdk/commit/c826dc07b90c284cc9915858553b6fae739d9fd6))
+
 ## 0.9.1 (2026-02-03)
 
 Full Changelog: [v0.9.0...v0.9.1](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.9.0...v0.9.1)
