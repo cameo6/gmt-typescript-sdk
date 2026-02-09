@@ -28,7 +28,17 @@ import {
   AccountRetrieveResponse,
   Accounts,
 } from './resources/accounts';
-import { Profile, ProfileRetrieveResponse } from './resources/profile';
+import {
+  Profile,
+  ProfileChangeLoginParams,
+  ProfileChangeLoginResponse,
+  ProfileChangePasswordParams,
+  ProfileChangePasswordResponse,
+  ProfileRetrieveResponse,
+  ProfileUnbindTelegramResponse,
+} from './resources/profile';
+import { Service, ServiceGetServerTimeResponse, ServiceHealthCheckResponse } from './resources/service';
+import { WebhookTestParams, WebhookTestResponse, Webhooks } from './resources/webhooks';
 import {
   PurchaseCreateParams,
   PurchaseCreateResponse,
@@ -40,9 +50,7 @@ import {
   PurchaseRequestVerificationCodeResponse,
   PurchaseRetrieveResponse,
   Purchases,
-} from './resources/purchases';
-import { Service, ServiceGetServerTimeResponse, ServiceHealthCheckResponse } from './resources/service';
-import { WebhookTestParams, WebhookTestResponse, Webhooks } from './resources/webhooks';
+} from './resources/purchases/purchases';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -807,7 +815,15 @@ export declare namespace Gmt {
     type AccountListCountriesParams as AccountListCountriesParams,
   };
 
-  export { Profile as Profile, type ProfileRetrieveResponse as ProfileRetrieveResponse };
+  export {
+    Profile as Profile,
+    type ProfileRetrieveResponse as ProfileRetrieveResponse,
+    type ProfileChangeLoginResponse as ProfileChangeLoginResponse,
+    type ProfileChangePasswordResponse as ProfileChangePasswordResponse,
+    type ProfileUnbindTelegramResponse as ProfileUnbindTelegramResponse,
+    type ProfileChangeLoginParams as ProfileChangeLoginParams,
+    type ProfileChangePasswordParams as ProfileChangePasswordParams,
+  };
 
   export {
     Purchases as Purchases,
