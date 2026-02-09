@@ -10,7 +10,15 @@ export {
   type AccountListResponsesPageNumber,
   type AccountListCountriesResponsesPageNumber,
 } from './accounts';
-export { Profile, type ProfileRetrieveResponse } from './profile';
+export {
+  Profile,
+  type ProfileRetrieveResponse,
+  type ProfileChangeLoginResponse,
+  type ProfileChangePasswordResponse,
+  type ProfileUnbindTelegramResponse,
+  type ProfileChangeLoginParams,
+  type ProfileChangePasswordParams,
+} from './profile';
 export {
   Purchases,
   type PurchaseCreateResponse,
@@ -22,6 +30,6 @@ export {
   type PurchaseListParams,
   type PurchaseRequestVerificationCodeParams,
   type PurchaseListResponsesPageNumber,
-} from './purchases';
+} from './purchases/purchases';
 export { Service, type ServiceGetServerTimeResponse, type ServiceHealthCheckResponse } from './service';
 export { Webhooks, type WebhookTestResponse, type WebhookTestParams } from './webhooks';

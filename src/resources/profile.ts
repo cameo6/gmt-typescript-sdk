@@ -3,14 +3,73 @@
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
+import { maybeMultipartFormRequestOptions } from '../internal/uploads';
 
 export class Profile extends APIResource {
   /**
    * Returns detailed user profile information including balances, statistics, and
    * program levels.
+   *
+   * @example
+   * ```ts
+   * const profile = await client.profile.retrieve();
+   * ```
    */
   retrieve(options?: RequestOptions): APIPromise<ProfileRetrieveResponse> {
     return this._client.get('/v1/profile/', options);
+  }
+
+  /**
+   * Change the current user login to a new one.
+   *
+   * @example
+   * ```ts
+   * const response = await client.profile.changeLogin({
+   *   new_login: 'username',
+   * });
+   * ```
+   */
+  changeLogin(
+    body: ProfileChangeLoginParams,
+    options?: RequestOptions,
+  ): APIPromise<ProfileChangeLoginResponse> {
+    return this._client.patch(
+      '/v1/profile/change-login',
+      maybeMultipartFormRequestOptions({ body, ...options }, this._client),
+    );
+  }
+
+  /**
+   * Change the current user password to a new one.
+   *
+   * @example
+   * ```ts
+   * const response = await client.profile.changePassword({
+   *   new_password: 'Password123',
+   * });
+   * ```
+   */
+  changePassword(
+    body: ProfileChangePasswordParams,
+    options?: RequestOptions,
+  ): APIPromise<ProfileChangePasswordResponse> {
+    return this._client.patch(
+      '/v1/profile/change-password',
+      maybeMultipartFormRequestOptions({ body, ...options }, this._client),
+    );
+  }
+
+  /**
+   * Disables linking of the Telegram account to the user's web profile, all data
+   * remains on the web account.
+   *
+   * @example
+   * ```ts
+   * const response = await client.profile.unbindTelegram();
+   * ```
+   */
+  unbindTelegram(options?: RequestOptions): APIPromise<ProfileUnbindTelegramResponse> {
+    return this._client.patch('/v1/profile/unbind-telegram', options);
   }
 }
 
@@ -144,6 +203,49 @@ export namespace ProfileRetrieveResponse {
   }
 }
 
+export interface ProfileChangeLoginResponse {
+  /**
+   * Indicates if the operation was successful
+   */
+  success: boolean;
+}
+
+export interface ProfileChangePasswordResponse {
+  /**
+   * Indicates if the operation was successful
+   */
+  success: boolean;
+}
+
+export interface ProfileUnbindTelegramResponse {
+  /**
+   * Indicates if the operation was successful
+   */
+  success: boolean;
+}
+
+export interface ProfileChangeLoginParams {
+  /**
+   * User login for registration
+   */
+  new_login: string;
+}
+
+export interface ProfileChangePasswordParams {
+  /**
+   * User password. Must contain at least two character types: lowercase, uppercase,
+   * digits, or special characters
+   */
+  new_password: string;
+}
+
 export declare namespace Profile {
-  export { type ProfileRetrieveResponse as ProfileRetrieveResponse };
+  export {
+    type ProfileRetrieveResponse as ProfileRetrieveResponse,
+    type ProfileChangeLoginResponse as ProfileChangeLoginResponse,
+    type ProfileChangePasswordResponse as ProfileChangePasswordResponse,
+    type ProfileUnbindTelegramResponse as ProfileUnbindTelegramResponse,
+    type ProfileChangeLoginParams as ProfileChangeLoginParams,
+    type ProfileChangePasswordParams as ProfileChangePasswordParams,
+  };
 }
