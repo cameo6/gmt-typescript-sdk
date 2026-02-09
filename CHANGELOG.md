@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.10.0 (2026-02-09)
+
+Full Changelog: [v0.9.2...v0.10.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.9.2...v0.10.0)
+
+### Features
+
+* **api:** api update ([aa75389](https://github.com/cameo6/gmt-typescript-sdk/commit/aa7538926983f301df148a54360c3684c8adebfb))
+
+
+### Chores
+
+* **internal:** fix pagination internals not accepting option promises ([b6ce57e](https://github.com/cameo6/gmt-typescript-sdk/commit/b6ce57ebc396699247ecb4a57add825879c9cf80))
+* **internal:** upgrade pnpm ([1ded41f](https://github.com/cameo6/gmt-typescript-sdk/commit/1ded41f98083d8de2e5704b0ff6fac221b653406))
+
 ## 0.9.2 (2026-02-06)
 
 Full Changelog: [v0.9.1...v0.9.2](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.9.1...v0.9.2)
