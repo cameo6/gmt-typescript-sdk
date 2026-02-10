@@ -68,7 +68,7 @@ export interface ClientOptions {
   /**
    * API-key that you received from Telegram Bot.
    */
-  apiKey?: string | undefined;
+  apiKey?: string | null | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -143,7 +143,7 @@ export interface ClientOptions {
  * API Client for interfacing with the Gmt API.
  */
 export class Gmt {
-  apiKey: string;
+  apiKey: string | null;
 
   baseURL: string;
   maxRetries: number;
@@ -160,7 +160,7 @@ export class Gmt {
   /**
    * API Client for interfacing with the Gmt API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['x-api-key'] ?? undefined]
+   * @param {string | null | undefined} [opts.apiKey=process.env['x-api-key'] ?? null]
    * @param {string} [opts.baseURL=process.env['GMT_BASE_URL'] ?? https://api.getmytg.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -171,15 +171,9 @@ export class Gmt {
    */
   constructor({
     baseURL = readEnv('GMT_BASE_URL'),
-    apiKey = readEnv('x-api-key'),
+    apiKey = readEnv('x-api-key') ?? null,
     ...opts
   }: ClientOptions = {}) {
-    if (apiKey === undefined) {
-      throw new Errors.GmtError(
-        "The x-api-key environment variable is missing or empty; either provide it, or instantiate the Gmt client with an apiKey option, like new Gmt({ apiKey: 'My API Key' }).",
-      );
-    }
-
     const options: ClientOptions = {
       apiKey,
       ...opts,
@@ -237,10 +231,22 @@ export class Gmt {
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
-    return;
+    if (this.apiKey && values.get('x-api-key')) {
+      return;
+    }
+    if (nulls.has('x-api-key')) {
+      return;
+    }
+
+    throw new Error(
+      'Could not resolve authentication method. Expected the apiKey to be set. Or for the "x-api-key" headers to be explicitly omitted',
+    );
   }
 
   protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
+    if (this.apiKey == null) {
+      return undefined;
+    }
     return buildHeaders([{ 'x-api-key': this.apiKey }]);
   }
 
