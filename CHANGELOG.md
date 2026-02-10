@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.0 (2026-02-10)
+
+Full Changelog: [v0.11.2...v0.12.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.11.2...v0.12.0)
+
+### Features
+
+* **api:** manual updates ([cbbaa0c](https://github.com/cameo6/gmt-typescript-sdk/commit/cbbaa0c09c0155b18da599da36832d939992be1f))
+
 ## 0.11.2 (2026-02-09)
 
 Full Changelog: [v0.11.1...v0.11.2](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.11.1...v0.11.2)
