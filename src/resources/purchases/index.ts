@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Bulk, type BulkCreateResponse, type BulkCreateParams } from './bulk';
+export { Bulk, type BulkCreateResponse, type BulkRetrieveResponse, type BulkCreateParams } from './bulk';
 export {
   Purchases,
   type PurchaseCreateResponse,

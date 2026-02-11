@@ -2,7 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as BulkAPI from './bulk';
-import { Bulk, BulkCreateParams, BulkCreateResponse } from './bulk';
+import { Bulk, BulkCreateParams, BulkCreateResponse, BulkRetrieveResponse } from './bulk';
 import { APIPromise } from '../../core/api-promise';
 import { PageNumber, type PageNumberParams, PagePromise } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
@@ -1011,6 +1011,7 @@ export declare namespace Purchases {
   export {
     Bulk as Bulk,
     type BulkCreateResponse as BulkCreateResponse,
+    type BulkRetrieveResponse as BulkRetrieveResponse,
     type BulkCreateParams as BulkCreateParams,
   };
 }
