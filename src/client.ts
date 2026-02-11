@@ -160,7 +160,7 @@ export class Gmt {
   /**
    * API Client for interfacing with the Gmt API.
    *
-   * @param {string | null | undefined} [opts.apiKey=process.env['x-api-key'] ?? null]
+   * @param {string | null | undefined} [opts.apiKey=process.env['GMT_API_KEY'] ?? null]
    * @param {string} [opts.baseURL=process.env['GMT_BASE_URL'] ?? https://api.getmytg.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -171,7 +171,7 @@ export class Gmt {
    */
   constructor({
     baseURL = readEnv('GMT_BASE_URL'),
-    apiKey = readEnv('x-api-key') ?? null,
+    apiKey = readEnv('GMT_API_KEY') ?? null,
     ...opts
   }: ClientOptions = {}) {
     const options: ClientOptions = {

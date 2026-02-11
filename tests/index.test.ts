@@ -441,14 +441,14 @@ describe('instantiate client', () => {
 
   test('with environment variable arguments', () => {
     // set options via env var
-    process.env['x-api-key'] = 'My API Key';
+    process.env['GMT_API_KEY'] = 'My API Key';
     const client = new Gmt();
     expect(client.apiKey).toBe('My API Key');
   });
 
   test('with overridden environment variable arguments', () => {
     // set options via env var
-    process.env['x-api-key'] = 'another My API Key';
+    process.env['GMT_API_KEY'] = 'another My API Key';
     const client = new Gmt({ apiKey: 'My API Key' });
     expect(client.apiKey).toBe('My API Key');
   });
