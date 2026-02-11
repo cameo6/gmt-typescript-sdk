@@ -190,6 +190,12 @@ export interface PurchaseCreateResponse {
   price: PurchaseCreateResponse.Price;
 
   /**
+   * Type of purchase: SINGLE (regular), BULK (batch purchase), ADMIN (admin
+   * deduction)
+   */
+  purchase_type: 'SINGLE' | 'BULK' | 'ADMIN';
+
+  /**
    * **Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code
    * request) or `ERROR` (provider failure). Any status can transition to `REFUND`
    * via admin action.
@@ -330,6 +336,12 @@ export interface PurchaseRetrieveResponse {
   price: PurchaseRetrieveResponse.Price;
 
   /**
+   * Type of purchase: SINGLE (regular), BULK (batch purchase), ADMIN (admin
+   * deduction)
+   */
+  purchase_type: 'SINGLE' | 'BULK' | 'ADMIN';
+
+  /**
    * **Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code
    * request) or `ERROR` (provider failure). Any status can transition to `REFUND`
    * via admin action.
@@ -468,6 +480,12 @@ export interface PurchaseListResponse {
    * volume = bigger discounts.
    */
   price: PurchaseListResponse.Price;
+
+  /**
+   * Type of purchase: SINGLE (regular), BULK (batch purchase), ADMIN (admin
+   * deduction)
+   */
+  purchase_type: 'SINGLE' | 'BULK' | 'ADMIN';
 
   /**
    * **Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code
@@ -615,6 +633,12 @@ export namespace PurchaseRefundResponse {
      * volume = bigger discounts.
      */
     price: Purchase.Price;
+
+    /**
+     * Type of purchase: SINGLE (regular), BULK (batch purchase), ADMIN (admin
+     * deduction)
+     */
+    purchase_type: 'SINGLE' | 'BULK' | 'ADMIN';
 
     /**
      * **Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code
@@ -824,6 +848,12 @@ export namespace PurchaseRequestVerificationCodeResponse {
      * volume = bigger discounts.
      */
     price: Purchase.Price;
+
+    /**
+     * Type of purchase: SINGLE (regular), BULK (batch purchase), ADMIN (admin
+     * deduction)
+     */
+    purchase_type: 'SINGLE' | 'BULK' | 'ADMIN';
 
     /**
      * **Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code
