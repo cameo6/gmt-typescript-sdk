@@ -63,13 +63,10 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/purchases/bulk.ts">BulkCreateResponse</a></code>
-- <code><a href="./src/resources/purchases/bulk.ts">BulkRetrieveResponse</a></code>
 
 Methods:
 
 - <code title="post /v1/purchases/bulk">client.purchases.bulk.<a href="./src/resources/purchases/bulk.ts">create</a>({ ...params }) -> BulkCreateResponse</code>
-- <code title="get /v1/purchases/bulk/{purchaseId}">client.purchases.bulk.<a href="./src/resources/purchases/bulk.ts">retrieve</a>(purchaseID) -> BulkRetrieveResponse</code>
-- <code title="get /v1/purchases/bulk/{purchaseId}/download">client.purchases.bulk.<a href="./src/resources/purchases/bulk.ts">download</a>(purchaseID) -> void</code>
 
 # Webhooks
 

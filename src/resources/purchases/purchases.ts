@@ -2,7 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as BulkAPI from './bulk';
-import { Bulk, BulkCreateParams, BulkCreateResponse, BulkRetrieveResponse } from './bulk';
+import { Bulk, BulkCreateParams, BulkCreateResponse } from './bulk';
 import { APIPromise } from '../../core/api-promise';
 import { PageNumber, type PageNumberParams, PagePromise } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
@@ -174,7 +174,7 @@ export interface PurchaseCreateResponse {
    * **Usage.** This is your Telegram account login. Use it with `verification.code`
    * and `verification.password` to access the account.
    */
-  phone_number: string;
+  phone_number: string | null;
 
   /**
    * **Final Price After Discount.** The actual amount deducted from your balance,
@@ -314,7 +314,7 @@ export interface PurchaseRetrieveResponse {
    * **Usage.** This is your Telegram account login. Use it with `verification.code`
    * and `verification.password` to access the account.
    */
-  phone_number: string;
+  phone_number: string | null;
 
   /**
    * **Final Price After Discount.** The actual amount deducted from your balance,
@@ -454,7 +454,7 @@ export interface PurchaseListResponse {
    * **Usage.** This is your Telegram account login. Use it with `verification.code`
    * and `verification.password` to access the account.
    */
-  phone_number: string;
+  phone_number: string | null;
 
   /**
    * **Final Price After Discount.** The actual amount deducted from your balance,
@@ -601,7 +601,7 @@ export namespace PurchaseRefundResponse {
      * **Usage.** This is your Telegram account login. Use it with `verification.code`
      * and `verification.password` to access the account.
      */
-    phone_number: string;
+    phone_number: string | null;
 
     /**
      * **Final Price After Discount.** The actual amount deducted from your balance,
@@ -810,7 +810,7 @@ export namespace PurchaseRequestVerificationCodeResponse {
      * **Usage.** This is your Telegram account login. Use it with `verification.code`
      * and `verification.password` to access the account.
      */
-    phone_number: string;
+    phone_number: string | null;
 
     /**
      * **Final Price After Discount.** The actual amount deducted from your balance,
@@ -981,7 +981,6 @@ export declare namespace Purchases {
   export {
     Bulk as Bulk,
     type BulkCreateResponse as BulkCreateResponse,
-    type BulkRetrieveResponse as BulkRetrieveResponse,
     type BulkCreateParams as BulkCreateParams,
   };
 }

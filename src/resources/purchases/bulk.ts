@@ -2,10 +2,8 @@
 
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
-import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { maybeMultipartFormRequestOptions } from '../../internal/uploads';
-import { path } from '../../internal/utils/path';
 
 export class Bulk extends APIResource {
   /**
@@ -37,37 +35,6 @@ export class Bulk extends APIResource {
       '/v1/purchases/bulk',
       maybeMultipartFormRequestOptions({ body, ...options }, this._client),
     );
-  }
-
-  /**
-   * Returns the status of a bulk purchase, including details and link to download
-   * archive.
-   *
-   * @example
-   * ```ts
-   * const bulk = await client.purchases.bulk.retrieve(
-   *   'purchaseId',
-   * );
-   * ```
-   */
-  retrieve(purchaseID: string, options?: RequestOptions): APIPromise<BulkRetrieveResponse> {
-    return this._client.get(path`/v1/purchases/bulk/${purchaseID}`, options);
-  }
-
-  /**
-   * Download the archive file containing multiple accounts from a successful bulk
-   * purchase
-   *
-   * @example
-   * ```ts
-   * await client.purchases.bulk.download('purchaseId');
-   * ```
-   */
-  download(purchaseID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.get(path`/v1/purchases/bulk/${purchaseID}/download`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
   }
 }
 
@@ -180,115 +147,6 @@ export namespace BulkCreateResponse {
   }
 }
 
-export interface BulkRetrieveResponse {
-  /**
-   * Unique ID of the bulk purchase request
-   */
-  bulk_purchase_id: number;
-
-  /**
-   * ISO 3166-1 alpha-2 country code.
-   */
-  country_code: string;
-
-  /**
-   * Bulk purchase creation timestamp
-   */
-  created_at: string;
-
-  /**
-   * Archive data (only populated when status is SUCCESS)
-   */
-  item: BulkRetrieveResponse.Item | null;
-
-  /**
-   * Price of a single account
-   */
-  price_per_account: BulkRetrieveResponse.PricePerAccount;
-
-  /**
-   * Number of accounts in this purchase
-   */
-  quantity: number;
-
-  /**
-   * Current status of bulk purchase
-   */
-  status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND';
-
-  /**
-   * Total price for all accounts
-   */
-  total_price: BulkRetrieveResponse.TotalPrice;
-
-  /**
-   * Last update timestamp
-   */
-  updated_at: string;
-}
-
-export namespace BulkRetrieveResponse {
-  /**
-   * Archive data (only populated when status is SUCCESS)
-   */
-  export interface Item {
-    /**
-     * Path or URL to download the archive with accounts
-     */
-    archive_url: string;
-
-    /**
-     * Bulk purchase creation timestamp
-     */
-    created_at: string;
-
-    /**
-     * Archive/export ID with sessions
-     */
-    export_id: string;
-
-    /**
-     * Number of accounts in the archive
-     */
-    quantity: number;
-
-    /**
-     * Status of bulk purchase
-     */
-    status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND';
-  }
-
-  /**
-   * Price of a single account
-   */
-  export interface PricePerAccount {
-    /**
-     * Monetary amount as a string with up to 2 decimal places.
-     */
-    amount: string;
-
-    /**
-     * ISO 4217 currency code.
-     */
-    currency_code: string;
-  }
-
-  /**
-   * Total price for all accounts
-   */
-  export interface TotalPrice {
-    /**
-     * Monetary amount as a string with up to 2 decimal places.
-     */
-    amount: string;
-
-    /**
-     * ISO 4217 currency code.
-     */
-    currency_code: string;
-  }
-}
-
 export interface BulkCreateParams {
   /**
    * ISO 3166-1 alpha-2 country code.
@@ -312,9 +170,5 @@ export interface BulkCreateParams {
 }
 
 export declare namespace Bulk {
-  export {
-    type BulkCreateResponse as BulkCreateResponse,
-    type BulkRetrieveResponse as BulkRetrieveResponse,
-    type BulkCreateParams as BulkCreateParams,
-  };
+  export { type BulkCreateResponse as BulkCreateResponse, type BulkCreateParams as BulkCreateParams };
 }
