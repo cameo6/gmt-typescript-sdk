@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.17.0 (2026-02-12)
+
+Full Changelog: [v0.16.0...v0.17.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.16.0...v0.17.0)
+
+### Features
+
+* **api:** api update ([7c3872b](https://github.com/cameo6/gmt-typescript-sdk/commit/7c3872bebd35b5a6d9831c3ffeee7bf3791bea49))
+
+
+### Chores
+
+* **internal:** avoid type checking errors with ts-reset ([d6d41df](https://github.com/cameo6/gmt-typescript-sdk/commit/d6d41df007f15c7423a04ae0a644a5bc998e8861))
+
 ## 0.16.0 (2026-02-11)
 
 Full Changelog: [v0.15.0...v0.16.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.15.0...v0.16.0)
