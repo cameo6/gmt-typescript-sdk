@@ -60,13 +60,19 @@ export class Bulk extends APIResource {
    *
    * @example
    * ```ts
-   * await client.purchases.bulk.download('purchase_id');
+   * const response = await client.purchases.bulk.download(
+   *   'purchase_id',
+   * );
+   *
+   * const content = await response.blob();
+   * console.log(content);
    * ```
    */
-  download(purchaseID: string, options?: RequestOptions): APIPromise<void> {
+  download(purchaseID: string, options?: RequestOptions): APIPromise<Response> {
     return this._client.get(path`/v1/purchases/bulk/${purchaseID}/download`, {
       ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+      headers: buildHeaders([{ Accept: 'application/zip' }, options?.headers]),
+      __binaryResponse: true,
     });
   }
 }
