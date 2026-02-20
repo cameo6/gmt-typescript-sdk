@@ -8,7 +8,7 @@ const client = new Gmt({
 });
 
 describe('resource webhooks', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('test: only required params', async () => {
     const responsePromise = client.webhooks.test({
       type: 'success',
@@ -23,7 +23,7 @@ describe('resource webhooks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('test: required and optional params', async () => {
     const response = await client.webhooks.test({
       type: 'success',

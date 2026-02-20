@@ -8,7 +8,7 @@ const client = new Gmt({
 });
 
 describe('resource accounts', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.accounts.retrieve('US');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource accounts', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: only required params', async () => {
     const responsePromise = client.accounts.list({
       page: 1,
@@ -36,7 +36,7 @@ describe('resource accounts', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: required and optional params', async () => {
     const response = await client.accounts.list({
       page: 1,
@@ -46,7 +46,7 @@ describe('resource accounts', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listCountries: only required params', async () => {
     const responsePromise = client.accounts.listCountries({
       page: 1,
@@ -62,7 +62,7 @@ describe('resource accounts', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listCountries: required and optional params', async () => {
     const response = await client.accounts.listCountries({
       page: 1,

@@ -8,7 +8,7 @@ const client = new Gmt({
 });
 
 describe('resource profile', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.profile.retrieve();
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource profile', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('changeLogin: only required params', async () => {
     const responsePromise = client.profile.changeLogin({ new_login: 'username' });
     const rawResponse = await responsePromise.asResponse();
@@ -32,12 +32,12 @@ describe('resource profile', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('changeLogin: required and optional params', async () => {
     const response = await client.profile.changeLogin({ new_login: 'username' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('changePassword: only required params', async () => {
     const responsePromise = client.profile.changePassword({ new_password: 'Password123' });
     const rawResponse = await responsePromise.asResponse();
@@ -49,12 +49,12 @@ describe('resource profile', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('changePassword: required and optional params', async () => {
     const response = await client.profile.changePassword({ new_password: 'Password123' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('unbindTelegram', async () => {
     const responsePromise = client.profile.unbindTelegram();
     const rawResponse = await responsePromise.asResponse();

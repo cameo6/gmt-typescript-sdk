@@ -8,7 +8,7 @@ const client = new Gmt({
 });
 
 describe('resource purchases', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.purchases.create({ country_code: 'US' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,12 +20,12 @@ describe('resource purchases', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.purchases.create({ country_code: 'US' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.purchases.retrieve(12345);
     const rawResponse = await responsePromise.asResponse();
@@ -37,7 +37,7 @@ describe('resource purchases', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: only required params', async () => {
     const responsePromise = client.purchases.list({ page: 1, page_size: 50 });
     const rawResponse = await responsePromise.asResponse();
@@ -49,7 +49,7 @@ describe('resource purchases', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: required and optional params', async () => {
     const response = await client.purchases.list({
       page: 1,
@@ -58,7 +58,7 @@ describe('resource purchases', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('refund', async () => {
     const responsePromise = client.purchases.refund(12345);
     const rawResponse = await responsePromise.asResponse();
@@ -70,7 +70,7 @@ describe('resource purchases', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('requestVerificationCode', async () => {
     const responsePromise = client.purchases.requestVerificationCode(12345, {});
     const rawResponse = await responsePromise.asResponse();

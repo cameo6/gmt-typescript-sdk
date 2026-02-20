@@ -8,7 +8,7 @@ const client = new Gmt({
 });
 
 describe('resource service', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getServerTime', async () => {
     const responsePromise = client.service.getServerTime();
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource service', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('healthCheck', async () => {
     const responsePromise = client.service.healthCheck();
     const rawResponse = await responsePromise.asResponse();
