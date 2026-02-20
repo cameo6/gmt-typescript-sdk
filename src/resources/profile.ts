@@ -73,9 +73,6 @@ export class Profile extends APIResource {
   }
 }
 
-/**
- * Successful response.
- */
 export interface ProfileRetrieveResponse {
   /**
    * User Database ID

@@ -158,6 +158,8 @@ export interface AccountListResponse {
    */
   available: boolean;
 
+  base_price: AccountListResponse.BasePrice;
+
   /**
    * ISO 3166-1 alpha-2 country code (e.g., US, RU, GB).
    */
@@ -169,6 +171,11 @@ export interface AccountListResponse {
    * Country flag emoji.
    */
   emoji: string;
+
+  /**
+   * Relative popularity of this country based on recent purchase volume.
+   */
+  popularity_index: number;
 
   price: AccountListResponse.Price;
 
@@ -184,6 +191,18 @@ export interface AccountListResponse {
 }
 
 export namespace AccountListResponse {
+  export interface BasePrice {
+    /**
+     * Monetary amount as a string with up to 2 decimal places.
+     */
+    amount: string;
+
+    /**
+     * ISO 4217 currency code.
+     */
+    currency_code: string;
+  }
+
   export interface DisplayName {
     /**
      * Name in English.
@@ -215,6 +234,8 @@ export interface AccountListCountriesResponse {
    */
   available: boolean;
 
+  base_price: AccountListCountriesResponse.BasePrice;
+
   /**
    * ISO 3166-1 alpha-2 country code (e.g., US, RU, GB).
    */
@@ -226,6 +247,11 @@ export interface AccountListCountriesResponse {
    * Country flag emoji.
    */
   emoji: string;
+
+  /**
+   * Relative popularity of this country based on recent purchase volume.
+   */
+  popularity_index: number;
 
   price: AccountListCountriesResponse.Price;
 
@@ -241,6 +267,18 @@ export interface AccountListCountriesResponse {
 }
 
 export namespace AccountListCountriesResponse {
+  export interface BasePrice {
+    /**
+     * Monetary amount as a string with up to 2 decimal places.
+     */
+    amount: string;
+
+    /**
+     * ISO 4217 currency code.
+     */
+    currency_code: string;
+  }
+
   export interface DisplayName {
     /**
      * Name in English.
