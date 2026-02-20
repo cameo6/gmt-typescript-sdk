@@ -8,7 +8,7 @@ const client = new Gmt({
 });
 
 describe('resource bulk', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.purchases.bulk.create({ country_code: 'US', quantity: 10 });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource bulk', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.purchases.bulk.create({
       country_code: 'US',
@@ -29,7 +29,7 @@ describe('resource bulk', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.purchases.bulk.retrieve('purchase_id');
     const rawResponse = await responsePromise.asResponse();
