@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.19.0 (2026-02-20)
+
+Full Changelog: [v0.18.0...v0.19.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.18.0...v0.19.0)
+
+### Features
+
+* **api:** api update ([9846cf3](https://github.com/cameo6/gmt-typescript-sdk/commit/9846cf3a801da7a9ca69b63b21c5cb90ef807704))
+
+
+### Chores
+
+* **internal/client:** fix form-urlencoded requests ([3d5f291](https://github.com/cameo6/gmt-typescript-sdk/commit/3d5f2919a3892512d4f69a43d02aefb0c521ba8e))
+* **internal:** remove mock server code ([a55ea6c](https://github.com/cameo6/gmt-typescript-sdk/commit/a55ea6c5bac58b92fe0b1d60a21c9c9cb046677b))
+* update mock server docs ([8cdb621](https://github.com/cameo6/gmt-typescript-sdk/commit/8cdb621af59d6eae5e67544c19897a442013572d))
+
 ## 0.18.0 (2026-02-16)
 
 Full Changelog: [v0.17.0...v0.18.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.17.0...v0.18.0)
