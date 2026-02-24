@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.19.1 (2026-02-24)
+
+Full Changelog: [v0.19.0...v0.19.1](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.19.0...v0.19.1)
+
+### Bug Fixes
+
+* **docs/contributing:** correct pnpm link command ([ed3487d](https://github.com/cameo6/gmt-typescript-sdk/commit/ed3487d11d88b3a51bf03671991a3e4142583775))
+
+
+### Chores
+
+* **internal:** upgrade pnpm version ([10f82bd](https://github.com/cameo6/gmt-typescript-sdk/commit/10f82bd3ae43ed1b855807b96202071c725e3e73))
+
 ## 0.19.0 (2026-02-20)
 
 Full Changelog: [v0.18.0...v0.19.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.18.0...v0.19.0)
