@@ -60,7 +60,7 @@ $ yarn link gmt-typescript-sdk
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global gmt-typescript-sdk
+$ pnpm link --global gmt-typescript-sdk
 ```
 
 ## Running tests
