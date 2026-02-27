@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.19.2 (2026-02-27)
+
+Full Changelog: [v0.19.1...v0.19.2](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.19.1...v0.19.2)
+
+### Chores
+
+* **internal:** move stringifyQuery implementation to internal function ([c6ea76f](https://github.com/cameo6/gmt-typescript-sdk/commit/c6ea76f94cae98d0c1446b6c130e6e6ddce4232a))
+
 ## 0.19.1 (2026-02-24)
 
 Full Changelog: [v0.19.0...v0.19.1](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.19.0...v0.19.1)
