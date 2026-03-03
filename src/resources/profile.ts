@@ -5,6 +5,9 @@ import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { maybeMultipartFormRequestOptions } from '../internal/uploads';
 
+/**
+ * User profile management.
+ */
 export class Profile extends APIResource {
   /**
    * Returns detailed user profile information including balances, statistics, and

@@ -4,6 +4,9 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Service endpoints for API health checks.
+ */
 export class Service extends APIResource {
   /**
    * Useful for client synchronization and checking clock drift.

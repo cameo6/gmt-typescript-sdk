@@ -772,10 +772,55 @@ export class Gmt {
 
   static toFile = Uploads.toFile;
 
+  /**
+   * Service endpoints for API health checks.
+   */
   service: API.Service = new API.Service(this);
+  /**
+   * Browse and purchase Telegram accounts.
+   *
+   * **Endpoints overview:**
+   * - `GET /accounts/countries` — Public catalog with base prices (no auth required)
+   * - `GET /accounts` — Personalized list with user's discounted prices (auth required)
+   * - `GET /accounts/:country_code` — Detailed pricing breakdown with discount info (auth required)
+   *
+   * **Pricing model.** Base prices are set per country. Authenticated users may receive a personal discount based on their purchase history (discount level). Use `/accounts/:country_code` to see the full price breakdown.
+   */
   accounts: API.Accounts = new API.Accounts(this);
+  /**
+   * User profile management.
+   */
   profile: API.Profile = new API.Profile(this);
+  /**
+   * Purchase history and management.
+   */
   purchases: API.Purchases = new API.Purchases(this);
+  /**
+   * Webhook testing and documentation.
+   *
+   * ## Webhook Payload Types
+   *
+   * When you provide `callback_url` in `POST /purchases/:id/request-code`, your endpoint will receive one of the following payloads:
+   *
+   * - **WebhookSuccessPayload** — sent when verification code is successfully retrieved
+   * - **WebhookFailedPayload** — sent when code retrieval fails after all retry attempts
+   *
+   * When you provide `callback_url` in `POST /purchases/bulk`, your endpoint will receive:
+   *
+   * - **WebhookBulkReadyPayload** — sent when bulk archive is ready
+   *
+   * See the **Models** section below for detailed payload structure.
+   *
+   * ## Requirements
+   *
+   * - Your endpoint **must return HTTP 200** to acknowledge receipt
+   * - Response timeout: **5 seconds**
+   * - Failed deliveries are retried up to **3 times** (immediately, after 10s, after 30s)
+   *
+   * ## Testing
+   *
+   * Use `POST /v1/webhooks/test` to verify your endpoint. Get a temporary test URL at https://webhook.site
+   */
   webhooks: API.Webhooks = new API.Webhooks(this);
 }
 
