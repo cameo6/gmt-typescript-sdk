@@ -7,6 +7,9 @@ import { RequestOptions } from '../../internal/request-options';
 import { maybeMultipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Purchase history and management.
+ */
 export class Bulk extends APIResource {
   /**
    * Creates a new wholesale purchase for the specified country. Immediately debits

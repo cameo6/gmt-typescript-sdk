@@ -9,6 +9,9 @@ import { RequestOptions } from '../../internal/request-options';
 import { maybeMultipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Purchase history and management.
+ */
 export class Purchases extends APIResource {
   bulk: BulkAPI.Bulk = new BulkAPI.Bulk(this._client);
 
