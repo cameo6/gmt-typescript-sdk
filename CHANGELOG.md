@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.19.2 (2026-03-07)
+
+Full Changelog: [v0.19.1...v0.19.2](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.19.1...v0.19.2)
+
+### Bug Fixes
+
+* **client:** preserve URL params already embedded in path ([73e50c3](https://github.com/cameo6/gmt-typescript-sdk/commit/73e50c3d6960b0d1daf6884ec1ca4e147d562795))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([2ecfc6e](https://github.com/cameo6/gmt-typescript-sdk/commit/2ecfc6ee89eb73c4e8446f6823cbbacb523ed847))
+* **internal:** codegen related update ([03b08f4](https://github.com/cameo6/gmt-typescript-sdk/commit/03b08f4344e53b4613ff0717481a59a5fa8f9c6a))
+* **internal:** codegen related update ([c07ff19](https://github.com/cameo6/gmt-typescript-sdk/commit/c07ff194195e2c95604cf9b9e4cf12264beca722))
+* **internal:** move stringifyQuery implementation to internal function ([c6ea76f](https://github.com/cameo6/gmt-typescript-sdk/commit/c6ea76f94cae98d0c1446b6c130e6e6ddce4232a))
+
 ## 0.19.1 (2026-02-24)
 
 Full Changelog: [v0.19.0...v0.19.1](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.19.0...v0.19.1)
