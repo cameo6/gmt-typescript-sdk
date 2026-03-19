@@ -15,4 +15,4 @@ export {
   type ReferralRetrieveResponse,
   type ReferralTransferBalanceResponse,
   type ReferralTransferBalanceParams,
-} from './referral';
+} from './referral/index';
