@@ -5,7 +5,7 @@ import * as DiscountAPI from './discount';
 import { Discount as DiscountAPIDiscount, DiscountRetrieveResponse } from './discount';
 import * as ReferralAPI from './referral';
 import {
-  Referral as ReferralAPIReferral,
+  Referral,
   ReferralRetrieveResponse,
   ReferralTransferBalanceParams,
   ReferralTransferBalanceResponse,
@@ -108,8 +108,6 @@ export interface ProfileRetrieveResponse {
    */
   login: string | null;
 
-  referral: ProfileRetrieveResponse.Referral;
-
   statistics: ProfileRetrieveResponse.Statistics;
 
   /**
@@ -146,65 +144,6 @@ export namespace ProfileRetrieveResponse {
      * Discount percentage.
      */
     percent: number;
-  }
-
-  export interface Referral {
-    /**
-     * Current referral balance available for withdrawal.
-     */
-    balance: Referral.Balance;
-
-    /**
-     * Current referral program level: bronze, silver, gold, platinum.
-     */
-    level: 'bronze' | 'silver' | 'gold' | 'platinum';
-
-    /**
-     * Referral commission percentage.
-     */
-    percent: number;
-
-    /**
-     * Total lifetime earnings from referral commissions.
-     */
-    profit: Referral.Profit;
-
-    /**
-     * Total number of users invited through referral link.
-     */
-    referrals_count: number;
-  }
-
-  export namespace Referral {
-    /**
-     * Current referral balance available for withdrawal.
-     */
-    export interface Balance {
-      /**
-       * Monetary amount as a string with up to 2 decimal places.
-       */
-      amount: string;
-
-      /**
-       * ISO 4217 currency code.
-       */
-      currency_code: string;
-    }
-
-    /**
-     * Total lifetime earnings from referral commissions.
-     */
-    export interface Profit {
-      /**
-       * Monetary amount as a string with up to 2 decimal places.
-       */
-      amount: string;
-
-      /**
-       * ISO 4217 currency code.
-       */
-      currency_code: string;
-    }
   }
 
   export interface Statistics {
@@ -252,7 +191,7 @@ export interface ProfileChangePasswordParams {
 }
 
 Profile.Discount = DiscountAPIDiscount;
-Profile.Referral = ReferralAPIReferral;
+Profile.Referral = Referral;
 
 export declare namespace Profile {
   export {
@@ -267,7 +206,7 @@ export declare namespace Profile {
   export { DiscountAPIDiscount as Discount, type DiscountRetrieveResponse as DiscountRetrieveResponse };
 
   export {
-    ReferralAPIReferral as Referral,
+    Referral as Referral,
     type ReferralRetrieveResponse as ReferralRetrieveResponse,
     type ReferralTransferBalanceResponse as ReferralTransferBalanceResponse,
     type ReferralTransferBalanceParams as ReferralTransferBalanceParams,
