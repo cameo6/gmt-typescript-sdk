@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.20.0 (2026-03-19)
+
+Full Changelog: [v0.19.2...v0.20.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.19.2...v0.20.0)
+
+### Features
+
+* **api:** manual updates ([3760ca4](https://github.com/cameo6/gmt-typescript-sdk/commit/3760ca40c262e01ba8f6bffbfd7633650acbf7b8))
+
+
+### Chores
+
+* **internal:** tweak CI branches ([408412b](https://github.com/cameo6/gmt-typescript-sdk/commit/408412be9d2b05aacab1c262db28e96c9790e246))
+* **internal:** update dependencies to address dependabot vulnerabilities ([d1bbeee](https://github.com/cameo6/gmt-typescript-sdk/commit/d1bbeee45d46e47c4af3a1b24ebdc80fef64f955))
+
 ## 0.19.2 (2026-03-07)
 
 Full Changelog: [v0.19.1...v0.19.2](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.19.1...v0.19.2)
