@@ -18,7 +18,7 @@ export {
   type ProfileUnbindTelegramResponse,
   type ProfileChangeLoginParams,
   type ProfileChangePasswordParams,
-} from './profile';
+} from './profile/profile';
 export {
   Purchases,
   type PurchaseCreateResponse,
