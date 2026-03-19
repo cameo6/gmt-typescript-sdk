@@ -3,13 +3,13 @@
 import { APIResource } from '../../core/resource';
 import * as DiscountAPI from './discount';
 import { Discount as DiscountAPIDiscount, DiscountRetrieveResponse } from './discount';
-import * as ReferralAPI from './referral';
+import * as ReferralAPI from './referral/referral';
 import {
   Referral,
   ReferralRetrieveResponse,
   ReferralTransferBalanceParams,
   ReferralTransferBalanceResponse,
-} from './referral';
+} from './referral/referral';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { maybeMultipartFormRequestOptions } from '../../internal/uploads';

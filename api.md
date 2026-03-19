@@ -54,13 +54,23 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/profile/referral.ts">ReferralRetrieveResponse</a></code>
-- <code><a href="./src/resources/profile/referral.ts">ReferralTransferBalanceResponse</a></code>
+- <code><a href="./src/resources/profile/referral/referral.ts">ReferralRetrieveResponse</a></code>
+- <code><a href="./src/resources/profile/referral/referral.ts">ReferralTransferBalanceResponse</a></code>
 
 Methods:
 
-- <code title="get /v1/profile/referral">client.profile.referral.<a href="./src/resources/profile/referral.ts">retrieve</a>() -> ReferralRetrieveResponse</code>
-- <code title="post /v1/profile/referral/transfer-balance">client.profile.referral.<a href="./src/resources/profile/referral.ts">transferBalance</a>({ ...params }) -> ReferralTransferBalanceResponse</code>
+- <code title="get /v1/profile/referral">client.profile.referral.<a href="./src/resources/profile/referral/referral.ts">retrieve</a>() -> ReferralRetrieveResponse</code>
+- <code title="post /v1/profile/referral/transfer-balance">client.profile.referral.<a href="./src/resources/profile/referral/referral.ts">transferBalance</a>({ ...params }) -> ReferralTransferBalanceResponse</code>
+
+### Transaction
+
+Types:
+
+- <code><a href="./src/resources/profile/referral/transaction.ts">TransactionListResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/profile/referral/transaction">client.profile.referral.transaction.<a href="./src/resources/profile/referral/transaction.ts">list</a>({ ...params }) -> TransactionListResponsesPageNumber</code>
 
 # Purchases
 
