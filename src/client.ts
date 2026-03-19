@@ -29,6 +29,8 @@ import {
   AccountRetrieveResponse,
   Accounts,
 } from './resources/accounts';
+import { Service, ServiceGetServerTimeResponse, ServiceHealthCheckResponse } from './resources/service';
+import { WebhookTestParams, WebhookTestResponse, Webhooks } from './resources/webhooks';
 import {
   Profile,
   ProfileChangeLoginParams,
@@ -37,9 +39,7 @@ import {
   ProfileChangePasswordResponse,
   ProfileRetrieveResponse,
   ProfileUnbindTelegramResponse,
-} from './resources/profile';
-import { Service, ServiceGetServerTimeResponse, ServiceHealthCheckResponse } from './resources/service';
-import { WebhookTestParams, WebhookTestResponse, Webhooks } from './resources/webhooks';
+} from './resources/profile/profile';
 import {
   PurchaseCreateParams,
   PurchaseCreateResponse,
