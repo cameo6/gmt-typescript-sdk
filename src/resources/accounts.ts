@@ -122,6 +122,11 @@ export interface AccountRetrieveResponse {
    * Account tags (e.g., HIGH_QUALITY for premium accounts).
    */
   tags: Array<'HIGH_QUALITY' | 'HIGH_DEMAND'>;
+
+  /**
+   * Number of available accounts for this country.
+   */
+  available_count?: number | null;
 }
 
 export namespace AccountRetrieveResponse {

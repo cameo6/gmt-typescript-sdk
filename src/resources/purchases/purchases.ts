@@ -171,6 +171,11 @@ export interface PurchaseCreateResponse {
   display_name: PurchaseCreateResponse.DisplayName;
 
   /**
+   * Country flag emoji.
+   */
+  emoji: string;
+
+  /**
    * **E.164 International Format.** Phone number with country code prefix (e.g.,
    * `+12025550123` for US, `+79991234567` for Russia).
    *
@@ -317,6 +322,11 @@ export interface PurchaseRetrieveResponse {
   display_name: PurchaseRetrieveResponse.DisplayName;
 
   /**
+   * Country flag emoji.
+   */
+  emoji: string;
+
+  /**
    * **E.164 International Format.** Phone number with country code prefix (e.g.,
    * `+12025550123` for US, `+79991234567` for Russia).
    *
@@ -461,6 +471,11 @@ export interface PurchaseListResponse {
   created_at: string;
 
   display_name: PurchaseListResponse.DisplayName;
+
+  /**
+   * Country flag emoji.
+   */
+  emoji: string;
 
   /**
    * **E.164 International Format.** Phone number with country code prefix (e.g.,
@@ -614,6 +629,11 @@ export namespace PurchaseRefundResponse {
     created_at: string;
 
     display_name: Purchase.DisplayName;
+
+    /**
+     * Country flag emoji.
+     */
+    emoji: string;
 
     /**
      * **E.164 International Format.** Phone number with country code prefix (e.g.,
@@ -829,6 +849,11 @@ export namespace PurchaseRequestVerificationCodeResponse {
     created_at: string;
 
     display_name: Purchase.DisplayName;
+
+    /**
+     * Country flag emoji.
+     */
+    emoji: string;
 
     /**
      * **E.164 International Format.** Phone number with country code prefix (e.g.,
