@@ -79,7 +79,7 @@ export namespace ReferralRetrieveResponse {
     /**
      * Name of the current referral level
      */
-    name: string;
+    name: 'bronze' | 'silver' | 'gold' | 'platinum';
 
     /**
      * Commission percentage
@@ -107,7 +107,7 @@ export namespace ReferralRetrieveResponse {
     /**
      * Name of the referral level
      */
-    name: string;
+    name: 'bronze' | 'silver' | 'gold' | 'platinum';
 
     /**
      * Commission percentage
@@ -132,7 +132,7 @@ export namespace ReferralRetrieveResponse {
     /**
      * Name of the next referral level
      */
-    name: string;
+    name: 'bronze' | 'silver' | 'gold' | 'platinum';
 
     /**
      * Commission percentage for the next level
