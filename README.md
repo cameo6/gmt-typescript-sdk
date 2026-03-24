@@ -127,7 +127,11 @@ You can use the `for await … of` syntax to iterate through items across all pa
 async function fetchAllPurchaseListResponses(params) {
   const allPurchaseListResponses = [];
   // Automatically fetches more pages as needed.
-  for await (const purchaseListResponse of client.purchases.list({ page: 1, page_size: 100 })) {
+  for await (const purchaseListResponse of client.purchases.list({
+    page: 1,
+    page_size: 100,
+    sort: 'date_desc',
+  })) {
     allPurchaseListResponses.push(purchaseListResponse);
   }
   return allPurchaseListResponses;
@@ -137,7 +141,11 @@ async function fetchAllPurchaseListResponses(params) {
 Alternatively, you can request a single page at a time:
 
 ```ts
-let page = await client.purchases.list({ page: 1, page_size: 100 });
+let page = await client.purchases.list({
+  page: 1,
+  page_size: 100,
+  sort: 'date_desc',
+});
 for (const purchaseListResponse of page.items) {
   console.log(purchaseListResponse);
 }
