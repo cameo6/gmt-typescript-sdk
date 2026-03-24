@@ -81,7 +81,11 @@ export class Purchases extends APIResource {
    * ```ts
    * // Automatically fetches more pages as needed.
    * for await (const purchaseListResponse of client.purchases.list(
-   *   { page: 1, page_size: 50 },
+   *   {
+   *     page: 1,
+   *     page_size: 50,
+   *     sort: 'date_desc',
+   *   },
    * )) {
    *   // ...
    * }
@@ -169,11 +173,6 @@ export interface PurchaseCreateResponse {
   created_at: string;
 
   display_name: PurchaseCreateResponse.DisplayName;
-
-  /**
-   * Country flag emoji.
-   */
-  emoji: string;
 
   /**
    * **E.164 International Format.** Phone number with country code prefix (e.g.,
@@ -322,11 +321,6 @@ export interface PurchaseRetrieveResponse {
   display_name: PurchaseRetrieveResponse.DisplayName;
 
   /**
-   * Country flag emoji.
-   */
-  emoji: string;
-
-  /**
    * **E.164 International Format.** Phone number with country code prefix (e.g.,
    * `+12025550123` for US, `+79991234567` for Russia).
    *
@@ -471,11 +465,6 @@ export interface PurchaseListResponse {
   created_at: string;
 
   display_name: PurchaseListResponse.DisplayName;
-
-  /**
-   * Country flag emoji.
-   */
-  emoji: string;
 
   /**
    * **E.164 International Format.** Phone number with country code prefix (e.g.,
@@ -629,11 +618,6 @@ export namespace PurchaseRefundResponse {
     created_at: string;
 
     display_name: Purchase.DisplayName;
-
-    /**
-     * Country flag emoji.
-     */
-    emoji: string;
 
     /**
      * **E.164 International Format.** Phone number with country code prefix (e.g.,
@@ -851,11 +835,6 @@ export namespace PurchaseRequestVerificationCodeResponse {
     display_name: Purchase.DisplayName;
 
     /**
-     * Country flag emoji.
-     */
-    emoji: string;
-
-    /**
      * **E.164 International Format.** Phone number with country code prefix (e.g.,
      * `+12025550123` for US, `+79991234567` for Russia).
      *
@@ -992,6 +971,11 @@ export interface PurchaseCreateParams {
 }
 
 export interface PurchaseListParams extends PageNumberParams {
+  /**
+   * Sort purchases by creation date
+   */
+  sort: 'date_asc' | 'date_desc';
+
   /**
    * **Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code
    * request) or `ERROR` (provider failure). Any status can transition to `REFUND`

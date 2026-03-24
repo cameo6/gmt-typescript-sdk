@@ -39,7 +39,11 @@ describe('resource purchases', () => {
 
   // Mock server tests are disabled
   test.skip('list: only required params', async () => {
-    const responsePromise = client.purchases.list({ page: 1, page_size: 50 });
+    const responsePromise = client.purchases.list({
+      page: 1,
+      page_size: 50,
+      sort: 'date_desc',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -54,6 +58,7 @@ describe('resource purchases', () => {
     const response = await client.purchases.list({
       page: 1,
       page_size: 50,
+      sort: 'date_desc',
       status: 'SUCCESS',
     });
   });
