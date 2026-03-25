@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.24.1 (2026-03-25)
+
+Full Changelog: [v0.24.0...v0.24.1](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.24.0...v0.24.1)
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([4ed8ae7](https://github.com/cameo6/gmt-typescript-sdk/commit/4ed8ae7ecec1750caf51e02dd4c59202cbc1e148))
+
 ## 0.24.0 (2026-03-24)
 
 Full Changelog: [v0.23.0...v0.24.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.23.0...v0.24.0)
