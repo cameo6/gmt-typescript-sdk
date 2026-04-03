@@ -175,6 +175,11 @@ export interface PurchaseCreateResponse {
   display_name: PurchaseCreateResponse.DisplayName;
 
   /**
+   * Country flag emoji.
+   */
+  emoji: string;
+
+  /**
    * **E.164 International Format.** Phone number with country code prefix (e.g.,
    * `+12025550123` for US, `+79991234567` for Russia).
    *
@@ -321,6 +326,11 @@ export interface PurchaseRetrieveResponse {
   display_name: PurchaseRetrieveResponse.DisplayName;
 
   /**
+   * Country flag emoji.
+   */
+  emoji: string;
+
+  /**
    * **E.164 International Format.** Phone number with country code prefix (e.g.,
    * `+12025550123` for US, `+79991234567` for Russia).
    *
@@ -465,6 +475,11 @@ export interface PurchaseListResponse {
   created_at: string;
 
   display_name: PurchaseListResponse.DisplayName;
+
+  /**
+   * Country flag emoji.
+   */
+  emoji: string;
 
   /**
    * **E.164 International Format.** Phone number with country code prefix (e.g.,
@@ -618,6 +633,11 @@ export namespace PurchaseRefundResponse {
     created_at: string;
 
     display_name: Purchase.DisplayName;
+
+    /**
+     * Country flag emoji.
+     */
+    emoji: string;
 
     /**
      * **E.164 International Format.** Phone number with country code prefix (e.g.,
@@ -835,6 +855,11 @@ export namespace PurchaseRequestVerificationCodeResponse {
     display_name: Purchase.DisplayName;
 
     /**
+     * Country flag emoji.
+     */
+    emoji: string;
+
+    /**
      * **E.164 International Format.** Phone number with country code prefix (e.g.,
      * `+12025550123` for US, `+79991234567` for Russia).
      *
@@ -975,6 +1000,12 @@ export interface PurchaseListParams extends PageNumberParams {
    * Sort purchases by creation date
    */
   sort: 'date_asc' | 'date_desc';
+
+  /**
+   * Filter purchases by phone number fragment (partial match). Example: '123'
+   * matches '+71234567890'.
+   */
+  phone_number?: string;
 
   /**
    * **Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code
