@@ -59,6 +59,7 @@ describe('resource purchases', () => {
       page: 1,
       page_size: 50,
       sort: 'date_desc',
+      phone_number: '123',
       status: 'SUCCESS',
     });
   });
