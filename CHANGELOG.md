@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.26.0 (2026-04-08)
+
+Full Changelog: [v0.25.0...v0.26.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.25.0...v0.26.0)
+
+### Features
+
+* **api:** add telegram ([152e148](https://github.com/cameo6/gmt-typescript-sdk/commit/152e1487e9559e6fa91b646171794745d727fb27))
+
 ## 0.25.0 (2026-04-03)
 
 Full Changelog: [v0.24.1...v0.25.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.24.1...v0.25.0)
