@@ -18,9 +18,6 @@ import {
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 
-/**
- * Stars and premium subscription for Telegram.
- */
 export class Telegram extends APIResource {
   purchases: PurchasesAPI.Purchases = new PurchasesAPI.Purchases(this._client);
 
