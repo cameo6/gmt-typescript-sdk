@@ -6,9 +6,6 @@ import { PageNumber, type PageNumberParams, PagePromise } from '../../core/pagin
 import { RequestOptions } from '../../internal/request-options';
 import { maybeMultipartFormRequestOptions } from '../../internal/uploads';
 
-/**
- * Stars and premium subscription for Telegram.
- */
 export class Purchases extends APIResource {
   /**
    * Creates a new purchase for Telegram premium subscription. Deducts balance
