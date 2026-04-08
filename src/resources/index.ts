@@ -31,6 +31,12 @@ export {
   type PurchaseRequestVerificationCodeParams,
   type PurchaseListResponsesPageNumber,
 } from './purchases/purchases';
+export {
+  PurchasesByHash,
+  type PurchasesByHashRetrieveResponse,
+  type PurchasesByHashRequestVerificationCodeResponse,
+  type PurchasesByHashRequestVerificationCodeParams,
+} from './purchases-by-hash';
 export { Service, type ServiceGetServerTimeResponse, type ServiceHealthCheckResponse } from './service';
 export {
   Telegram,

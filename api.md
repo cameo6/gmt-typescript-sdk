@@ -103,6 +103,18 @@ Methods:
 - <code title="get /v1/purchases/bulk/{purchase_id}">client.purchases.bulk.<a href="./src/resources/purchases/bulk.ts">retrieve</a>(purchaseID) -> BulkRetrieveResponse</code>
 - <code title="get /v1/purchases/bulk/{purchase_id}/download">client.purchases.bulk.<a href="./src/resources/purchases/bulk.ts">download</a>(purchaseID) -> Response</code>
 
+# PurchasesByHash
+
+Types:
+
+- <code><a href="./src/resources/purchases-by-hash.ts">PurchasesByHashRetrieveResponse</a></code>
+- <code><a href="./src/resources/purchases-by-hash.ts">PurchasesByHashRequestVerificationCodeResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/purchases-by-hash/{hash}">client.purchasesByHash.<a href="./src/resources/purchases-by-hash.ts">retrieve</a>(hash) -> PurchasesByHashRetrieveResponse</code>
+- <code title="post /v1/purchases-by-hash/{hash}/request-code">client.purchasesByHash.<a href="./src/resources/purchases-by-hash.ts">requestVerificationCode</a>(hash, { ...params }) -> PurchasesByHashRequestVerificationCodeResponse</code>
+
 # Telegram
 
 Types:
