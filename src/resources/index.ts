@@ -32,4 +32,11 @@ export {
   type PurchaseListResponsesPageNumber,
 } from './purchases/purchases';
 export { Service, type ServiceGetServerTimeResponse, type ServiceHealthCheckResponse } from './service';
+export {
+  Telegram,
+  type TelegramGetPremiumPriceResponse,
+  type TelegramGetStarsPriceResponse,
+  type TelegramGetPremiumPriceParams,
+  type TelegramGetStarsPriceParams,
+} from './telegram/telegram';
 export { Webhooks, type WebhookTestResponse, type WebhookTestParams } from './webhooks';

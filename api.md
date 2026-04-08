@@ -103,6 +103,34 @@ Methods:
 - <code title="get /v1/purchases/bulk/{purchase_id}">client.purchases.bulk.<a href="./src/resources/purchases/bulk.ts">retrieve</a>(purchaseID) -> BulkRetrieveResponse</code>
 - <code title="get /v1/purchases/bulk/{purchase_id}/download">client.purchases.bulk.<a href="./src/resources/purchases/bulk.ts">download</a>(purchaseID) -> Response</code>
 
+# Telegram
+
+Types:
+
+- <code><a href="./src/resources/telegram/telegram.ts">TelegramGetPremiumPriceResponse</a></code>
+- <code><a href="./src/resources/telegram/telegram.ts">TelegramGetStarsPriceResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/telegram/premium">client.telegram.<a href="./src/resources/telegram/telegram.ts">getPremiumPrice</a>({ ...params }) -> TelegramGetPremiumPriceResponse</code>
+- <code title="get /v1/telegram/stars">client.telegram.<a href="./src/resources/telegram/telegram.ts">getStarsPrice</a>({ ...params }) -> TelegramGetStarsPriceResponse</code>
+
+## Purchases
+
+Types:
+
+- <code><a href="./src/resources/telegram/purchases.ts">PurchaseCreatePremiumResponse</a></code>
+- <code><a href="./src/resources/telegram/purchases.ts">PurchaseCreateStarsResponse</a></code>
+- <code><a href="./src/resources/telegram/purchases.ts">PurchaseListPremiumResponse</a></code>
+- <code><a href="./src/resources/telegram/purchases.ts">PurchaseListStarsResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/telegram/purchases/premium">client.telegram.purchases.<a href="./src/resources/telegram/purchases.ts">createPremium</a>({ ...params }) -> PurchaseCreatePremiumResponse</code>
+- <code title="post /v1/telegram/purchases/stars">client.telegram.purchases.<a href="./src/resources/telegram/purchases.ts">createStars</a>({ ...params }) -> PurchaseCreateStarsResponse</code>
+- <code title="get /v1/telegram/purchases/premium">client.telegram.purchases.<a href="./src/resources/telegram/purchases.ts">listPremium</a>({ ...params }) -> PurchaseListPremiumResponsesPageNumber</code>
+- <code title="get /v1/telegram/purchases/stars">client.telegram.purchases.<a href="./src/resources/telegram/purchases.ts">listStars</a>({ ...params }) -> PurchaseListStarsResponsesPageNumber</code>
+
 # Webhooks
 
 Types:
