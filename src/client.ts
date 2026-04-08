@@ -29,6 +29,12 @@ import {
   AccountRetrieveResponse,
   Accounts,
 } from './resources/accounts';
+import {
+  PurchasesByHash,
+  PurchasesByHashRequestVerificationCodeParams,
+  PurchasesByHashRequestVerificationCodeResponse,
+  PurchasesByHashRetrieveResponse,
+} from './resources/purchases-by-hash';
 import { Service, ServiceGetServerTimeResponse, ServiceHealthCheckResponse } from './resources/service';
 import { WebhookTestParams, WebhookTestResponse, Webhooks } from './resources/webhooks';
 import {
@@ -803,6 +809,10 @@ export class Gmt {
    * Purchase history and management.
    */
   purchases: API.Purchases = new API.Purchases(this);
+  /**
+   * Purchase history and management.
+   */
+  purchasesByHash: API.PurchasesByHash = new API.PurchasesByHash(this);
   telegram: API.Telegram = new API.Telegram(this);
   /**
    * Webhook testing and documentation.
@@ -837,6 +847,7 @@ Gmt.Service = Service;
 Gmt.Accounts = Accounts;
 Gmt.Profile = Profile;
 Gmt.Purchases = Purchases;
+Gmt.PurchasesByHash = PurchasesByHash;
 Gmt.Telegram = Telegram;
 Gmt.Webhooks = Webhooks;
 
@@ -884,6 +895,13 @@ export declare namespace Gmt {
     type PurchaseCreateParams as PurchaseCreateParams,
     type PurchaseListParams as PurchaseListParams,
     type PurchaseRequestVerificationCodeParams as PurchaseRequestVerificationCodeParams,
+  };
+
+  export {
+    PurchasesByHash as PurchasesByHash,
+    type PurchasesByHashRetrieveResponse as PurchasesByHashRetrieveResponse,
+    type PurchasesByHashRequestVerificationCodeResponse as PurchasesByHashRequestVerificationCodeResponse,
+    type PurchasesByHashRequestVerificationCodeParams as PurchasesByHashRequestVerificationCodeParams,
   };
 
   export {
