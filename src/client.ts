@@ -52,6 +52,13 @@ import {
   PurchaseRetrieveResponse,
   Purchases,
 } from './resources/purchases/purchases';
+import {
+  Telegram,
+  TelegramGetPremiumPriceParams,
+  TelegramGetPremiumPriceResponse,
+  TelegramGetStarsPriceParams,
+  TelegramGetStarsPriceResponse,
+} from './resources/telegram/telegram';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -797,6 +804,10 @@ export class Gmt {
    */
   purchases: API.Purchases = new API.Purchases(this);
   /**
+   * Stars and premium subscription for Telegram.
+   */
+  telegram: API.Telegram = new API.Telegram(this);
+  /**
    * Webhook testing and documentation.
    *
    * ## Webhook Payload Types
@@ -829,6 +840,7 @@ Gmt.Service = Service;
 Gmt.Accounts = Accounts;
 Gmt.Profile = Profile;
 Gmt.Purchases = Purchases;
+Gmt.Telegram = Telegram;
 Gmt.Webhooks = Webhooks;
 
 export declare namespace Gmt {
@@ -875,6 +887,14 @@ export declare namespace Gmt {
     type PurchaseCreateParams as PurchaseCreateParams,
     type PurchaseListParams as PurchaseListParams,
     type PurchaseRequestVerificationCodeParams as PurchaseRequestVerificationCodeParams,
+  };
+
+  export {
+    Telegram as Telegram,
+    type TelegramGetPremiumPriceResponse as TelegramGetPremiumPriceResponse,
+    type TelegramGetStarsPriceResponse as TelegramGetStarsPriceResponse,
+    type TelegramGetPremiumPriceParams as TelegramGetPremiumPriceParams,
+    type TelegramGetStarsPriceParams as TelegramGetStarsPriceParams,
   };
 
   export {
