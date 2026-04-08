@@ -803,9 +803,6 @@ export class Gmt {
    * Purchase history and management.
    */
   purchases: API.Purchases = new API.Purchases(this);
-  /**
-   * Stars and premium subscription for Telegram.
-   */
   telegram: API.Telegram = new API.Telegram(this);
   /**
    * Webhook testing and documentation.
