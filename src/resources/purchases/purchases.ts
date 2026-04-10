@@ -289,7 +289,7 @@ export namespace PurchaseCreateResponse {
     /**
      * Account password.
      */
-    password: string;
+    password: string | null;
 
     /**
      * **Code Retrieval Timestamp.** Marks when verification code was successfully
@@ -440,7 +440,7 @@ export namespace PurchaseRetrieveResponse {
     /**
      * Account password.
      */
-    password: string;
+    password: string | null;
 
     /**
      * **Code Retrieval Timestamp.** Marks when verification code was successfully
@@ -591,7 +591,7 @@ export namespace PurchaseListResponse {
     /**
      * Account password.
      */
-    password: string;
+    password: string | null;
 
     /**
      * **Code Retrieval Timestamp.** Marks when verification code was successfully
@@ -749,7 +749,7 @@ export namespace PurchaseRefundResponse {
       /**
        * Account password.
        */
-      password: string;
+      password: string | null;
 
       /**
        * **Code Retrieval Timestamp.** Marks when verification code was successfully
@@ -969,7 +969,7 @@ export namespace PurchaseRequestVerificationCodeResponse {
       /**
        * Account password.
        */
-      password: string;
+      password: string | null;
 
       /**
        * **Code Retrieval Timestamp.** Marks when verification code was successfully

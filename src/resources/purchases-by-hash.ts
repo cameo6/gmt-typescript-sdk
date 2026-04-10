@@ -190,7 +190,7 @@ export namespace PurchasesByHashRetrieveResponse {
     /**
      * Account password.
      */
-    password: string;
+    password: string | null;
 
     /**
      * **Code Retrieval Timestamp.** Marks when verification code was successfully
@@ -375,7 +375,7 @@ export namespace PurchasesByHashRequestVerificationCodeResponse {
       /**
        * Account password.
        */
-      password: string;
+      password: string | null;
 
       /**
        * **Code Retrieval Timestamp.** Marks when verification code was successfully
