@@ -114,7 +114,7 @@ export interface BulkCreateResponse {
   /**
    * Current status of bulk purchase
    */
-  status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND';
+  status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND' | 'EXPIRED';
 
   /**
    * Total price for all accounts
@@ -155,7 +155,7 @@ export namespace BulkCreateResponse {
     /**
      * Status of bulk purchase
      */
-    status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND';
+    status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND' | 'EXPIRED';
   }
 
   /**
@@ -223,7 +223,7 @@ export interface BulkRetrieveResponse {
   /**
    * Current status of bulk purchase
    */
-  status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND';
+  status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND' | 'EXPIRED';
 
   /**
    * Total price for all accounts
@@ -264,7 +264,7 @@ export namespace BulkRetrieveResponse {
     /**
      * Status of bulk purchase
      */
-    status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND';
+    status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND' | 'EXPIRED';
   }
 
   /**

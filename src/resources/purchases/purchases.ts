@@ -221,7 +221,7 @@ export interface PurchaseCreateResponse {
    * - `ERROR` - provider failed.
    * - `REFUND` - money returned.
    */
-  status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND';
+  status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND' | 'EXPIRED';
 
   /**
    * **Verification Credentials.** Login credentials for the purchased Telegram
@@ -372,7 +372,7 @@ export interface PurchaseRetrieveResponse {
    * - `ERROR` - provider failed.
    * - `REFUND` - money returned.
    */
-  status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND';
+  status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND' | 'EXPIRED';
 
   /**
    * **Verification Credentials.** Login credentials for the purchased Telegram
@@ -523,7 +523,7 @@ export interface PurchaseListResponse {
    * - `ERROR` - provider failed.
    * - `REFUND` - money returned.
    */
-  status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND';
+  status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND' | 'EXPIRED';
 
   /**
    * **Verification Credentials.** Login credentials for the purchased Telegram
@@ -681,7 +681,7 @@ export namespace PurchaseRefundResponse {
      * - `ERROR` - provider failed.
      * - `REFUND` - money returned.
      */
-    status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND';
+    status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND' | 'EXPIRED';
 
     /**
      * **Verification Credentials.** Login credentials for the purchased Telegram
@@ -901,7 +901,7 @@ export namespace PurchaseRequestVerificationCodeResponse {
      * - `ERROR` - provider failed.
      * - `REFUND` - money returned.
      */
-    status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND';
+    status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND' | 'EXPIRED';
 
     /**
      * **Verification Credentials.** Login credentials for the purchased Telegram
@@ -1021,7 +1021,7 @@ export interface PurchaseListParams extends PageNumberParams {
    * - `ERROR` - provider failed.
    * - `REFUND` - money returned.
    */
-  status?: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND';
+  status?: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND' | 'EXPIRED';
 }
 
 export interface PurchaseRequestVerificationCodeParams {
