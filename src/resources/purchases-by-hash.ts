@@ -122,7 +122,7 @@ export interface PurchasesByHashRetrieveResponse {
    * - `ERROR` - provider failed.
    * - `REFUND` - money returned.
    */
-  status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND';
+  status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND' | 'EXPIRED';
 
   /**
    * **Verification Credentials.** Login credentials for the purchased Telegram
@@ -307,7 +307,7 @@ export namespace PurchasesByHashRequestVerificationCodeResponse {
      * - `ERROR` - provider failed.
      * - `REFUND` - money returned.
      */
-    status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND';
+    status: 'PENDING' | 'SUCCESS' | 'ERROR' | 'REFUND' | 'EXPIRED';
 
     /**
      * **Verification Credentials.** Login credentials for the purchased Telegram
