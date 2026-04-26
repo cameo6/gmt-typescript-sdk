@@ -2,12 +2,7 @@
 
 import { APIResource } from '../../../core/resource';
 import * as TransactionAPI from './transaction';
-import {
-  Transaction,
-  TransactionListParams,
-  TransactionListResponse,
-  TransactionListResponsesPageNumber,
-} from './transaction';
+import { Transaction, TransactionListParams, TransactionListResponse, TransactionListResponsesPageNumber } from './transaction';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 import { maybeMultipartFormRequestOptions } from '../../../internal/uploads';
@@ -42,14 +37,8 @@ export class Referral extends APIResource {
    *   });
    * ```
    */
-  transferBalance(
-    body: ReferralTransferBalanceParams,
-    options?: RequestOptions,
-  ): APIPromise<ReferralTransferBalanceResponse> {
-    return this._client.post(
-      '/v1/profile/referral/transfer-balance',
-      maybeMultipartFormRequestOptions({ body, ...options }, this._client),
-    );
+  transferBalance(body: ReferralTransferBalanceParams, options?: RequestOptions): APIPromise<ReferralTransferBalanceResponse> {
+    return this._client.post('/v1/profile/referral/transfer-balance', maybeMultipartFormRequestOptions({ body, ...options }, this._client));
   }
 }
 
@@ -298,13 +287,13 @@ export declare namespace Referral {
   export {
     type ReferralRetrieveResponse as ReferralRetrieveResponse,
     type ReferralTransferBalanceResponse as ReferralTransferBalanceResponse,
-    type ReferralTransferBalanceParams as ReferralTransferBalanceParams,
+    type ReferralTransferBalanceParams as ReferralTransferBalanceParams
   };
 
   export {
     Transaction as Transaction,
     type TransactionListResponse as TransactionListResponse,
     type TransactionListResponsesPageNumber as TransactionListResponsesPageNumber,
-    type TransactionListParams as TransactionListParams,
+    type TransactionListParams as TransactionListParams
   };
 }

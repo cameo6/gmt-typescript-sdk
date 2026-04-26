@@ -2,10 +2,7 @@
 
 import Gmt from 'gmt-typescript-sdk';
 
-const client = new Gmt({
-  apiKey: 'My API Key',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new Gmt({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
 
 describe('resource bulk', () => {
   // Mock server tests are disabled
@@ -23,10 +20,10 @@ describe('resource bulk', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.purchases.bulk.create({
-      country_code: 'US',
-      quantity: 10,
-      callback_url: 'https://example.com/webhooks/code-received',
-    });
+    country_code: 'US',
+    quantity: 10,
+    callback_url: 'https://example.com/webhooks/code-received',
+  });
   });
 
   // Mock server tests are disabled
