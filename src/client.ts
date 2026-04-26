@@ -19,63 +19,18 @@ import { AbstractPage, type PageNumberParams, PageNumberResponse } from './core/
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import {
-  AccountListCountriesParams,
-  AccountListCountriesResponse,
-  AccountListCountriesResponsesPageNumber,
-  AccountListParams,
-  AccountListResponse,
-  AccountListResponsesPageNumber,
-  AccountRetrieveResponse,
-  Accounts,
-} from './resources/accounts';
-import {
-  PurchasesByHash,
-  PurchasesByHashRequestVerificationCodeParams,
-  PurchasesByHashRequestVerificationCodeResponse,
-  PurchasesByHashRetrieveResponse,
-} from './resources/purchases-by-hash';
+import { AccountListCountriesParams, AccountListCountriesResponse, AccountListCountriesResponsesPageNumber, AccountListParams, AccountListResponse, AccountListResponsesPageNumber, AccountRetrieveResponse, Accounts } from './resources/accounts';
+import { PurchasesByHash, PurchasesByHashRequestVerificationCodeParams, PurchasesByHashRequestVerificationCodeResponse, PurchasesByHashRetrieveResponse } from './resources/purchases-by-hash';
 import { Service, ServiceGetServerTimeResponse, ServiceHealthCheckResponse } from './resources/service';
 import { WebhookTestParams, WebhookTestResponse, Webhooks } from './resources/webhooks';
-import {
-  Profile,
-  ProfileChangeLoginParams,
-  ProfileChangeLoginResponse,
-  ProfileChangePasswordParams,
-  ProfileChangePasswordResponse,
-  ProfileRetrieveResponse,
-  ProfileUnbindTelegramResponse,
-} from './resources/profile/profile';
-import {
-  PurchaseCreateParams,
-  PurchaseCreateResponse,
-  PurchaseListParams,
-  PurchaseListResponse,
-  PurchaseListResponsesPageNumber,
-  PurchaseRefundResponse,
-  PurchaseRequestVerificationCodeParams,
-  PurchaseRequestVerificationCodeResponse,
-  PurchaseRetrieveResponse,
-  Purchases,
-} from './resources/purchases/purchases';
-import {
-  Telegram,
-  TelegramGetPremiumPriceParams,
-  TelegramGetPremiumPriceResponse,
-  TelegramGetStarsPriceParams,
-  TelegramGetStarsPriceResponse,
-} from './resources/telegram/telegram';
+import { Profile, ProfileChangeLoginParams, ProfileChangeLoginResponse, ProfileChangePasswordParams, ProfileChangePasswordResponse, ProfileRetrieveResponse, ProfileUnbindTelegramResponse } from './resources/profile/profile';
+import { PurchaseCreateParams, PurchaseCreateResponse, PurchaseListParams, PurchaseListResponse, PurchaseListResponsesPageNumber, PurchaseRefundResponse, PurchaseRequestVerificationCodeParams, PurchaseRequestVerificationCodeResponse, PurchaseRetrieveResponse, Purchases } from './resources/purchases/purchases';
+import { Telegram, TelegramGetPremiumPriceParams, TelegramGetPremiumPriceResponse, TelegramGetStarsPriceParams, TelegramGetStarsPriceResponse } from './resources/telegram/telegram';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
 import { readEnv } from './internal/utils/env';
-import {
-  type LogLevel,
-  type Logger,
-  formatRequestDetails,
-  loggerFor,
-  parseLogLevel,
-} from './internal/utils/log';
+import { type LogLevel, type Logger, formatRequestDetails, loggerFor, parseLogLevel } from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
@@ -154,7 +109,7 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Gmt API.
+ * API Client for interfacing with the Gmt API. 
  */
 export class Gmt {
   apiKey: string | null;
@@ -188,6 +143,7 @@ export class Gmt {
     apiKey = readEnv('GMT_API_KEY') ?? null,
     ...opts
   }: ClientOptions = {}) {
+
     const options: ClientOptions = {
       apiKey,
       ...opts,
@@ -200,10 +156,7 @@ export class Gmt {
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
-    this.logLevel =
-      parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv('GMT_LOG'), "process.env['GMT_LOG']", this) ??
-      defaultLogLevel;
+    this.logLevel = parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ?? parseLogLevel(readEnv('GMT_LOG'), 'process.env[\'GMT_LOG\']', this) ?? defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
     this.fetch = options.fetch ?? Shims.getDefaultFetch();
@@ -228,7 +181,7 @@ export class Gmt {
       fetch: this.fetch,
       fetchOptions: this.fetchOptions,
       apiKey: this.apiKey,
-      ...options,
+      ...options
     });
     return client;
   }
@@ -241,7 +194,7 @@ export class Gmt {
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
-    return this._options.defaultQuery;
+    return this._options.defaultQuery
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
@@ -279,11 +232,7 @@ export class Gmt {
     return Errors.APIError.generate(status, error, message, headers);
   }
 
-  buildURL(
-    path: string,
-    query: Record<string, unknown> | null | undefined,
-    defaultBaseURL?: string | undefined,
-  ): string {
+  buildURL(path: string, query: Record<string, unknown> | null | undefined, defaultBaseURL?: string | undefined): string {
     const baseURL = (!this.#baseURLOverridden() && defaultBaseURL) || this.baseURL;
     const url =
       isAbsoluteURL(path) ?
@@ -371,9 +320,7 @@ export class Gmt {
 
     await this.prepareOptions(options);
 
-    const { req, url, timeout } = await this.buildRequest(options, {
-      retryCount: maxRetries - retriesRemaining,
-    });
+    const { req, url, timeout } = await this.buildRequest(options, { retryCount: maxRetries - retriesRemaining });
 
     await this.prepareRequest(req, { url, options });
 
@@ -382,16 +329,7 @@ export class Gmt {
     const retryLogStr = retryOfRequestLogID === undefined ? '' : `, retryOf: ${retryOfRequestLogID}`;
     const startTime = Date.now();
 
-    loggerFor(this).debug(
-      `[${requestLogID}] sending request`,
-      formatRequestDetails({
-        retryOfRequestLogID,
-        method: options.method,
-        url,
-        options,
-        headers: req.headers,
-      }),
-    );
+    loggerFor(this).debug(`[${requestLogID}] sending request`, formatRequestDetails({ retryOfRequestLogID, method: options.method, url, options, headers: req.headers }));
 
     if (options.signal?.aborted) {
       throw new Errors.APIUserAbortError();
@@ -410,45 +348,21 @@ export class Gmt {
       // deno throws "TypeError: error sending request for url (https://example/): client error (Connect): tcp connect error: Operation timed out (os error 60): Operation timed out (os error 60)"
       // undici throws "TypeError: fetch failed" with cause "ConnectTimeoutError: Connect Timeout Error (attempted address: example:443, timeout: 1ms)"
       // others do not provide enough information to distinguish timeouts from other connection errors
-      const isTimeout =
-        isAbortError(response) ||
-        /timed? ?out/i.test(String(response) + ('cause' in response ? String(response.cause) : ''));
+      const isTimeout = isAbortError(response) || /timed? ?out/i.test(String(response) + ('cause' in response ? String(response.cause) : ''))
       if (retriesRemaining) {
-        loggerFor(this).info(
-          `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - ${retryMessage}`,
-        );
-        loggerFor(this).debug(
-          `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (${retryMessage})`,
-          formatRequestDetails({
-            retryOfRequestLogID,
-            url,
-            durationMs: headersTime - startTime,
-            message: response.message,
-          }),
-        );
+        loggerFor(this).info(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - ${retryMessage}`)
+        loggerFor(this).debug(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url, durationMs: headersTime - startTime, message: response.message }));
         return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID);
       }
-      loggerFor(this).info(
-        `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - error; no more retries left`,
-      );
-      loggerFor(this).debug(
-        `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (error; no more retries left)`,
-        formatRequestDetails({
-          retryOfRequestLogID,
-          url,
-          durationMs: headersTime - startTime,
-          message: response.message,
-        }),
-      );
+      loggerFor(this).info(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - error; no more retries left`)
+      loggerFor(this).debug(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (error; no more retries left)`, formatRequestDetails({ retryOfRequestLogID, url, durationMs: headersTime - startTime, message: response.message }));
       if (isTimeout) {
         throw new Errors.APIConnectionTimeoutError();
       }
       throw new Errors.APIConnectionError({ cause: response });
     }
 
-    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${url} ${
-      response.ok ? 'succeeded' : 'failed'
-    } with status ${response.status} in ${headersTime - startTime}ms`;
+    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${url} ${response.ok ? 'succeeded' : 'failed'} with status ${response.status} in ${headersTime - startTime}ms`;
 
     if (!response.ok) {
       const shouldRetry = await this.shouldRetry(response);
@@ -457,60 +371,27 @@ export class Gmt {
 
         // We don't need the body of this response.
         await Shims.CancelReadableStream(response.body);
-        loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
-        loggerFor(this).debug(
-          `[${requestLogID}] response error (${retryMessage})`,
-          formatRequestDetails({
-            retryOfRequestLogID,
-            url: response.url,
-            status: response.status,
-            headers: response.headers,
-            durationMs: headersTime - startTime,
-          }),
-        );
-        return this.retryRequest(
-          options,
-          retriesRemaining,
-          retryOfRequestLogID ?? requestLogID,
-          response.headers,
-        );
+        loggerFor(this).info(`${responseInfo} - ${retryMessage}`)
+        loggerFor(this).debug(`[${requestLogID}] response error (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, durationMs: headersTime - startTime }));
+        return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID, response.headers);
       }
 
       const retryMessage = shouldRetry ? `error; no more retries left` : `error; not retryable`;
 
-      loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
+      loggerFor(this).info(`${responseInfo} - ${retryMessage}`)
 
       const errText = await response.text().catch((err: any) => castToError(err).message);
       const errJSON = safeJSON(errText) as any;
       const errMessage = errJSON ? undefined : errText;
 
-      loggerFor(this).debug(
-        `[${requestLogID}] response error (${retryMessage})`,
-        formatRequestDetails({
-          retryOfRequestLogID,
-          url: response.url,
-          status: response.status,
-          headers: response.headers,
-          message: errMessage,
-          durationMs: Date.now() - startTime,
-        }),
-      );
+      loggerFor(this).debug(`[${requestLogID}] response error (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, message: errMessage, durationMs: Date.now() - startTime }));
 
       const err = this.makeStatusError(response.status, errJSON, errMessage, response.headers);
       throw err;
     }
 
-    loggerFor(this).info(responseInfo);
-    loggerFor(this).debug(
-      `[${requestLogID}] response start`,
-      formatRequestDetails({
-        retryOfRequestLogID,
-        url: response.url,
-        status: response.status,
-        headers: response.headers,
-        durationMs: headersTime - startTime,
-      }),
-    );
+    loggerFor(this).info(responseInfo)
+    loggerFor(this).debug(`[${requestLogID}] response start`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, durationMs: headersTime - startTime }));
 
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
@@ -528,10 +409,7 @@ export class Gmt {
     );
   }
 
-  requestAPIList<
-    Item = unknown,
-    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
-  >(
+  requestAPIList<Item = unknown, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
     Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
     options: PromiseOrValue<FinalRequestOptions>,
   ): Pagination.PagePromise<PageClass, Item> {
@@ -551,9 +429,7 @@ export class Gmt {
 
     const timeout = setTimeout(abort, ms);
 
-    const isReadableBody =
-      ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) ||
-      (typeof options.body === 'object' && options.body !== null && Symbol.asyncIterator in options.body);
+    const isReadableBody = ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) || (typeof options.body === "object" && options.body !== null && Symbol.asyncIterator in options.body);
 
     const fetchOptions: RequestInit = {
       signal: controller.signal as any,
@@ -568,6 +444,7 @@ export class Gmt {
     }
 
     try {
+
       // use undefined this binding; fetch errors if bound to something else in browser/cloudflare
       return await this.fetch.call(undefined, url, fetchOptions);
     } finally {
@@ -668,12 +545,11 @@ export class Gmt {
     const req: FinalizedRequestInit = {
       method,
       headers: reqHeaders,
-      ...(options.signal && { signal: options.signal }),
-      ...((globalThis as any).ReadableStream &&
-        body instanceof (globalThis as any).ReadableStream && { duplex: 'half' }),
+      ...(options.signal && { signal: options.signal}),
+      ...((globalThis as any).ReadableStream && body instanceof (globalThis as any).ReadableStream && { duplex: "half" }),
       ...(body && { body }),
-      ...((this.fetchOptions as any) ?? {}),
-      ...((options.fetchOptions as any) ?? {}),
+      ...(this.fetchOptions as any ?? {}),
+      ...(options.fetchOptions as any ?? {}),
     };
 
     return { req, url, timeout: options.timeout };
@@ -698,17 +574,15 @@ export class Gmt {
 
     const headers = buildHeaders([
       idempotencyHeaders,
-      {
-        Accept: 'application/json',
-        'User-Agent': this.getUserAgent(),
-        'X-Stainless-Retry-Count': String(retryCount),
-        ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
-        ...getPlatformHeaders(),
-      },
+      {Accept: 'application/json',
+      'User-Agent': this.getUserAgent(),
+      'X-Stainless-Retry-Count': String(retryCount),
+      ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
+      ...getPlatformHeaders()},
       await this.authHeaders(options),
       this._options.defaultHeaders,
       bodyHeaders,
-      options.headers,
+      options.headers
     ]);
 
     this.validateHeaders(headers);
@@ -735,9 +609,11 @@ export class Gmt {
       ArrayBuffer.isView(body) ||
       body instanceof ArrayBuffer ||
       body instanceof DataView ||
-      (typeof body === 'string' &&
+      (
+        typeof body === 'string' &&
         // Preserve legacy string encoding behavior for now
-        headers.values.has('content-type')) ||
+        headers.values.has('content-type')
+      ) ||
       // `Blob` is superset of `File`
       ((globalThis as any).Blob && body instanceof (globalThis as any).Blob) ||
       // `FormData` -> `multipart/form-data`
@@ -768,7 +644,7 @@ export class Gmt {
   }
 
   static Gmt = this;
-  static DEFAULT_TIMEOUT = 60000; // 1 minute
+  static DEFAULT_TIMEOUT = 60000 // 1 minute
 
   static GmtError = Errors.GmtError;
   static APIError = Errors.APIError;
@@ -852,69 +728,72 @@ Gmt.Telegram = Telegram;
 Gmt.Webhooks = Webhooks;
 
 export declare namespace Gmt {
-  export type RequestOptions = Opts.RequestOptions;
+      export type RequestOptions = Opts.RequestOptions;
 
-  export import PageNumber = Pagination.PageNumber;
-  export { type PageNumberParams as PageNumberParams, type PageNumberResponse as PageNumberResponse };
+      export import PageNumber = Pagination.PageNumber;
+export {
+  type PageNumberParams as PageNumberParams,
+  type PageNumberResponse as PageNumberResponse
+};
 
-  export {
-    Service as Service,
-    type ServiceGetServerTimeResponse as ServiceGetServerTimeResponse,
-    type ServiceHealthCheckResponse as ServiceHealthCheckResponse,
-  };
+export {
+  Service as Service,
+  type ServiceGetServerTimeResponse as ServiceGetServerTimeResponse,
+  type ServiceHealthCheckResponse as ServiceHealthCheckResponse
+};
 
-  export {
-    Accounts as Accounts,
-    type AccountRetrieveResponse as AccountRetrieveResponse,
-    type AccountListResponse as AccountListResponse,
-    type AccountListCountriesResponse as AccountListCountriesResponse,
-    type AccountListResponsesPageNumber as AccountListResponsesPageNumber,
-    type AccountListCountriesResponsesPageNumber as AccountListCountriesResponsesPageNumber,
-    type AccountListParams as AccountListParams,
-    type AccountListCountriesParams as AccountListCountriesParams,
-  };
+export {
+  Accounts as Accounts,
+  type AccountRetrieveResponse as AccountRetrieveResponse,
+  type AccountListResponse as AccountListResponse,
+  type AccountListCountriesResponse as AccountListCountriesResponse,
+  type AccountListResponsesPageNumber as AccountListResponsesPageNumber,
+  type AccountListCountriesResponsesPageNumber as AccountListCountriesResponsesPageNumber,
+  type AccountListParams as AccountListParams,
+  type AccountListCountriesParams as AccountListCountriesParams
+};
 
-  export {
-    Profile as Profile,
-    type ProfileRetrieveResponse as ProfileRetrieveResponse,
-    type ProfileChangeLoginResponse as ProfileChangeLoginResponse,
-    type ProfileChangePasswordResponse as ProfileChangePasswordResponse,
-    type ProfileUnbindTelegramResponse as ProfileUnbindTelegramResponse,
-    type ProfileChangeLoginParams as ProfileChangeLoginParams,
-    type ProfileChangePasswordParams as ProfileChangePasswordParams,
-  };
+export {
+  Profile as Profile,
+  type ProfileRetrieveResponse as ProfileRetrieveResponse,
+  type ProfileChangeLoginResponse as ProfileChangeLoginResponse,
+  type ProfileChangePasswordResponse as ProfileChangePasswordResponse,
+  type ProfileUnbindTelegramResponse as ProfileUnbindTelegramResponse,
+  type ProfileChangeLoginParams as ProfileChangeLoginParams,
+  type ProfileChangePasswordParams as ProfileChangePasswordParams
+};
 
-  export {
-    Purchases as Purchases,
-    type PurchaseCreateResponse as PurchaseCreateResponse,
-    type PurchaseRetrieveResponse as PurchaseRetrieveResponse,
-    type PurchaseListResponse as PurchaseListResponse,
-    type PurchaseRefundResponse as PurchaseRefundResponse,
-    type PurchaseRequestVerificationCodeResponse as PurchaseRequestVerificationCodeResponse,
-    type PurchaseListResponsesPageNumber as PurchaseListResponsesPageNumber,
-    type PurchaseCreateParams as PurchaseCreateParams,
-    type PurchaseListParams as PurchaseListParams,
-    type PurchaseRequestVerificationCodeParams as PurchaseRequestVerificationCodeParams,
-  };
+export {
+  Purchases as Purchases,
+  type PurchaseCreateResponse as PurchaseCreateResponse,
+  type PurchaseRetrieveResponse as PurchaseRetrieveResponse,
+  type PurchaseListResponse as PurchaseListResponse,
+  type PurchaseRefundResponse as PurchaseRefundResponse,
+  type PurchaseRequestVerificationCodeResponse as PurchaseRequestVerificationCodeResponse,
+  type PurchaseListResponsesPageNumber as PurchaseListResponsesPageNumber,
+  type PurchaseCreateParams as PurchaseCreateParams,
+  type PurchaseListParams as PurchaseListParams,
+  type PurchaseRequestVerificationCodeParams as PurchaseRequestVerificationCodeParams
+};
 
-  export {
-    PurchasesByHash as PurchasesByHash,
-    type PurchasesByHashRetrieveResponse as PurchasesByHashRetrieveResponse,
-    type PurchasesByHashRequestVerificationCodeResponse as PurchasesByHashRequestVerificationCodeResponse,
-    type PurchasesByHashRequestVerificationCodeParams as PurchasesByHashRequestVerificationCodeParams,
-  };
+export {
+  PurchasesByHash as PurchasesByHash,
+  type PurchasesByHashRetrieveResponse as PurchasesByHashRetrieveResponse,
+  type PurchasesByHashRequestVerificationCodeResponse as PurchasesByHashRequestVerificationCodeResponse,
+  type PurchasesByHashRequestVerificationCodeParams as PurchasesByHashRequestVerificationCodeParams
+};
 
-  export {
-    Telegram as Telegram,
-    type TelegramGetPremiumPriceResponse as TelegramGetPremiumPriceResponse,
-    type TelegramGetStarsPriceResponse as TelegramGetStarsPriceResponse,
-    type TelegramGetPremiumPriceParams as TelegramGetPremiumPriceParams,
-    type TelegramGetStarsPriceParams as TelegramGetStarsPriceParams,
-  };
+export {
+  Telegram as Telegram,
+  type TelegramGetPremiumPriceResponse as TelegramGetPremiumPriceResponse,
+  type TelegramGetStarsPriceResponse as TelegramGetStarsPriceResponse,
+  type TelegramGetPremiumPriceParams as TelegramGetPremiumPriceParams,
+  type TelegramGetStarsPriceParams as TelegramGetStarsPriceParams
+};
 
-  export {
-    Webhooks as Webhooks,
-    type WebhookTestResponse as WebhookTestResponse,
-    type WebhookTestParams as WebhookTestParams,
-  };
-}
+export {
+  Webhooks as Webhooks,
+  type WebhookTestResponse as WebhookTestResponse,
+  type WebhookTestParams as WebhookTestParams
+};
+    }

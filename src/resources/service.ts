@@ -88,6 +88,6 @@ export namespace ServiceHealthCheckResponse {
 export declare namespace Service {
   export {
     type ServiceGetServerTimeResponse as ServiceGetServerTimeResponse,
-    type ServiceHealthCheckResponse as ServiceHealthCheckResponse,
+    type ServiceHealthCheckResponse as ServiceHealthCheckResponse
   };
 }

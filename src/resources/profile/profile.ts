@@ -4,12 +4,7 @@ import { APIResource } from '../../core/resource';
 import * as DiscountAPI from './discount';
 import { Discount as DiscountAPIDiscount, DiscountRetrieveResponse } from './discount';
 import * as ReferralAPI from './referral/referral';
-import {
-  Referral,
-  ReferralRetrieveResponse,
-  ReferralTransferBalanceParams,
-  ReferralTransferBalanceResponse,
-} from './referral/referral';
+import { Referral, ReferralRetrieveResponse, ReferralTransferBalanceParams, ReferralTransferBalanceResponse } from './referral/referral';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { maybeMultipartFormRequestOptions } from '../../internal/uploads';
@@ -44,14 +39,8 @@ export class Profile extends APIResource {
    * });
    * ```
    */
-  changeLogin(
-    body: ProfileChangeLoginParams,
-    options?: RequestOptions,
-  ): APIPromise<ProfileChangeLoginResponse> {
-    return this._client.patch(
-      '/v1/profile/change-login',
-      maybeMultipartFormRequestOptions({ body, ...options }, this._client),
-    );
+  changeLogin(body: ProfileChangeLoginParams, options?: RequestOptions): APIPromise<ProfileChangeLoginResponse> {
+    return this._client.patch('/v1/profile/change-login', maybeMultipartFormRequestOptions({ body, ...options }, this._client));
   }
 
   /**
@@ -64,14 +53,8 @@ export class Profile extends APIResource {
    * });
    * ```
    */
-  changePassword(
-    body: ProfileChangePasswordParams,
-    options?: RequestOptions,
-  ): APIPromise<ProfileChangePasswordResponse> {
-    return this._client.patch(
-      '/v1/profile/change-password',
-      maybeMultipartFormRequestOptions({ body, ...options }, this._client),
-    );
+  changePassword(body: ProfileChangePasswordParams, options?: RequestOptions): APIPromise<ProfileChangePasswordResponse> {
+    return this._client.patch('/v1/profile/change-password', maybeMultipartFormRequestOptions({ body, ...options }, this._client));
   }
 
   /**
@@ -200,15 +183,18 @@ export declare namespace Profile {
     type ProfileChangePasswordResponse as ProfileChangePasswordResponse,
     type ProfileUnbindTelegramResponse as ProfileUnbindTelegramResponse,
     type ProfileChangeLoginParams as ProfileChangeLoginParams,
-    type ProfileChangePasswordParams as ProfileChangePasswordParams,
+    type ProfileChangePasswordParams as ProfileChangePasswordParams
   };
 
-  export { DiscountAPIDiscount as Discount, type DiscountRetrieveResponse as DiscountRetrieveResponse };
+  export {
+    DiscountAPIDiscount as Discount,
+    type DiscountRetrieveResponse as DiscountRetrieveResponse
+  };
 
   export {
     Referral as Referral,
     type ReferralRetrieveResponse as ReferralRetrieveResponse,
     type ReferralTransferBalanceResponse as ReferralTransferBalanceResponse,
-    type ReferralTransferBalanceParams as ReferralTransferBalanceParams,
+    type ReferralTransferBalanceParams as ReferralTransferBalanceParams
   };
 }
