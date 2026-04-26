@@ -20,14 +20,8 @@ export class Purchases extends APIResource {
    *   });
    * ```
    */
-  createPremium(
-    body: PurchaseCreatePremiumParams,
-    options?: RequestOptions,
-  ): APIPromise<PurchaseCreatePremiumResponse> {
-    return this._client.post(
-      '/v1/telegram/purchases/premium',
-      maybeMultipartFormRequestOptions({ body, ...options }, this._client),
-    );
+  createPremium(body: PurchaseCreatePremiumParams, options?: RequestOptions): APIPromise<PurchaseCreatePremiumResponse> {
+    return this._client.post('/v1/telegram/purchases/premium', maybeMultipartFormRequestOptions({ body, ...options }, this._client));
   }
 
   /**
@@ -43,14 +37,8 @@ export class Purchases extends APIResource {
    *   });
    * ```
    */
-  createStars(
-    body: PurchaseCreateStarsParams,
-    options?: RequestOptions,
-  ): APIPromise<PurchaseCreateStarsResponse> {
-    return this._client.post(
-      '/v1/telegram/purchases/stars',
-      maybeMultipartFormRequestOptions({ body, ...options }, this._client),
-    );
+  createStars(body: PurchaseCreateStarsParams, options?: RequestOptions): APIPromise<PurchaseCreateStarsResponse> {
+    return this._client.post('/v1/telegram/purchases/stars', maybeMultipartFormRequestOptions({ body, ...options }, this._client));
   }
 
   /**
@@ -67,15 +55,8 @@ export class Purchases extends APIResource {
    * }
    * ```
    */
-  listPremium(
-    query: PurchaseListPremiumParams,
-    options?: RequestOptions,
-  ): PagePromise<PurchaseListPremiumResponsesPageNumber, PurchaseListPremiumResponse> {
-    return this._client.getAPIList(
-      '/v1/telegram/purchases/premium',
-      PageNumber<PurchaseListPremiumResponse>,
-      { query, ...options },
-    );
+  listPremium(query: PurchaseListPremiumParams, options?: RequestOptions): PagePromise<PurchaseListPremiumResponsesPageNumber, PurchaseListPremiumResponse> {
+    return this._client.getAPIList('/v1/telegram/purchases/premium', PageNumber<PurchaseListPremiumResponse>, { query, ...options });
   }
 
   /**
@@ -91,20 +72,14 @@ export class Purchases extends APIResource {
    * }
    * ```
    */
-  listStars(
-    query: PurchaseListStarsParams,
-    options?: RequestOptions,
-  ): PagePromise<PurchaseListStarsResponsesPageNumber, PurchaseListStarsResponse> {
-    return this._client.getAPIList('/v1/telegram/purchases/stars', PageNumber<PurchaseListStarsResponse>, {
-      query,
-      ...options,
-    });
+  listStars(query: PurchaseListStarsParams, options?: RequestOptions): PagePromise<PurchaseListStarsResponsesPageNumber, PurchaseListStarsResponse> {
+    return this._client.getAPIList('/v1/telegram/purchases/stars', PageNumber<PurchaseListStarsResponse>, { query, ...options });
   }
 }
 
-export type PurchaseListPremiumResponsesPageNumber = PageNumber<PurchaseListPremiumResponse>;
+export type PurchaseListPremiumResponsesPageNumber = PageNumber<PurchaseListPremiumResponse>
 
-export type PurchaseListStarsResponsesPageNumber = PageNumber<PurchaseListStarsResponse>;
+export type PurchaseListStarsResponsesPageNumber = PageNumber<PurchaseListStarsResponse>
 
 export interface PurchaseCreatePremiumResponse {
   /**
@@ -228,9 +203,11 @@ export interface PurchaseCreateStarsParams {
   username: string;
 }
 
-export interface PurchaseListPremiumParams extends PageNumberParams {}
+export interface PurchaseListPremiumParams extends PageNumberParams {
+}
 
-export interface PurchaseListStarsParams extends PageNumberParams {}
+export interface PurchaseListStarsParams extends PageNumberParams {
+}
 
 export declare namespace Purchases {
   export {
@@ -243,6 +220,6 @@ export declare namespace Purchases {
     type PurchaseCreatePremiumParams as PurchaseCreatePremiumParams,
     type PurchaseCreateStarsParams as PurchaseCreateStarsParams,
     type PurchaseListPremiumParams as PurchaseListPremiumParams,
-    type PurchaseListStarsParams as PurchaseListStarsParams,
+    type PurchaseListStarsParams as PurchaseListStarsParams
   };
 }

@@ -45,15 +45,8 @@ export class PurchasesByHash extends APIResource {
    *   );
    * ```
    */
-  requestVerificationCode(
-    hash: string,
-    body: PurchasesByHashRequestVerificationCodeParams,
-    options?: RequestOptions,
-  ): APIPromise<PurchasesByHashRequestVerificationCodeResponse> {
-    return this._client.post(
-      path`/v1/purchases-by-hash/${hash}/request-code`,
-      maybeMultipartFormRequestOptions({ body, ...options }, this._client),
-    );
+  requestVerificationCode(hash: string, body: PurchasesByHashRequestVerificationCodeParams, options?: RequestOptions): APIPromise<PurchasesByHashRequestVerificationCodeResponse> {
+    return this._client.post(path`/v1/purchases-by-hash/${hash}/request-code`, maybeMultipartFormRequestOptions({ body, ...options }, this._client));
   }
 }
 
@@ -410,6 +403,6 @@ export declare namespace PurchasesByHash {
   export {
     type PurchasesByHashRetrieveResponse as PurchasesByHashRetrieveResponse,
     type PurchasesByHashRequestVerificationCodeResponse as PurchasesByHashRequestVerificationCodeResponse,
-    type PurchasesByHashRequestVerificationCodeParams as PurchasesByHashRequestVerificationCodeParams,
+    type PurchasesByHashRequestVerificationCodeParams as PurchasesByHashRequestVerificationCodeParams
   };
 }

@@ -2,19 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as PurchasesAPI from './purchases';
-import {
-  PurchaseCreatePremiumParams,
-  PurchaseCreatePremiumResponse,
-  PurchaseCreateStarsParams,
-  PurchaseCreateStarsResponse,
-  PurchaseListPremiumParams,
-  PurchaseListPremiumResponse,
-  PurchaseListPremiumResponsesPageNumber,
-  PurchaseListStarsParams,
-  PurchaseListStarsResponse,
-  PurchaseListStarsResponsesPageNumber,
-  Purchases,
-} from './purchases';
+import { PurchaseCreatePremiumParams, PurchaseCreatePremiumResponse, PurchaseCreateStarsParams, PurchaseCreateStarsResponse, PurchaseListPremiumParams, PurchaseListPremiumResponse, PurchaseListPremiumResponsesPageNumber, PurchaseListStarsParams, PurchaseListStarsResponse, PurchaseListStarsResponsesPageNumber, Purchases } from './purchases';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 
@@ -31,10 +19,7 @@ export class Telegram extends APIResource {
    * });
    * ```
    */
-  getPremiumPrice(
-    query: TelegramGetPremiumPriceParams,
-    options?: RequestOptions,
-  ): APIPromise<TelegramGetPremiumPriceResponse> {
+  getPremiumPrice(query: TelegramGetPremiumPriceParams, options?: RequestOptions): APIPromise<TelegramGetPremiumPriceResponse> {
     return this._client.get('/v1/telegram/premium', { query, ...options });
   }
 
@@ -48,10 +33,7 @@ export class Telegram extends APIResource {
    * });
    * ```
    */
-  getStarsPrice(
-    query: TelegramGetStarsPriceParams,
-    options?: RequestOptions,
-  ): APIPromise<TelegramGetStarsPriceResponse> {
+  getStarsPrice(query: TelegramGetStarsPriceParams, options?: RequestOptions): APIPromise<TelegramGetStarsPriceResponse> {
     return this._client.get('/v1/telegram/stars', { query, ...options });
   }
 }
@@ -101,7 +83,7 @@ export declare namespace Telegram {
     type TelegramGetPremiumPriceResponse as TelegramGetPremiumPriceResponse,
     type TelegramGetStarsPriceResponse as TelegramGetStarsPriceResponse,
     type TelegramGetPremiumPriceParams as TelegramGetPremiumPriceParams,
-    type TelegramGetStarsPriceParams as TelegramGetStarsPriceParams,
+    type TelegramGetStarsPriceParams as TelegramGetStarsPriceParams
   };
 
   export {
@@ -115,6 +97,6 @@ export declare namespace Telegram {
     type PurchaseCreatePremiumParams as PurchaseCreatePremiumParams,
     type PurchaseCreateStarsParams as PurchaseCreateStarsParams,
     type PurchaseListPremiumParams as PurchaseListPremiumParams,
-    type PurchaseListStarsParams as PurchaseListStarsParams,
+    type PurchaseListStarsParams as PurchaseListStarsParams
   };
 }

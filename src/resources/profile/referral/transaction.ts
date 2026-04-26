@@ -22,18 +22,12 @@ export class Transaction extends APIResource {
    * }
    * ```
    */
-  list(
-    query: TransactionListParams,
-    options?: RequestOptions,
-  ): PagePromise<TransactionListResponsesPageNumber, TransactionListResponse> {
-    return this._client.getAPIList('/v1/profile/referral/transaction', PageNumber<TransactionListResponse>, {
-      query,
-      ...options,
-    });
+  list(query: TransactionListParams, options?: RequestOptions): PagePromise<TransactionListResponsesPageNumber, TransactionListResponse> {
+    return this._client.getAPIList('/v1/profile/referral/transaction', PageNumber<TransactionListResponse>, { query, ...options });
   }
 }
 
-export type TransactionListResponsesPageNumber = PageNumber<TransactionListResponse>;
+export type TransactionListResponsesPageNumber = PageNumber<TransactionListResponse>
 
 export interface TransactionListResponse {
   id: number;
@@ -87,12 +81,13 @@ export namespace TransactionListResponse {
   }
 }
 
-export interface TransactionListParams extends PageNumberParams {}
+export interface TransactionListParams extends PageNumberParams {
+}
 
 export declare namespace Transaction {
   export {
     type TransactionListResponse as TransactionListResponse,
     type TransactionListResponsesPageNumber as TransactionListResponsesPageNumber,
-    type TransactionListParams as TransactionListParams,
+    type TransactionListParams as TransactionListParams
   };
 }

@@ -58,10 +58,7 @@ export class Accounts extends APIResource {
    * **Sorting options:** `price_asc`, `price_desc`, `name_asc`, `name_desc`,
    * `popularity_asc`, `popularity_desc`.
    */
-  list(
-    query: AccountListParams,
-    options?: RequestOptions,
-  ): PagePromise<AccountListResponsesPageNumber, AccountListResponse> {
+  list(query: AccountListParams, options?: RequestOptions): PagePromise<AccountListResponsesPageNumber, AccountListResponse> {
     return this._client.getAPIList('/v1/accounts/', PageNumber<AccountListResponse>, { query, ...options });
   }
 
@@ -81,20 +78,14 @@ export class Accounts extends APIResource {
    * **Sorting options:** `price_asc`, `price_desc`, `name_asc`, `name_desc`,
    * `popularity_asc`, `popularity_desc`.
    */
-  listCountries(
-    query: AccountListCountriesParams,
-    options?: RequestOptions,
-  ): PagePromise<AccountListCountriesResponsesPageNumber, AccountListCountriesResponse> {
-    return this._client.getAPIList('/v1/accounts/countries', PageNumber<AccountListCountriesResponse>, {
-      query,
-      ...options,
-    });
+  listCountries(query: AccountListCountriesParams, options?: RequestOptions): PagePromise<AccountListCountriesResponsesPageNumber, AccountListCountriesResponse> {
+    return this._client.getAPIList('/v1/accounts/countries', PageNumber<AccountListCountriesResponse>, { query, ...options });
   }
 }
 
-export type AccountListResponsesPageNumber = PageNumber<AccountListResponse>;
+export type AccountListResponsesPageNumber = PageNumber<AccountListResponse>
 
-export type AccountListCountriesResponsesPageNumber = PageNumber<AccountListCountriesResponse>;
+export type AccountListCountriesResponsesPageNumber = PageNumber<AccountListCountriesResponse>
 
 export interface AccountRetrieveResponse {
   /**
@@ -353,6 +344,6 @@ export declare namespace Accounts {
     type AccountListResponsesPageNumber as AccountListResponsesPageNumber,
     type AccountListCountriesResponsesPageNumber as AccountListCountriesResponsesPageNumber,
     type AccountListParams as AccountListParams,
-    type AccountListCountriesParams as AccountListCountriesParams,
+    type AccountListCountriesParams as AccountListCountriesParams
   };
 }
