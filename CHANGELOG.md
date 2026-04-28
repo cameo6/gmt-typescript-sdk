@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.31.0 (2026-04-28)
+
+Full Changelog: [v0.30.0...v0.31.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.30.0...v0.31.0)
+
+### Features
+
+* support setting headers via env ([47dc465](https://github.com/cameo6/gmt-typescript-sdk/commit/47dc465211f0a3ffd1a1f57526d60f9f659b7a2b))
+
+
+### Chores
+
+* **formatter:** run prettier and eslint separately ([913b1fa](https://github.com/cameo6/gmt-typescript-sdk/commit/913b1fabfed4403526e6532c9007335fc5caf5e0))
+* **internal:** codegen related update ([7640f42](https://github.com/cameo6/gmt-typescript-sdk/commit/7640f42e452cc0666c94e0b81c61e2ccbfe2948a))
+* **internal:** more robust bootstrap script ([e1f72ab](https://github.com/cameo6/gmt-typescript-sdk/commit/e1f72abc7e469929c0d4753e8f4a717289423fac))
+
 ## 0.30.0 (2026-04-11)
 
 Full Changelog: [v0.29.0...v0.30.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.29.0...v0.30.0)
