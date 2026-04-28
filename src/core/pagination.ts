@@ -87,7 +87,8 @@ export class PagePromise<
     super(
       client,
       request,
-      async (client, props) => new Page(client, props.response, await defaultParseResponse(client, props), props.options)
+      async (client, props) =>
+        new Page(client, props.response, await defaultParseResponse(client, props), props.options),
     );
   }
 
@@ -153,7 +154,7 @@ export class PageNumber<Item> extends AbstractPage<Item> implements PageNumberRe
   }
 
   nextPageRequestOptions(): PageRequestOptions | null {
-    const currentPage = this.pagination?.current_page ?? 1
+    const currentPage = this.pagination?.current_page ?? 1;
 
     if (currentPage >= this.pagination?.total_pages) {
       return null;

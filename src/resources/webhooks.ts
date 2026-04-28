@@ -58,7 +58,10 @@ export class Webhooks extends APIResource {
    * ```
    */
   test(body: WebhookTestParams, options?: RequestOptions): APIPromise<WebhookTestResponse> {
-    return this._client.post('/v1/webhooks/test', maybeMultipartFormRequestOptions({ body, ...options }, this._client));
+    return this._client.post(
+      '/v1/webhooks/test',
+      maybeMultipartFormRequestOptions({ body, ...options }, this._client),
+    );
   }
 }
 
@@ -105,8 +108,5 @@ export interface WebhookTestParams {
 }
 
 export declare namespace Webhooks {
-  export {
-    type WebhookTestResponse as WebhookTestResponse,
-    type WebhookTestParams as WebhookTestParams
-  };
+  export { type WebhookTestResponse as WebhookTestResponse, type WebhookTestParams as WebhookTestParams };
 }
