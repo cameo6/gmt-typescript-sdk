@@ -2,7 +2,10 @@
 
 import Gmt from 'gmt-typescript-sdk';
 
-const client = new Gmt({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new Gmt({
+  apiKey: 'My API Key',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource purchases', () => {
   // Mock server tests are disabled
@@ -37,10 +40,10 @@ describe('resource purchases', () => {
   // Mock server tests are disabled
   test.skip('list: only required params', async () => {
     const responsePromise = client.purchases.list({
-    page: 1,
-    page_size: 50,
-    sort: 'date_desc',
-  });
+      page: 1,
+      page_size: 50,
+      sort: 'date_desc',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -53,12 +56,12 @@ describe('resource purchases', () => {
   // Mock server tests are disabled
   test.skip('list: required and optional params', async () => {
     const response = await client.purchases.list({
-    page: 1,
-    page_size: 50,
-    sort: 'date_desc',
-    phone_number: '123',
-    status: 'SUCCESS',
-  });
+      page: 1,
+      page_size: 50,
+      sort: 'date_desc',
+      phone_number: '123',
+      status: 'SUCCESS',
+    });
   });
 
   // Mock server tests are disabled

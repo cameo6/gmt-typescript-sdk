@@ -40,7 +40,10 @@ export class Purchases extends APIResource {
    * ```
    */
   create(body: PurchaseCreateParams, options?: RequestOptions): APIPromise<PurchaseCreateResponse> {
-    return this._client.post('/v1/purchases/', maybeMultipartFormRequestOptions({ body, ...options }, this._client));
+    return this._client.post(
+      '/v1/purchases/',
+      maybeMultipartFormRequestOptions({ body, ...options }, this._client),
+    );
   }
 
   /**
@@ -88,7 +91,10 @@ export class Purchases extends APIResource {
    * }
    * ```
    */
-  list(query: PurchaseListParams, options?: RequestOptions): PagePromise<PurchaseListResponsesPageNumber, PurchaseListResponse> {
+  list(
+    query: PurchaseListParams,
+    options?: RequestOptions,
+  ): PagePromise<PurchaseListResponsesPageNumber, PurchaseListResponse> {
     return this._client.getAPIList('/v1/purchases/', PageNumber<PurchaseListResponse>, { query, ...options });
   }
 
@@ -136,12 +142,19 @@ export class Purchases extends APIResource {
    *   await client.purchases.requestVerificationCode(12345);
    * ```
    */
-  requestVerificationCode(purchaseID: number, body: PurchaseRequestVerificationCodeParams, options?: RequestOptions): APIPromise<PurchaseRequestVerificationCodeResponse> {
-    return this._client.post(path`/v1/purchases/${purchaseID}/request-code`, maybeMultipartFormRequestOptions({ body, ...options }, this._client));
+  requestVerificationCode(
+    purchaseID: number,
+    body: PurchaseRequestVerificationCodeParams,
+    options?: RequestOptions,
+  ): APIPromise<PurchaseRequestVerificationCodeResponse> {
+    return this._client.post(
+      path`/v1/purchases/${purchaseID}/request-code`,
+      maybeMultipartFormRequestOptions({ body, ...options }, this._client),
+    );
   }
 }
 
-export type PurchaseListResponsesPageNumber = PageNumber<PurchaseListResponse>
+export type PurchaseListResponsesPageNumber = PageNumber<PurchaseListResponse>;
 
 export interface PurchaseCreateResponse {
   /**
@@ -1035,13 +1048,13 @@ export declare namespace Purchases {
     type PurchaseListResponsesPageNumber as PurchaseListResponsesPageNumber,
     type PurchaseCreateParams as PurchaseCreateParams,
     type PurchaseListParams as PurchaseListParams,
-    type PurchaseRequestVerificationCodeParams as PurchaseRequestVerificationCodeParams
+    type PurchaseRequestVerificationCodeParams as PurchaseRequestVerificationCodeParams,
   };
 
   export {
     Bulk as Bulk,
     type BulkCreateResponse as BulkCreateResponse,
     type BulkRetrieveResponse as BulkRetrieveResponse,
-    type BulkCreateParams as BulkCreateParams
+    type BulkCreateParams as BulkCreateParams,
   };
 }
