@@ -104,6 +104,11 @@ export interface ProfileRetrieveResponse {
   discount: ProfileRetrieveResponse.Discount;
 
   /**
+   * Preferred user interface language
+   */
+  language: string;
+
+  /**
    * Web username
    */
   login: string | null;
