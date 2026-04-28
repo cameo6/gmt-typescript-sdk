@@ -145,7 +145,5 @@ export namespace DiscountRetrieveResponse {
 }
 
 export declare namespace Discount {
-  export {
-    type DiscountRetrieveResponse as DiscountRetrieveResponse
-  };
+  export { type DiscountRetrieveResponse as DiscountRetrieveResponse };
 }

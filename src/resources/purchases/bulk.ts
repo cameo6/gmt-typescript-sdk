@@ -36,7 +36,10 @@ export class Bulk extends APIResource {
    * ```
    */
   create(body: BulkCreateParams, options?: RequestOptions): APIPromise<BulkCreateResponse> {
-    return this._client.post('/v1/purchases/bulk', maybeMultipartFormRequestOptions({ body, ...options }, this._client));
+    return this._client.post(
+      '/v1/purchases/bulk',
+      maybeMultipartFormRequestOptions({ body, ...options }, this._client),
+    );
   }
 
   /**
@@ -69,7 +72,11 @@ export class Bulk extends APIResource {
    * ```
    */
   download(purchaseID: string, options?: RequestOptions): APIPromise<Response> {
-    return this._client.get(path`/v1/purchases/bulk/${purchaseID}/download`, { ...options, headers: buildHeaders([{Accept: 'application/zip'}, options?.headers]), __binaryResponse: true });
+    return this._client.get(path`/v1/purchases/bulk/${purchaseID}/download`, {
+      ...options,
+      headers: buildHeaders([{ Accept: 'application/zip' }, options?.headers]),
+      __binaryResponse: true,
+    });
   }
 }
 
@@ -317,6 +324,6 @@ export declare namespace Bulk {
   export {
     type BulkCreateResponse as BulkCreateResponse,
     type BulkRetrieveResponse as BulkRetrieveResponse,
-    type BulkCreateParams as BulkCreateParams
+    type BulkCreateParams as BulkCreateParams,
   };
 }
