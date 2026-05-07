@@ -39,6 +39,8 @@ import { Service, ServiceGetServerTimeResponse, ServiceHealthCheckResponse } fro
 import { WebhookTestParams, WebhookTestResponse, Webhooks } from './resources/webhooks';
 import {
   Profile,
+  ProfileChangeLanguageParams,
+  ProfileChangeLanguageResponse,
   ProfileChangeLoginParams,
   ProfileChangeLoginResponse,
   ProfileChangePasswordParams,
@@ -889,9 +891,11 @@ export declare namespace Gmt {
   export {
     Profile as Profile,
     type ProfileRetrieveResponse as ProfileRetrieveResponse,
+    type ProfileChangeLanguageResponse as ProfileChangeLanguageResponse,
     type ProfileChangeLoginResponse as ProfileChangeLoginResponse,
     type ProfileChangePasswordResponse as ProfileChangePasswordResponse,
     type ProfileUnbindTelegramResponse as ProfileUnbindTelegramResponse,
+    type ProfileChangeLanguageParams as ProfileChangeLanguageParams,
     type ProfileChangeLoginParams as ProfileChangeLoginParams,
     type ProfileChangePasswordParams as ProfileChangePasswordParams,
   };

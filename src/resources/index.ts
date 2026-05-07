@@ -13,9 +13,11 @@ export {
 export {
   Profile,
   type ProfileRetrieveResponse,
+  type ProfileChangeLanguageResponse,
   type ProfileChangeLoginResponse,
   type ProfileChangePasswordResponse,
   type ProfileUnbindTelegramResponse,
+  type ProfileChangeLanguageParams,
   type ProfileChangeLoginParams,
   type ProfileChangePasswordParams,
 } from './profile/profile';
