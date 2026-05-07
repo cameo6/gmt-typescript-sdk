@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.33.1 (2026-05-07)
+
+Full Changelog: [v0.33.0...v0.33.1](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.33.0...v0.33.1)
+
+### Chores
+
+* update SDK settings ([ebed860](https://github.com/cameo6/gmt-typescript-sdk/commit/ebed8604976c05955ca3f777dd7c8aa63aa6bf80))
+
 ## 0.33.0 (2026-05-07)
 
 Full Changelog: [v0.32.0...v0.33.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.32.0...v0.33.0)
