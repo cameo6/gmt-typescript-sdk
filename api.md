@@ -29,6 +29,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/profile/profile.ts">ProfileRetrieveResponse</a></code>
+- <code><a href="./src/resources/profile/profile.ts">ProfileChangeLanguageResponse</a></code>
 - <code><a href="./src/resources/profile/profile.ts">ProfileChangeLoginResponse</a></code>
 - <code><a href="./src/resources/profile/profile.ts">ProfileChangePasswordResponse</a></code>
 - <code><a href="./src/resources/profile/profile.ts">ProfileUnbindTelegramResponse</a></code>
@@ -36,6 +37,7 @@ Types:
 Methods:
 
 - <code title="get /v1/profile/">client.profile.<a href="./src/resources/profile/profile.ts">retrieve</a>() -> ProfileRetrieveResponse</code>
+- <code title="patch /v1/profile/language">client.profile.<a href="./src/resources/profile/profile.ts">changeLanguage</a>({ ...params }) -> ProfileChangeLanguageResponse</code>
 - <code title="patch /v1/profile/change-login">client.profile.<a href="./src/resources/profile/profile.ts">changeLogin</a>({ ...params }) -> ProfileChangeLoginResponse</code>
 - <code title="patch /v1/profile/change-password">client.profile.<a href="./src/resources/profile/profile.ts">changePassword</a>({ ...params }) -> ProfileChangePasswordResponse</code>
 - <code title="patch /v1/profile/unbind-telegram">client.profile.<a href="./src/resources/profile/profile.ts">unbindTelegram</a>() -> ProfileUnbindTelegramResponse</code>
