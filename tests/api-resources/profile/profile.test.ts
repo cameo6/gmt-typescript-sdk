@@ -21,6 +21,23 @@ describe('resource profile', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('changeLanguage: only required params', async () => {
+    const responsePromise = client.profile.changeLanguage({ language: 'en' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('changeLanguage: required and optional params', async () => {
+    const response = await client.profile.changeLanguage({ language: 'en' });
+  });
+
+  // Mock server tests are disabled
   test.skip('changeLogin: only required params', async () => {
     const responsePromise = client.profile.changeLogin({ new_login: 'username' });
     const rawResponse = await responsePromise.asResponse();

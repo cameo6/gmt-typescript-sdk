@@ -35,6 +35,26 @@ export class Profile extends APIResource {
   }
 
   /**
+   * Change the preferred user interface language on the website and in the bot.
+   *
+   * @example
+   * ```ts
+   * const response = await client.profile.changeLanguage({
+   *   language: 'en',
+   * });
+   * ```
+   */
+  changeLanguage(
+    body: ProfileChangeLanguageParams,
+    options?: RequestOptions,
+  ): APIPromise<ProfileChangeLanguageResponse> {
+    return this._client.patch(
+      '/v1/profile/language',
+      maybeMultipartFormRequestOptions({ body, ...options }, this._client),
+    );
+  }
+
+  /**
    * Change the current user login to a new one.
    *
    * @example
@@ -159,6 +179,13 @@ export namespace ProfileRetrieveResponse {
   }
 }
 
+export interface ProfileChangeLanguageResponse {
+  /**
+   * Indicates if the operation was successful
+   */
+  success: boolean;
+}
+
 export interface ProfileChangeLoginResponse {
   /**
    * Indicates if the operation was successful
@@ -178,6 +205,13 @@ export interface ProfileUnbindTelegramResponse {
    * Indicates if the operation was successful
    */
   success: boolean;
+}
+
+export interface ProfileChangeLanguageParams {
+  /**
+   * Preferred user interface language
+   */
+  language: 'ru' | 'ua' | 'en' | 'es' | 'zh';
 }
 
 export interface ProfileChangeLoginParams {
@@ -201,9 +235,11 @@ Profile.Referral = Referral;
 export declare namespace Profile {
   export {
     type ProfileRetrieveResponse as ProfileRetrieveResponse,
+    type ProfileChangeLanguageResponse as ProfileChangeLanguageResponse,
     type ProfileChangeLoginResponse as ProfileChangeLoginResponse,
     type ProfileChangePasswordResponse as ProfileChangePasswordResponse,
     type ProfileUnbindTelegramResponse as ProfileUnbindTelegramResponse,
+    type ProfileChangeLanguageParams as ProfileChangeLanguageParams,
     type ProfileChangeLoginParams as ProfileChangeLoginParams,
     type ProfileChangePasswordParams as ProfileChangePasswordParams,
   };
