@@ -124,9 +124,9 @@ export interface ProfileRetrieveResponse {
   discount: ProfileRetrieveResponse.Discount;
 
   /**
-   * Preferred user interface language
+   * Preferred user interface language; null until the user selects one
    */
-  language: string;
+  language: 'ru' | 'uk' | 'en' | 'es' | 'zh' | null;
 
   /**
    * Web username
@@ -211,7 +211,7 @@ export interface ProfileChangeLanguageParams {
   /**
    * Preferred user interface language
    */
-  language: 'ru' | 'ua' | 'en' | 'es' | 'zh';
+  language: 'ru' | 'uk' | 'en' | 'es' | 'zh';
 }
 
 export interface ProfileChangeLoginParams {
