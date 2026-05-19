@@ -156,7 +156,7 @@ export class PageNumber<Item> extends AbstractPage<Item> implements PageNumberRe
   nextPageRequestOptions(): PageRequestOptions | null {
     const currentPage = this.pagination?.current_page ?? 1;
 
-    if (currentPage >= this.pagination?.total_pages) {
+    if (currentPage >= this.pagination.total_pages) {
       return null;
     }
 
