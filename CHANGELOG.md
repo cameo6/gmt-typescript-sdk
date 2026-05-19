@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.34.1 (2026-05-19)
+
+Full Changelog: [v0.34.0...v0.34.1](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.34.0...v0.34.1)
+
+### Bug Fixes
+
+* fix nullable total pages accessor ([d5d078f](https://github.com/cameo6/gmt-typescript-sdk/commit/d5d078fb5c5fcfff1c4d91495914d6a3da28c6ff))
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([75f503f](https://github.com/cameo6/gmt-typescript-sdk/commit/75f503f9f3116405f45b5b5ab03dd269d3cdabc4))
+
+
+### Chores
+
+* **tests:** remove redundant File import ([51774b0](https://github.com/cameo6/gmt-typescript-sdk/commit/51774b0a4e478b9cc82a624e17c78680dc93a325))
+
 ## 0.34.0 (2026-05-08)
 
 Full Changelog: [v0.33.1...v0.34.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.33.1...v0.34.0)
