@@ -202,6 +202,11 @@ export interface PurchaseCreateResponse {
   price: PurchaseCreateResponse.Price;
 
   /**
+   * Purchase channel: BOT (Telegram), WEB (site JWT), API (x-api-key)
+   */
+  purchase_source: 'BOT' | 'WEB' | 'API';
+
+  /**
    * Type of purchase: SINGLE (regular), BULK (batch purchase), ADMIN (admin
    * deduction)
    */
@@ -353,6 +358,11 @@ export interface PurchaseRetrieveResponse {
   price: PurchaseRetrieveResponse.Price;
 
   /**
+   * Purchase channel: BOT (Telegram), WEB (site JWT), API (x-api-key)
+   */
+  purchase_source: 'BOT' | 'WEB' | 'API';
+
+  /**
    * Type of purchase: SINGLE (regular), BULK (batch purchase), ADMIN (admin
    * deduction)
    */
@@ -502,6 +512,11 @@ export interface PurchaseListResponse {
    * volume = bigger discounts.
    */
   price: PurchaseListResponse.Price;
+
+  /**
+   * Purchase channel: BOT (Telegram), WEB (site JWT), API (x-api-key)
+   */
+  purchase_source: 'BOT' | 'WEB' | 'API';
 
   /**
    * Type of purchase: SINGLE (regular), BULK (batch purchase), ADMIN (admin
@@ -660,6 +675,11 @@ export namespace PurchaseRefundResponse {
      * volume = bigger discounts.
      */
     price: Purchase.Price;
+
+    /**
+     * Purchase channel: BOT (Telegram), WEB (site JWT), API (x-api-key)
+     */
+    purchase_source: 'BOT' | 'WEB' | 'API';
 
     /**
      * Type of purchase: SINGLE (regular), BULK (batch purchase), ADMIN (admin
@@ -880,6 +900,11 @@ export namespace PurchaseRequestVerificationCodeResponse {
      * volume = bigger discounts.
      */
     price: Purchase.Price;
+
+    /**
+     * Purchase channel: BOT (Telegram), WEB (site JWT), API (x-api-key)
+     */
+    purchase_source: 'BOT' | 'WEB' | 'API';
 
     /**
      * Type of purchase: SINGLE (regular), BULK (batch purchase), ADMIN (admin

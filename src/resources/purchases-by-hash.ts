@@ -103,6 +103,11 @@ export interface PurchasesByHashRetrieveResponse {
   price: PurchasesByHashRetrieveResponse.Price;
 
   /**
+   * Purchase channel: BOT (Telegram), WEB (site JWT), API (x-api-key)
+   */
+  purchase_source: 'BOT' | 'WEB' | 'API';
+
+  /**
    * Type of purchase: SINGLE (regular), BULK (batch purchase), ADMIN (admin
    * deduction)
    */
@@ -286,6 +291,11 @@ export namespace PurchasesByHashRequestVerificationCodeResponse {
      * volume = bigger discounts.
      */
     price: Purchase.Price;
+
+    /**
+     * Purchase channel: BOT (Telegram), WEB (site JWT), API (x-api-key)
+     */
+    purchase_source: 'BOT' | 'WEB' | 'API';
 
     /**
      * Type of purchase: SINGLE (regular), BULK (batch purchase), ADMIN (admin
