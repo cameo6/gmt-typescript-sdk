@@ -48,12 +48,10 @@ export class Bulk extends APIResource {
    *
    * @example
    * ```ts
-   * const bulk = await client.purchases.bulk.retrieve(
-   *   'purchase_id',
-   * );
+   * const bulk = await client.purchases.bulk.retrieve(12345);
    * ```
    */
-  retrieve(purchaseID: string, options?: RequestOptions): APIPromise<BulkRetrieveResponse> {
+  retrieve(purchaseID: number, options?: RequestOptions): APIPromise<BulkRetrieveResponse> {
     return this._client.get(path`/v1/purchases/bulk/${purchaseID}`, options);
   }
 
@@ -63,19 +61,13 @@ export class Bulk extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.purchases.bulk.download(
-   *   'purchase_id',
-   * );
-   *
-   * const content = await response.blob();
-   * console.log(content);
+   * await client.purchases.bulk.download(12345);
    * ```
    */
-  download(purchaseID: string, options?: RequestOptions): APIPromise<Response> {
+  download(purchaseID: number, options?: RequestOptions): APIPromise<void> {
     return this._client.get(path`/v1/purchases/bulk/${purchaseID}/download`, {
       ...options,
-      headers: buildHeaders([{ Accept: 'application/zip' }, options?.headers]),
-      __binaryResponse: true,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
 }

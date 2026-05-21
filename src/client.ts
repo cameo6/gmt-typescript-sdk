@@ -60,13 +60,7 @@ import {
   PurchaseRetrieveResponse,
   Purchases,
 } from './resources/purchases/purchases';
-import {
-  Telegram,
-  TelegramGetPremiumPriceParams,
-  TelegramGetPremiumPriceResponse,
-  TelegramGetStarsPriceParams,
-  TelegramGetStarsPriceResponse,
-} from './resources/telegram/telegram';
+import { Telegram } from './resources/telegram/telegram';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -824,7 +818,7 @@ export class Gmt {
    */
   purchases: API.Purchases = new API.Purchases(this);
   /**
-   * Purchase history and management.
+   * Endpoints for accessing purchase details and requesting verification codes using a unique hash identifier instead of purchase ID. This allows retrieval of purchase information without authentication, using the hash as a secure access token.
    */
   purchasesByHash: API.PurchasesByHash = new API.PurchasesByHash(this);
   telegram: API.Telegram = new API.Telegram(this);
@@ -920,13 +914,7 @@ export declare namespace Gmt {
     type PurchasesByHashRequestVerificationCodeParams as PurchasesByHashRequestVerificationCodeParams,
   };
 
-  export {
-    Telegram as Telegram,
-    type TelegramGetPremiumPriceResponse as TelegramGetPremiumPriceResponse,
-    type TelegramGetStarsPriceResponse as TelegramGetStarsPriceResponse,
-    type TelegramGetPremiumPriceParams as TelegramGetPremiumPriceParams,
-    type TelegramGetStarsPriceParams as TelegramGetStarsPriceParams,
-  };
+  export { Telegram as Telegram };
 
   export {
     Webhooks as Webhooks,
