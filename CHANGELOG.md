@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.36.1 (2026-06-17)
+
+Full Changelog: [v0.36.0...v0.36.1](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.36.0...v0.36.1)
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([fd95f88](https://github.com/cameo6/gmt-typescript-sdk/commit/fd95f885380ae8708f27398f7a81f9c6ca574a63))
+
 ## 0.36.0 (2026-05-21)
 
 Full Changelog: [v0.35.0...v0.36.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.35.0...v0.36.0)
