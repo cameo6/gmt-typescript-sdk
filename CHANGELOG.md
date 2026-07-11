@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.36.2 (2026-07-11)
+
+Full Changelog: [v0.36.1...v0.36.2](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.36.1...v0.36.2)
+
+### Bug Fixes
+
+* **ci:** bump @arethetypeswrong/cli to ^0.18.0 and run CI workflows on Node 24 ([334a7f0](https://github.com/cameo6/gmt-typescript-sdk/commit/334a7f0b8546479a87c9ffda5a2d5f7b8daabf11))
+
 ## 0.36.1 (2026-06-17)
 
 Full Changelog: [v0.36.0...v0.36.1](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.36.0...v0.36.1)
