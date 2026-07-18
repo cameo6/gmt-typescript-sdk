@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.37.0 (2026-07-18)
+
+Full Changelog: [v0.36.2...v0.37.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.36.2...v0.37.0)
+
+### Features
+
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([bda0277](https://github.com/cameo6/gmt-typescript-sdk/commit/bda027768a3ba889015a0b50010aae4296135939))
+
 ## 0.36.2 (2026-07-11)
 
 Full Changelog: [v0.36.1...v0.36.2](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.36.1...v0.36.2)
