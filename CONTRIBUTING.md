@@ -23,3 +23,28 @@ After updating `openapi.json`, regenerate and commit the internal source files.
 ```sh
 sh scripts/sdk/generate.sh javascript "$(mktemp -d)" --update
 ```
+
+## Release workflow
+
+The release workflow builds and tests installable packages and uploads
+`npm-release-candidate` with `SHA256SUMS`. Pull requests that change the release
+workflow run these checks automatically. After merge, run the workflow on
+`main` with `publish` left off to verify a candidate without registry writes.
+
+Before the first release, configure the GitHub `npm` environment to allow
+only `main` and require a release reviewer. In the registry settings for
+`gmt-typescript-sdk`, add a GitHub Actions Trusted Publisher with `npm publish` allowed
+using these values:
+
+| Setting | Value |
+| --- | --- |
+| Owner | `cameo6` |
+| Repository | `gmt-typescript-sdk` |
+| Workflow filename | `release.yml` |
+| GitHub environment | `npm` |
+
+For a release, select `main`, enable `publish`, and enter the new stable version
+from `package.json`. The publish job downloads the tested artifact from the same
+run, checks SHA-256, and authenticates via OIDC.
+
+[Trusted Publishing setup](https://docs.npmjs.com/trusted-publishers/)
