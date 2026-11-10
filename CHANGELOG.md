@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.37.3
+
+- Clarify the Unix epoch in the public OpenAPI description of the service time response.
+
 ## 0.37.0 (2026-07-18)
 
 Full Changelog: [v0.36.2...v0.37.0](https://github.com/cameo6/gmt-typescript-sdk/compare/v0.36.2...v0.37.0)
