@@ -20,6 +20,7 @@ permissions:
 
 jobs:
   build:
+    name: Build npm release candidate
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     outputs:
@@ -36,7 +37,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Check requested release version
-        if: inputs.publish || inputs.version != ''
+        if: github.event_name == 'workflow_dispatch' && (inputs.publish || inputs.version != '')
         env:
           EXPECTED_VERSION: ${{ inputs.version }}
         run: |
