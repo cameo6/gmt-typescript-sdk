@@ -1,10 +1,8 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
+import { operations } from '../internal/operations';
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { PageNumber, type PageNumberParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
-import { path } from '../internal/utils/path';
 
 /**
  * Browse and purchase Telegram accounts.
@@ -37,7 +35,7 @@ export class Accounts extends APIResource {
    * - `discount.percent`: `10`
    */
   retrieve(countryCode: string, options?: RequestOptions): APIPromise<AccountRetrieveResponse> {
-    return this._client.get(path`/v1/accounts/${countryCode}`, options);
+    return this._client.get(operations["getV1AccountsByCountry_code"](countryCode), options);
   }
 
   /**
@@ -62,7 +60,7 @@ export class Accounts extends APIResource {
     query: AccountListParams,
     options?: RequestOptions,
   ): PagePromise<AccountListResponsesPageNumber, AccountListResponse> {
-    return this._client.getAPIList('/v1/accounts/', PageNumber<AccountListResponse>, { query, ...options });
+    return this._client.getAPIList(operations["getV1Accounts"], PageNumber<AccountListResponse>, { query, ...options });
   }
 
   /**
@@ -85,7 +83,7 @@ export class Accounts extends APIResource {
     query: AccountListCountriesParams,
     options?: RequestOptions,
   ): PagePromise<AccountListCountriesResponsesPageNumber, AccountListCountriesResponse> {
-    return this._client.getAPIList('/v1/accounts/countries', PageNumber<AccountListCountriesResponse>, {
+    return this._client.getAPIList(operations["getV1AccountsCountries"], PageNumber<AccountListCountriesResponse>, {
       query,
       ...options,
     });

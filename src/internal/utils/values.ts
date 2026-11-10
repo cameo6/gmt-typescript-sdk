@@ -1,5 +1,3 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
 import { GmtError } from '../../core/error';
 
 // https://url.spec.whatwg.org/#url-scheme-string
@@ -37,7 +35,7 @@ export function isObj(obj: unknown): obj is Record<string, unknown> {
   return obj != null && typeof obj === 'object' && !Array.isArray(obj);
 }
 
-export const ensurePresent = <T>(value: T | null | undefined): T => {
+export const ensurePresent = <T,>(value: T | null | undefined): T => {
   if (value == null) {
     throw new GmtError(`Expected a value to be given but received ${value} instead.`);
   }

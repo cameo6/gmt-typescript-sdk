@@ -1,5 +1,4 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
+import { operations } from '../../../internal/operations';
 import { APIResource } from '../../../core/resource';
 import * as TransactionAPI from './transaction';
 import {
@@ -28,7 +27,7 @@ export class Referral extends APIResource {
    * ```
    */
   retrieve(options?: RequestOptions): APIPromise<ReferralRetrieveResponse> {
-    return this._client.get('/v1/profile/referral', options);
+    return this._client.get(operations["getV1ProfileReferral"], options);
   }
 
   /**
@@ -48,7 +47,7 @@ export class Referral extends APIResource {
     options?: RequestOptions,
   ): APIPromise<ReferralTransferBalanceResponse> {
     return this._client.post(
-      '/v1/profile/referral/transfer-balance',
+      operations["postV1ProfileReferralTransfer-balance"],
       maybeMultipartFormRequestOptions({ body, ...options }, this._client),
     );
   }

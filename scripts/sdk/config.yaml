@@ -1,0 +1,5 @@
+templateDir: codegen/templates
+files:
+  operations.mustache:
+    templateType: SupportingFiles
+    destinationFilename: operations.tsv

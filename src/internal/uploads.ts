@@ -122,7 +122,7 @@ function supportsFormData(fetchObject: Gmt | Fetch): Promise<boolean> {
   return promise;
 }
 
-export const createForm = async <T = Record<string, unknown>>(
+export const createForm = async <T = Record<string, unknown>,>(
   body: T | undefined,
   fetch: Gmt | Fetch,
 ): Promise<FormData> => {

@@ -1,5 +1,4 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
+import { operations } from '../../internal/operations';
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
@@ -18,7 +17,7 @@ export class Discount extends APIResource {
    * ```
    */
   retrieve(options?: RequestOptions): APIPromise<DiscountRetrieveResponse> {
-    return this._client.get('/v1/profile/discount', options);
+    return this._client.get(operations["getV1ProfileDiscount"], options);
   }
 }
 

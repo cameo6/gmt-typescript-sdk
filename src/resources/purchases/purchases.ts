@@ -1,5 +1,5 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
+import type { CodePage } from '../../internal/code-page';
+import { operations } from '../../internal/operations';
 import { APIResource } from '../../core/resource';
 import * as BulkAPI from './bulk';
 import { Bulk, BulkCreateParams, BulkCreateResponse, BulkRetrieveResponse } from './bulk';
@@ -7,13 +7,17 @@ import { APIPromise } from '../../core/api-promise';
 import { PageNumber, type PageNumberParams, PagePromise } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { maybeMultipartFormRequestOptions } from '../../internal/uploads';
-import { path } from '../../internal/utils/path';
 
 /**
  * Purchase history and management.
  */
 export class Purchases extends APIResource {
   bulk: BulkAPI.Bulk = new BulkAPI.Bulk(this._client);
+
+  /** Returns a page of individual and bulk purchase history. */
+  history(query?: PurchaseHistoryParams, options?: RequestOptions): APIPromise<PurchaseHistoryResponse> {
+    return this._client.get(operations["getV1PurchasesHistory"], { query, ...options });
+  }
 
   /**
    * Creates a new purchase for specified country. Deducts balance immediately and
@@ -41,7 +45,7 @@ export class Purchases extends APIResource {
    */
   create(body: PurchaseCreateParams, options?: RequestOptions): APIPromise<PurchaseCreateResponse> {
     return this._client.post(
-      '/v1/purchases/',
+      operations["postV1Purchases"],
       maybeMultipartFormRequestOptions({ body, ...options }, this._client),
     );
   }
@@ -58,7 +62,7 @@ export class Purchases extends APIResource {
    * ```
    */
   retrieve(purchaseID: number, options?: RequestOptions): APIPromise<PurchaseRetrieveResponse> {
-    return this._client.get(path`/v1/purchases/${purchaseID}`, options);
+    return this._client.get(operations["getV1PurchasesByPurchase_id"](purchaseID), options);
   }
 
   /**
@@ -95,7 +99,7 @@ export class Purchases extends APIResource {
     query: PurchaseListParams,
     options?: RequestOptions,
   ): PagePromise<PurchaseListResponsesPageNumber, PurchaseListResponse> {
-    return this._client.getAPIList('/v1/purchases/', PageNumber<PurchaseListResponse>, { query, ...options });
+    return this._client.getAPIList(operations["getV1Purchases"], PageNumber<PurchaseListResponse>, { query, ...options });
   }
 
   /**
@@ -112,7 +116,7 @@ export class Purchases extends APIResource {
    * ```
    */
   refund(purchaseID: number, options?: RequestOptions): APIPromise<PurchaseRefundResponse> {
-    return this._client.post(path`/v1/purchases/${purchaseID}/refund`, options);
+    return this._client.post(operations["postV1PurchasesByPurchase_idRefund"](purchaseID), options);
   }
 
   /**
@@ -148,7 +152,7 @@ export class Purchases extends APIResource {
     options?: RequestOptions,
   ): APIPromise<PurchaseRequestVerificationCodeResponse> {
     return this._client.post(
-      path`/v1/purchases/${purchaseID}/request-code`,
+      operations["postV1PurchasesByPurchase_idRequest-code"](purchaseID),
       maybeMultipartFormRequestOptions({ body, ...options }, this._client),
     );
   }
@@ -157,6 +161,8 @@ export class Purchases extends APIResource {
 export type PurchaseListResponsesPageNumber = PageNumber<PurchaseListResponse>;
 
 export interface PurchaseCreateResponse {
+  code_page?: CodePage | null;
+
   /**
    * Unique purchase identifier.
    */
@@ -313,6 +319,8 @@ export namespace PurchaseCreateResponse {
 }
 
 export interface PurchaseRetrieveResponse {
+  code_page?: CodePage | null;
+
   /**
    * Unique purchase identifier.
    */
@@ -469,6 +477,8 @@ export namespace PurchaseRetrieveResponse {
 }
 
 export interface PurchaseListResponse {
+  code_page?: CodePage | null;
+
   /**
    * Unique purchase identifier.
    */
@@ -632,6 +642,8 @@ export interface PurchaseRefundResponse {
 
 export namespace PurchaseRefundResponse {
   export interface Purchase {
+    code_page?: CodePage | null;
+
     /**
      * Unique purchase identifier.
      */
@@ -857,6 +869,8 @@ export namespace PurchaseRequestVerificationCodeResponse {
   }
 
   export interface Purchase {
+    code_page?: CodePage | null;
+
     /**
      * Unique purchase identifier.
      */
@@ -1082,4 +1096,16 @@ export declare namespace Purchases {
     type BulkRetrieveResponse as BulkRetrieveResponse,
     type BulkCreateParams as BulkCreateParams,
   };
+}
+
+
+export type PurchaseHistoryParams = Partial<PurchaseListParams> & { search?: string };
+
+export interface PurchaseHistoryResponse {
+  items: (
+    | (PurchaseListResponse & { kind: 'purchase' })
+    | { kind: 'bulk'; id: number; country_code: string; status: PurchaseListResponse['status'];
+        created_at: string; refunded_quantity: number; quantity: number; price: PurchaseListResponse.Price | null }
+  )[];
+  pagination: BulkAPI.PurchasePageMeta;
 }

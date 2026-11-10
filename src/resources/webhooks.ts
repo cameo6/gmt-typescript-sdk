@@ -1,5 +1,4 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
+import { operations } from '../internal/operations';
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
@@ -59,7 +58,7 @@ export class Webhooks extends APIResource {
    */
   test(body: WebhookTestParams, options?: RequestOptions): APIPromise<WebhookTestResponse> {
     return this._client.post(
-      '/v1/webhooks/test',
+      operations["postV1WebhooksTest"],
       maybeMultipartFormRequestOptions({ body, ...options }, this._client),
     );
   }

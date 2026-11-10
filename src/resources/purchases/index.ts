@@ -1,6 +1,4 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
-export { Bulk, type BulkCreateResponse, type BulkRetrieveResponse, type BulkCreateParams } from './bulk';
+export { Bulk, type BulkCreateResponse, type BulkRetrieveResponse, type BulkCreateParams, type BulkListParams, type BulkListResponse } from './bulk';
 export {
   Purchases,
   type PurchaseCreateResponse,
@@ -10,6 +8,8 @@ export {
   type PurchaseRequestVerificationCodeResponse,
   type PurchaseCreateParams,
   type PurchaseListParams,
+  type PurchaseHistoryParams,
+  type PurchaseHistoryResponse,
   type PurchaseRequestVerificationCodeParams,
   type PurchaseListResponsesPageNumber,
 } from './purchases';
