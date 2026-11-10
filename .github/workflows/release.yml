@@ -1,0 +1,90 @@
+name: npm release
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/release.yml
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Publish the verified tarball to npm
+        type: boolean
+        default: false
+      version:
+        description: Expected package version, required when publishing
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build npm release candidate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    outputs:
+      artifact-id: ${{ steps.upload.outputs.artifact-id }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.12'
+      - name: Check requested release version
+        if: github.event_name == 'workflow_dispatch' && (inputs.publish || inputs.version != '')
+        env:
+          EXPECTED_VERSION: ${{ inputs.version }}
+        run: |
+          actual_version=$(node -p "require('./package.json').version")
+          if [[ ! "$EXPECTED_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ || "$EXPECTED_VERSION" != "$actual_version" ]]; then
+            echo "::error::Enter the stable version from package.json ($actual_version)."
+            exit 1
+          fi
+      - name: Build and test the npm tarball
+        run: sh scripts/check-sdk.sh
+      - name: Check artifact integrity
+        working-directory: artifacts
+        run: sha256sum --check --strict SHA256SUMS
+      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        id: upload
+        with:
+          name: npm-release-candidate
+          path: |
+            artifacts/*.tgz
+            artifacts/SHA256SUMS
+          if-no-files-found: error
+
+  publish:
+    if: github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/main' && github.repository == 'cameo6/gmt-typescript-sdk'
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment: npm
+    concurrency:
+      group: npm-publish
+      cancel-in-progress: false
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          artifact-ids: ${{ needs.build.outputs.artifact-id }}
+          path: artifacts
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Verify and publish the tested tarball
+        working-directory: artifacts
+        env:
+          EXPECTED_VERSION: ${{ inputs.version }}
+        run: |
+          sha256sum --check --strict SHA256SUMS
+          npm publish "./gmt-typescript-sdk-$EXPECTED_VERSION.tgz" --ignore-scripts --access public --registry=https://registry.npmjs.org
