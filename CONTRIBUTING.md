@@ -1,101 +1,25 @@
-## Setting up the environment
+# Contributing to the JavaScript SDK
 
-This repository uses [`pnpm`](https://pnpm.io/).
-Other package managers may work but are not officially supported for development.
-
-To set up the repository, run:
+Use Node.js 22, Python 3.12, and Docker to run the same checks as CI.
 
 ```sh
-$ pnpm install
-$ pnpm build
+sh scripts/check-sdk.sh
 ```
 
-This will install all the required dependencies and build output files to `dist/`.
+This command regenerates internal routes and models from the checked-in
+[OpenAPI contract](openapi.json), checks the response models, and builds the npm
+tarball. It installs the tarball in a temporary project to test ESM and CommonJS
+imports, runtime behavior, TypeScript declarations, and examples from the API
+contract. The tested tarball and its SHA-256 checksum are written to `artifacts/`.
 
-## Modifying/Adding code
+For a local build with the checked-in generated files, use
+`npm ci --ignore-scripts` followed by `npm run build`.
 
-Most of the SDK is generated code. Modifications to code will be persisted between generations, but may
-result in merge conflicts between manual patches and changes from the generator. The generator will never
-modify the contents of the `src/lib/` and `examples/` directories.
-
-## Adding and running examples
-
-All files in the `examples/` directory are not modified by the generator and can be freely edited or added to.
-
-```ts
-// add an example to examples/<your-example>.ts
-
-#!/usr/bin/env -S npm run tsn -T
-…
-```
+Open an issue or pull request here for SDK changes. The
+[public API schema](https://api.getmytg.com/docs/openapi.json) is exported by
+the backend. Review schema updates alongside the SDK code that implements them.
+After updating `openapi.json`, regenerate and commit the internal source files.
 
 ```sh
-$ chmod +x examples/<your-example>.ts
-# run the example against your api
-$ pnpm tsn -T examples/<your-example>.ts
+sh scripts/sdk/generate.sh javascript "$(mktemp -d)" --update
 ```
-
-## Using the repository from source
-
-If you’d like to use the repository from source, you can either install from git or link to a cloned repository:
-
-To install via git:
-
-```sh
-$ npm install git+ssh://git@github.com:cameo6/gmt-typescript-sdk.git
-```
-
-Alternatively, to link a local copy of the repo:
-
-```sh
-# Clone
-$ git clone https://www.github.com/cameo6/gmt-typescript-sdk
-$ cd gmt-typescript-sdk
-
-# With yarn
-$ yarn link
-$ cd ../my-package
-$ yarn link gmt-typescript-sdk
-
-# With pnpm
-$ pnpm link --global
-$ cd ../my-package
-$ pnpm link --global gmt-typescript-sdk
-```
-
-## Running tests
-
-```sh
-$ pnpm run test
-```
-
-## Linting and formatting
-
-This repository uses [prettier](https://www.npmjs.com/package/prettier) and
-[eslint](https://www.npmjs.com/package/eslint) to format the code in the repository.
-
-To lint:
-
-```sh
-$ pnpm lint
-```
-
-To format and fix all lint issues automatically:
-
-```sh
-$ pnpm fix
-```
-
-## Publishing and releases
-
-Changes made to this repository via the automated release PR pipeline should publish to npm automatically. If
-the changes aren't made through the automated pipeline, you may want to make releases manually.
-
-### Publish with a GitHub workflow
-
-You can release to package managers by using [the `Publish NPM` GitHub action](https://www.github.com/cameo6/gmt-typescript-sdk/actions/workflows/publish-npm.yml). This requires a setup organization or repository secret to be set up.
-
-### Publish manually
-
-If you need to manually release a package, you can run the `bin/publish-npm` script with an `NPM_TOKEN` set on
-the environment.

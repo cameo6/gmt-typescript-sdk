@@ -1,5 +1,4 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
+import { operations } from '../../../internal/operations';
 import { APIResource } from '../../../core/resource';
 import { PageNumber, type PageNumberParams, PagePromise } from '../../../core/pagination';
 import { RequestOptions } from '../../../internal/request-options';
@@ -26,7 +25,7 @@ export class Transaction extends APIResource {
     query: TransactionListParams,
     options?: RequestOptions,
   ): PagePromise<TransactionListResponsesPageNumber, TransactionListResponse> {
-    return this._client.getAPIList('/v1/profile/referral/transaction', PageNumber<TransactionListResponse>, {
+    return this._client.getAPIList(operations["getV1ProfileReferralTransaction"], PageNumber<TransactionListResponse>, {
       query,
       ...options,
     });

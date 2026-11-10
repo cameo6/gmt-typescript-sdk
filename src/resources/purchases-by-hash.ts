@@ -1,10 +1,9 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
+import type { CodePage } from '../internal/code-page';
+import { operations } from '../internal/operations';
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { maybeMultipartFormRequestOptions } from '../internal/uploads';
-import { path } from '../internal/utils/path';
 
 /**
  * Endpoints for accessing purchase details and requesting verification codes using a unique hash identifier instead of purchase ID. This allows retrieval of purchase information without authentication, using the hash as a secure access token.
@@ -29,7 +28,7 @@ export class PurchasesByHash extends APIResource {
    * ```
    */
   retrieve(hash: string, options?: RequestOptions): APIPromise<PurchasesByHashRetrieveResponse> {
-    return this._client.get(path`/v1/purchases-by-hash/${hash}`, options);
+    return this._client.get(operations["getV1Purchases-by-hashByHash"](hash), options);
   }
 
   /**
@@ -59,13 +58,15 @@ export class PurchasesByHash extends APIResource {
     options?: RequestOptions,
   ): APIPromise<PurchasesByHashRequestVerificationCodeResponse> {
     return this._client.post(
-      path`/v1/purchases-by-hash/${hash}/request-code`,
+      operations["postV1Purchases-by-hashByHashRequest-code"](hash),
       maybeMultipartFormRequestOptions({ body, ...options }, this._client),
     );
   }
 }
 
 export interface PurchasesByHashRetrieveResponse {
+  code_page?: CodePage | null;
+
   /**
    * Unique purchase identifier.
    */
@@ -256,6 +257,8 @@ export namespace PurchasesByHashRequestVerificationCodeResponse {
   }
 
   export interface Purchase {
+    code_page?: CodePage | null;
+
     /**
      * Unique purchase identifier.
      */

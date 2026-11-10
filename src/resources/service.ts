@@ -1,5 +1,4 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
+import { operations } from '../internal/operations';
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
@@ -12,14 +11,14 @@ export class Service extends APIResource {
    * Useful for client synchronization and checking clock drift.
    */
   getServerTime(options?: RequestOptions): APIPromise<ServiceGetServerTimeResponse> {
-    return this._client.get('/v1/service/time', options);
+    return this._client.get(operations["getV1ServiceTime"], options);
   }
 
   /**
    * Returns basic service status, current time, and process uptime.
    */
   healthCheck(options?: RequestOptions): APIPromise<ServiceHealthCheckResponse> {
-    return this._client.get('/v1/service/health', options);
+    return this._client.get(operations["getV1ServiceHealth"], options);
   }
 }
 

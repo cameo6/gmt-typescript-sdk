@@ -1,5 +1,3 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
 import type { RequestInit, RequestInfo, BodyInit } from './internal/builtin-types';
 import type { HTTPMethod, PromiseOrValue, MergedRequestInit, FinalizedRequestInit } from './internal/types';
 import { uuid4 } from './internal/utils/uuid';
@@ -13,6 +11,7 @@ import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
 import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
+import { operations } from './internal/operations';
 import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
 import { AbstractPage, type PageNumberParams, PageNumberResponse } from './core/pagination';
@@ -384,6 +383,19 @@ export class Gmt {
     });
 
     await this.prepareRequest(req, { url, options });
+
+    if (
+      options.method === 'post' &&
+      (options.path === operations.postV1Purchases || options.path === operations.postV1PurchasesBulk)
+    ) {
+      const headers = buildHeaders([req.headers]).values;
+      if (retryOfRequestLogID === undefined) {
+        options.idempotencyKey = headers.get('Idempotency-Key') ||
+          options.idempotencyKey || this.defaultIdempotencyKey();
+      }
+      headers.set('Idempotency-Key', options.idempotencyKey!);
+      req.headers = headers;
+    }
 
     /** Not an API request ID, just for correlating local log entries. */
     const requestLogID = 'log_' + ((Math.random() * (1 << 24)) | 0).toString(16).padStart(6, '0');

@@ -1,16 +1,19 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
+import { operations } from '../../internal/operations';
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { maybeMultipartFormRequestOptions } from '../../internal/uploads';
-import { path } from '../../internal/utils/path';
 
 /**
  * Purchase history and management.
  */
 export class Bulk extends APIResource {
+  /** Returns a page of bulk purchases. */
+  list(query?: BulkListParams, options?: RequestOptions): APIPromise<BulkListResponse> {
+    return this._client.get(operations["getV1PurchasesBulk"], { query, ...options });
+  }
+
   /**
    * Creates a new wholesale purchase for the specified country. Immediately debits
    * the balance and returns the purchase with the status “PENDING”.
@@ -37,7 +40,7 @@ export class Bulk extends APIResource {
    */
   create(body: BulkCreateParams, options?: RequestOptions): APIPromise<BulkCreateResponse> {
     return this._client.post(
-      '/v1/purchases/bulk',
+      operations["postV1PurchasesBulk"],
       maybeMultipartFormRequestOptions({ body, ...options }, this._client),
     );
   }
@@ -52,7 +55,7 @@ export class Bulk extends APIResource {
    * ```
    */
   retrieve(purchaseID: number, options?: RequestOptions): APIPromise<BulkRetrieveResponse> {
-    return this._client.get(path`/v1/purchases/bulk/${purchaseID}`, options);
+    return this._client.get(operations["getV1PurchasesBulkByPurchase_id"](purchaseID), options);
   }
 
   /**
@@ -65,7 +68,7 @@ export class Bulk extends APIResource {
    * ```
    */
   download(purchaseID: number, options?: RequestOptions): APIPromise<void> {
-    return this._client.get(path`/v1/purchases/bulk/${purchaseID}/download`, {
+    return this._client.get(operations["getV1PurchasesBulkByPurchase_idDownload"](purchaseID), {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -182,6 +185,7 @@ export namespace BulkCreateResponse {
 }
 
 export interface BulkRetrieveResponse {
+  refunded_quantity?: number;
   /**
    * Unique ID of the bulk purchase request
    */
@@ -318,4 +322,34 @@ export declare namespace Bulk {
     type BulkRetrieveResponse as BulkRetrieveResponse,
     type BulkCreateParams as BulkCreateParams,
   };
+}
+
+
+export interface PurchasePageMeta {
+  current_page: number;
+  page_size: number;
+  total_items: number;
+  total_pages: number;
+  has_next: boolean;
+  has_previous: boolean;
+}
+
+export interface BulkListParams {
+  page?: number;
+  page_size?: number;
+  sort?: 'date_asc' | 'date_desc';
+  status?: BulkRetrieveResponse['status'];
+}
+
+export interface BulkListResponse {
+  items: {
+    bulk_purchase_id: number;
+    country_code: string;
+    quantity: number;
+    status: BulkRetrieveResponse['status'];
+    created_at: string;
+    refunded_quantity: number;
+    total_price: BulkRetrieveResponse.TotalPrice;
+  }[];
+  pagination: PurchasePageMeta;
 }

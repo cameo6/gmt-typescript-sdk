@@ -1,5 +1,4 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
+import { operations } from '../../internal/operations';
 import { APIResource } from '../../core/resource';
 import * as DiscountAPI from './discount';
 import { Discount as DiscountAPIDiscount, DiscountRetrieveResponse } from './discount';
@@ -31,7 +30,7 @@ export class Profile extends APIResource {
    * ```
    */
   retrieve(options?: RequestOptions): APIPromise<ProfileRetrieveResponse> {
-    return this._client.get('/v1/profile/', options);
+    return this._client.get(operations["getV1Profile"], options);
   }
 
   /**
@@ -49,7 +48,7 @@ export class Profile extends APIResource {
     options?: RequestOptions,
   ): APIPromise<ProfileChangeLanguageResponse> {
     return this._client.patch(
-      '/v1/profile/language',
+      operations["patchV1ProfileLanguage"],
       maybeMultipartFormRequestOptions({ body, ...options }, this._client),
     );
   }
@@ -69,7 +68,7 @@ export class Profile extends APIResource {
     options?: RequestOptions,
   ): APIPromise<ProfileChangeLoginResponse> {
     return this._client.patch(
-      '/v1/profile/change-login',
+      operations["patchV1ProfileChange-login"],
       maybeMultipartFormRequestOptions({ body, ...options }, this._client),
     );
   }
@@ -89,7 +88,7 @@ export class Profile extends APIResource {
     options?: RequestOptions,
   ): APIPromise<ProfileChangePasswordResponse> {
     return this._client.patch(
-      '/v1/profile/change-password',
+      operations["patchV1ProfileChange-password"],
       maybeMultipartFormRequestOptions({ body, ...options }, this._client),
     );
   }
@@ -104,7 +103,7 @@ export class Profile extends APIResource {
    * ```
    */
   unbindTelegram(options?: RequestOptions): APIPromise<ProfileUnbindTelegramResponse> {
-    return this._client.patch('/v1/profile/unbind-telegram', options);
+    return this._client.patch(operations["patchV1ProfileUnbind-telegram"], options);
   }
 }
 
