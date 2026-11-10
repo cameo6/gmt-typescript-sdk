@@ -1621,7 +1621,7 @@
                                         },
                                         "timezone": {
                                             "type": "string",
-                                            "description": "Server timezone.",
+                                            "description": "The server reports UTC in this field.",
                                             "example": "UTC"
                                         }
                                     },
