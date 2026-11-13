@@ -7219,6 +7219,52 @@
                                                     {
                                                         "type": "object",
                                                         "properties": {
+                                                            "code_request": {
+                                                                "nullable": true,
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "status": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "not_requested",
+                                                                            "pending",
+                                                                            "success",
+                                                                            "failed"
+                                                                        ]
+                                                                    },
+                                                                    "requested_at": {
+                                                                        "nullable": true,
+                                                                        "type": "string"
+                                                                    },
+                                                                    "expires_at": {
+                                                                        "nullable": true,
+                                                                        "type": "string"
+                                                                    },
+                                                                    "attempt": {
+                                                                        "type": "integer",
+                                                                        "minimum": 0,
+                                                                        "maximum": 9007199254740991
+                                                                    },
+                                                                    "next_attempt_at": {
+                                                                        "nullable": true,
+                                                                        "type": "string"
+                                                                    },
+                                                                    "attempt_finishes_at": {
+                                                                        "nullable": true,
+                                                                        "type": "string"
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "status",
+                                                                    "requested_at",
+                                                                    "expires_at",
+                                                                    "attempt",
+                                                                    "next_attempt_at",
+                                                                    "attempt_finishes_at"
+                                                                ],
+                                                                "additionalProperties": false,
+                                                                "description": "Current code request, separate from historical verification. Read-only polling never starts a cycle. / Текущий запрос отдельно от сохранённого кода; чтение не запускает цикл."
+                                                            },
                                                             "id": {
                                                                 "type": "integer",
                                                                 "minimum": 1,
@@ -7299,7 +7345,7 @@
                                                                     "REFUND",
                                                                     "EXPIRED"
                                                                 ],
-                                                                "description": "**Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code request) or `ERROR` (provider failure). Any status can transition to `REFUND` via admin action.\n\n**Important.** Status is immutable once set to `SUCCESS`, `ERROR`, or `REFUND`.\n\n**Filter options**\n- `PENDING` - code not requested.\n- `SUCCESS` - code ready.\n- `ERROR` - provider failed.\n- `REFUND` - money returned.",
+                                                                "description": "Legacy status projection: PENDING while the current retail code request is pending or failed, SUCCESS when its code is available. With include=code_request, status describes the durable purchase; code_request describes the current request. REFUND and access rules still apply.",
                                                                 "example": "SUCCESS"
                                                             },
                                                             "purchase_type": {
@@ -7324,7 +7370,7 @@
                                                             },
                                                             "verification": {
                                                                 "nullable": true,
-                                                                "description": "**Verification Credentials.** Login credentials for the purchased Telegram account. Initially `null` after purchase creation.\n\n**Availability.** Populated after calling `POST /purchases/:id/request-code`. Once received, credentials are permanent and cannot be re-requested.\n\n**Security.** Verification data is only visible to the purchase owner.",
+                                                                "description": "Current verification credentials, or null while waiting/after failure. A completed request returns its stored result. With include=code_request, the current request state is available separately in code_request. Previous verification credentials are internal and are not returned.",
                                                                 "type": "object",
                                                                 "properties": {
                                                                     "code": {
@@ -7344,7 +7390,7 @@
                                                                     },
                                                                     "received_at": {
                                                                         "type": "string",
-                                                                        "description": "**Code Retrieval Timestamp.** Marks when verification code was successfully fetched from the provider (not when purchase was created).\n\n**Example timeline.**\n- `created_at`: `2024-11-19T10:00:00Z` (purchase created)\n- `received_at`: `2024-11-19T10:05:02Z` (code requested 5 minutes later)\n\n**Note.** These timestamps may be identical if code is requested immediately after purchase.",
+                                                                        "description": "Legacy timestamp retained for compatibility: the purchase creation time. It does not identify a code request.",
                                                                         "example": "2024-11-19T07:52:00.000Z"
                                                                     }
                                                                 },
@@ -7364,6 +7410,11 @@
                                                                 "nullable": true,
                                                                 "type": "object",
                                                                 "properties": {
+                                                                    "brand_name": {
+                                                                        "nullable": true,
+                                                                        "description": "Public shop name, independent of the code page title.",
+                                                                        "type": "string"
+                                                                    },
                                                                     "logo_url": {
                                                                         "nullable": true,
                                                                         "type": "string"
@@ -7382,6 +7433,7 @@
                                                                     }
                                                                 },
                                                                 "required": [
+                                                                    "brand_name",
                                                                     "logo_url",
                                                                     "title",
                                                                     "description",
@@ -7834,6 +7886,18 @@
                 },
                 "parameters": [
                     {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "description": "Opt in to durable purchase status and current code_request. Without this option, legacy response fields and status semantics are preserved.",
+                            "type": "string",
+                            "enum": [
+                                "code_request"
+                            ]
+                        }
+                    },
+                    {
                         "name": "page",
                         "in": "query",
                         "required": false,
@@ -7879,7 +7943,7 @@
                         "in": "query",
                         "required": false,
                         "schema": {
-                            "description": "**Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code request) or `ERROR` (provider failure). Any status can transition to `REFUND` via admin action.\n\n**Important.** Status is immutable once set to `SUCCESS`, `ERROR`, or `REFUND`.\n\n**Filter options**\n- `PENDING` - code not requested.\n- `SUCCESS` - code ready.\n- `ERROR` - provider failed.\n- `REFUND` - money returned.",
+                            "description": "Legacy status projection: PENDING while the current retail code request is pending or failed, SUCCESS when its code is available. With include=code_request, status describes the durable purchase; code_request describes the current request. REFUND and access rules still apply.",
                             "example": "SUCCESS",
                             "type": "string",
                             "enum": [
@@ -7951,6 +8015,52 @@
                                             "items": {
                                                 "type": "object",
                                                 "properties": {
+                                                    "code_request": {
+                                                        "nullable": true,
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "status": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "not_requested",
+                                                                    "pending",
+                                                                    "success",
+                                                                    "failed"
+                                                                ]
+                                                            },
+                                                            "requested_at": {
+                                                                "nullable": true,
+                                                                "type": "string"
+                                                            },
+                                                            "expires_at": {
+                                                                "nullable": true,
+                                                                "type": "string"
+                                                            },
+                                                            "attempt": {
+                                                                "type": "integer",
+                                                                "minimum": 0,
+                                                                "maximum": 9007199254740991
+                                                            },
+                                                            "next_attempt_at": {
+                                                                "nullable": true,
+                                                                "type": "string"
+                                                            },
+                                                            "attempt_finishes_at": {
+                                                                "nullable": true,
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "status",
+                                                            "requested_at",
+                                                            "expires_at",
+                                                            "attempt",
+                                                            "next_attempt_at",
+                                                            "attempt_finishes_at"
+                                                        ],
+                                                        "additionalProperties": false,
+                                                        "description": "Current code request, separate from historical verification. Read-only polling never starts a cycle. / Текущий запрос отдельно от сохранённого кода; чтение не запускает цикл."
+                                                    },
                                                     "id": {
                                                         "type": "integer",
                                                         "minimum": 1,
@@ -8031,7 +8141,7 @@
                                                             "REFUND",
                                                             "EXPIRED"
                                                         ],
-                                                        "description": "**Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code request) or `ERROR` (provider failure). Any status can transition to `REFUND` via admin action.\n\n**Important.** Status is immutable once set to `SUCCESS`, `ERROR`, or `REFUND`.\n\n**Filter options**\n- `PENDING` - code not requested.\n- `SUCCESS` - code ready.\n- `ERROR` - provider failed.\n- `REFUND` - money returned.",
+                                                        "description": "Legacy status projection: PENDING while the current retail code request is pending or failed, SUCCESS when its code is available. With include=code_request, status describes the durable purchase; code_request describes the current request. REFUND and access rules still apply.",
                                                         "example": "SUCCESS"
                                                     },
                                                     "purchase_type": {
@@ -8056,7 +8166,7 @@
                                                     },
                                                     "verification": {
                                                         "nullable": true,
-                                                        "description": "**Verification Credentials.** Login credentials for the purchased Telegram account. Initially `null` after purchase creation.\n\n**Availability.** Populated after calling `POST /purchases/:id/request-code`. Once received, credentials are permanent and cannot be re-requested.\n\n**Security.** Verification data is only visible to the purchase owner.",
+                                                        "description": "Current verification credentials, or null while waiting/after failure. A completed request returns its stored result. With include=code_request, the current request state is available separately in code_request. Previous verification credentials are internal and are not returned.",
                                                         "type": "object",
                                                         "properties": {
                                                             "code": {
@@ -8076,7 +8186,7 @@
                                                             },
                                                             "received_at": {
                                                                 "type": "string",
-                                                                "description": "**Code Retrieval Timestamp.** Marks when verification code was successfully fetched from the provider (not when purchase was created).\n\n**Example timeline.**\n- `created_at`: `2024-11-19T10:00:00Z` (purchase created)\n- `received_at`: `2024-11-19T10:05:02Z` (code requested 5 minutes later)\n\n**Note.** These timestamps may be identical if code is requested immediately after purchase.",
+                                                                "description": "Legacy timestamp retained for compatibility: the purchase creation time. It does not identify a code request.",
                                                                 "example": "2024-11-19T07:52:00.000Z"
                                                             }
                                                         },
@@ -8096,6 +8206,11 @@
                                                         "nullable": true,
                                                         "type": "object",
                                                         "properties": {
+                                                            "brand_name": {
+                                                                "nullable": true,
+                                                                "description": "Public shop name, independent of the code page title.",
+                                                                "type": "string"
+                                                            },
                                                             "logo_url": {
                                                                 "nullable": true,
                                                                 "type": "string"
@@ -8114,6 +8229,7 @@
                                                             }
                                                         },
                                                         "required": [
+                                                            "brand_name",
                                                             "logo_url",
                                                             "title",
                                                             "description",
@@ -8477,7 +8593,7 @@
                         "in": "query",
                         "required": false,
                         "schema": {
-                            "description": "**Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code request) or `ERROR` (provider failure). Any status can transition to `REFUND` via admin action.\n\n**Important.** Status is immutable once set to `SUCCESS`, `ERROR`, or `REFUND`.\n\n**Filter options**\n- `PENDING` - code not requested.\n- `SUCCESS` - code ready.\n- `ERROR` - provider failed.\n- `REFUND` - money returned.",
+                            "description": "Legacy status projection: PENDING while the current retail code request is pending or failed, SUCCESS when its code is available. With include=code_request, status describes the durable purchase; code_request describes the current request. REFUND and access rules still apply.",
                             "example": "SUCCESS",
                             "type": "string",
                             "enum": [
@@ -8575,6 +8691,18 @@
                         }
                     },
                     {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "description": "Opt in to durable purchase status and current code_request. Without this option, legacy response fields and status semantics are preserved.",
+                            "type": "string",
+                            "enum": [
+                                "code_request"
+                            ]
+                        }
+                    },
+                    {
                         "name": "page",
                         "in": "query",
                         "required": false,
@@ -8629,6 +8757,52 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
+                                        "code_request": {
+                                            "nullable": true,
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "not_requested",
+                                                        "pending",
+                                                        "success",
+                                                        "failed"
+                                                    ]
+                                                },
+                                                "requested_at": {
+                                                    "nullable": true,
+                                                    "type": "string"
+                                                },
+                                                "expires_at": {
+                                                    "nullable": true,
+                                                    "type": "string"
+                                                },
+                                                "attempt": {
+                                                    "type": "integer",
+                                                    "minimum": 0,
+                                                    "maximum": 9007199254740991
+                                                },
+                                                "next_attempt_at": {
+                                                    "nullable": true,
+                                                    "type": "string"
+                                                },
+                                                "attempt_finishes_at": {
+                                                    "nullable": true,
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status",
+                                                "requested_at",
+                                                "expires_at",
+                                                "attempt",
+                                                "next_attempt_at",
+                                                "attempt_finishes_at"
+                                            ],
+                                            "additionalProperties": false,
+                                            "description": "Current code request, separate from historical verification. Read-only polling never starts a cycle. / Текущий запрос отдельно от сохранённого кода; чтение не запускает цикл."
+                                        },
                                         "id": {
                                             "type": "integer",
                                             "minimum": 1,
@@ -8709,7 +8883,7 @@
                                                 "REFUND",
                                                 "EXPIRED"
                                             ],
-                                            "description": "**Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code request) or `ERROR` (provider failure). Any status can transition to `REFUND` via admin action.\n\n**Important.** Status is immutable once set to `SUCCESS`, `ERROR`, or `REFUND`.\n\n**Filter options**\n- `PENDING` - code not requested.\n- `SUCCESS` - code ready.\n- `ERROR` - provider failed.\n- `REFUND` - money returned.",
+                                            "description": "Legacy status projection: PENDING while the current retail code request is pending or failed, SUCCESS when its code is available. With include=code_request, status describes the durable purchase; code_request describes the current request. REFUND and access rules still apply.",
                                             "example": "SUCCESS"
                                         },
                                         "purchase_type": {
@@ -8734,7 +8908,7 @@
                                         },
                                         "verification": {
                                             "nullable": true,
-                                            "description": "**Verification Credentials.** Login credentials for the purchased Telegram account. Initially `null` after purchase creation.\n\n**Availability.** Populated after calling `POST /purchases/:id/request-code`. Once received, credentials are permanent and cannot be re-requested.\n\n**Security.** Verification data is only visible to the purchase owner.",
+                                            "description": "Current verification credentials, or null while waiting/after failure. A completed request returns its stored result. With include=code_request, the current request state is available separately in code_request. Previous verification credentials are internal and are not returned.",
                                             "type": "object",
                                             "properties": {
                                                 "code": {
@@ -8754,7 +8928,7 @@
                                                 },
                                                 "received_at": {
                                                     "type": "string",
-                                                    "description": "**Code Retrieval Timestamp.** Marks when verification code was successfully fetched from the provider (not when purchase was created).\n\n**Example timeline.**\n- `created_at`: `2024-11-19T10:00:00Z` (purchase created)\n- `received_at`: `2024-11-19T10:05:02Z` (code requested 5 minutes later)\n\n**Note.** These timestamps may be identical if code is requested immediately after purchase.",
+                                                    "description": "Legacy timestamp retained for compatibility: the purchase creation time. It does not identify a code request.",
                                                     "example": "2024-11-19T07:52:00.000Z"
                                                 }
                                             },
@@ -8774,6 +8948,11 @@
                                             "nullable": true,
                                             "type": "object",
                                             "properties": {
+                                                "brand_name": {
+                                                    "nullable": true,
+                                                    "description": "Public shop name, independent of the code page title.",
+                                                    "type": "string"
+                                                },
                                                 "logo_url": {
                                                     "nullable": true,
                                                     "type": "string"
@@ -8792,6 +8971,7 @@
                                                 }
                                             },
                                             "required": [
+                                                "brand_name",
                                                 "logo_url",
                                                 "title",
                                                 "description",
@@ -9788,7 +9968,7 @@
                         "in": "query",
                         "required": false,
                         "schema": {
-                            "description": "**Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code request) or `ERROR` (provider failure). Any status can transition to `REFUND` via admin action.\n\n**Important.** Status is immutable once set to `SUCCESS`, `ERROR`, or `REFUND`.\n\n**Filter options**\n- `PENDING` - code not requested.\n- `SUCCESS` - code ready.\n- `ERROR` - provider failed.\n- `REFUND` - money returned.",
+                            "description": "Legacy status projection: PENDING while the current retail code request is pending or failed, SUCCESS when its code is available. With include=code_request, status describes the durable purchase; code_request describes the current request. REFUND and access rules still apply.",
                             "example": "SUCCESS",
                             "type": "string",
                             "enum": [
@@ -11467,6 +11647,52 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
+                                        "code_request": {
+                                            "nullable": true,
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "not_requested",
+                                                        "pending",
+                                                        "success",
+                                                        "failed"
+                                                    ]
+                                                },
+                                                "requested_at": {
+                                                    "nullable": true,
+                                                    "type": "string"
+                                                },
+                                                "expires_at": {
+                                                    "nullable": true,
+                                                    "type": "string"
+                                                },
+                                                "attempt": {
+                                                    "type": "integer",
+                                                    "minimum": 0,
+                                                    "maximum": 9007199254740991
+                                                },
+                                                "next_attempt_at": {
+                                                    "nullable": true,
+                                                    "type": "string"
+                                                },
+                                                "attempt_finishes_at": {
+                                                    "nullable": true,
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status",
+                                                "requested_at",
+                                                "expires_at",
+                                                "attempt",
+                                                "next_attempt_at",
+                                                "attempt_finishes_at"
+                                            ],
+                                            "additionalProperties": false,
+                                            "description": "Current code request, separate from historical verification. Read-only polling never starts a cycle. / Текущий запрос отдельно от сохранённого кода; чтение не запускает цикл."
+                                        },
                                         "id": {
                                             "type": "integer",
                                             "minimum": 1,
@@ -11547,7 +11773,7 @@
                                                 "REFUND",
                                                 "EXPIRED"
                                             ],
-                                            "description": "**Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code request) or `ERROR` (provider failure). Any status can transition to `REFUND` via admin action.\n\n**Important.** Status is immutable once set to `SUCCESS`, `ERROR`, or `REFUND`.\n\n**Filter options**\n- `PENDING` - code not requested.\n- `SUCCESS` - code ready.\n- `ERROR` - provider failed.\n- `REFUND` - money returned.",
+                                            "description": "Legacy status projection: PENDING while the current retail code request is pending or failed, SUCCESS when its code is available. With include=code_request, status describes the durable purchase; code_request describes the current request. REFUND and access rules still apply.",
                                             "example": "SUCCESS"
                                         },
                                         "purchase_type": {
@@ -11572,7 +11798,7 @@
                                         },
                                         "verification": {
                                             "nullable": true,
-                                            "description": "**Verification Credentials.** Login credentials for the purchased Telegram account. Initially `null` after purchase creation.\n\n**Availability.** Populated after calling `POST /purchases/:id/request-code`. Once received, credentials are permanent and cannot be re-requested.\n\n**Security.** Verification data is only visible to the purchase owner.",
+                                            "description": "Current verification credentials, or null while waiting/after failure. A completed request returns its stored result. With include=code_request, the current request state is available separately in code_request. Previous verification credentials are internal and are not returned.",
                                             "type": "object",
                                             "properties": {
                                                 "code": {
@@ -11592,7 +11818,7 @@
                                                 },
                                                 "received_at": {
                                                     "type": "string",
-                                                    "description": "**Code Retrieval Timestamp.** Marks when verification code was successfully fetched from the provider (not when purchase was created).\n\n**Example timeline.**\n- `created_at`: `2024-11-19T10:00:00Z` (purchase created)\n- `received_at`: `2024-11-19T10:05:02Z` (code requested 5 minutes later)\n\n**Note.** These timestamps may be identical if code is requested immediately after purchase.",
+                                                    "description": "Legacy timestamp retained for compatibility: the purchase creation time. It does not identify a code request.",
                                                     "example": "2024-11-19T07:52:00.000Z"
                                                 }
                                             },
@@ -11612,6 +11838,11 @@
                                             "nullable": true,
                                             "type": "object",
                                             "properties": {
+                                                "brand_name": {
+                                                    "nullable": true,
+                                                    "description": "Public shop name, independent of the code page title.",
+                                                    "type": "string"
+                                                },
                                                 "logo_url": {
                                                     "nullable": true,
                                                     "type": "string"
@@ -11630,6 +11861,7 @@
                                                 }
                                             },
                                             "required": [
+                                                "brand_name",
                                                 "logo_url",
                                                 "title",
                                                 "description",
@@ -11986,6 +12218,18 @@
                             "description": "Unique purchase identifier.",
                             "example": 12345
                         }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "description": "Opt in to durable purchase status and current code_request. Without this option, legacy response fields and status semantics are preserved.",
+                            "type": "string",
+                            "enum": [
+                                "code_request"
+                            ]
+                        }
                     }
                 ],
                 "operationId": "getV1PurchasesByPurchase_id",
@@ -12006,7 +12250,7 @@
         "/v1/purchases/{purchase_id}/request-code": {
             "post": {
                 "summary": "Request verification code",
-                "description": "Queues verification code retrieval. Active duplicate requests keep the original start time.\n\n**Waiting policy.** The window is 20 minutes from the first code request. Retryable not_ready/provider_error responses continue beyond 18 attempts: pauses are 10 seconds after attempts 1–3 and 60 seconds from attempt 4. Timeouts use the shared attempt counter (limit 18) and 20/40/80/120-second backoff, capped at 120 seconds. A non-retryable response ends the request immediately.\n\n**Completion.** A received code ends waiting. After terminal failure, repeated requests return failed without starting a new cycle; no automatic refund occurs. An already successful GMT purchase retains the existing code re-request behavior.\n\n**Webhook notification.** Supply callback_url for a success or failed webhook; failed does not mean refunded.",
+                "description": "Queues verification code retrieval. Active duplicate requests keep the original start time.\n\n**Waiting policy.** The window is 20 minutes from the first code request. Retryable not_ready/provider_error responses continue beyond 18 attempts: pauses are 10 seconds after attempts 1–3 and 60 seconds from attempt 4. Timeouts use the shared attempt counter (limit 18) and 20/40/80/120-second backoff, capped at 120 seconds. A non-retryable response ends the request immediately.\n\n**Completion.** A received code ends waiting. After terminal failure, repeated requests return failed without starting a new cycle; no automatic refund occurs. POST after success returns the stored result without starting another request. Default responses keep the existing fields: a pending or failed refresh is PENDING with verification=null. Opt in with include=code_request on GET/POST/list/history to receive the durable purchase status, current code_request. GET never starts a cycle. A terminal failed refresh cannot restart even when an older code is stored.\n\n**Webhook notification.** Supply callback_url for a success or failed webhook; failed does not mean refunded.",
                 "tags": [
                     "Purchases"
                 ],
@@ -12021,6 +12265,52 @@
                                         "purchase": {
                                             "type": "object",
                                             "properties": {
+                                                "code_request": {
+                                                    "nullable": true,
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "status": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "not_requested",
+                                                                "pending",
+                                                                "success",
+                                                                "failed"
+                                                            ]
+                                                        },
+                                                        "requested_at": {
+                                                            "nullable": true,
+                                                            "type": "string"
+                                                        },
+                                                        "expires_at": {
+                                                            "nullable": true,
+                                                            "type": "string"
+                                                        },
+                                                        "attempt": {
+                                                            "type": "integer",
+                                                            "minimum": 0,
+                                                            "maximum": 9007199254740991
+                                                        },
+                                                        "next_attempt_at": {
+                                                            "nullable": true,
+                                                            "type": "string"
+                                                        },
+                                                        "attempt_finishes_at": {
+                                                            "nullable": true,
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "status",
+                                                        "requested_at",
+                                                        "expires_at",
+                                                        "attempt",
+                                                        "next_attempt_at",
+                                                        "attempt_finishes_at"
+                                                    ],
+                                                    "additionalProperties": false,
+                                                    "description": "Current code request, separate from historical verification. Read-only polling never starts a cycle. / Текущий запрос отдельно от сохранённого кода; чтение не запускает цикл."
+                                                },
                                                 "id": {
                                                     "type": "integer",
                                                     "minimum": 1,
@@ -12101,7 +12391,7 @@
                                                         "REFUND",
                                                         "EXPIRED"
                                                     ],
-                                                    "description": "**Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code request) or `ERROR` (provider failure). Any status can transition to `REFUND` via admin action.\n\n**Important.** Status is immutable once set to `SUCCESS`, `ERROR`, or `REFUND`.\n\n**Filter options**\n- `PENDING` - code not requested.\n- `SUCCESS` - code ready.\n- `ERROR` - provider failed.\n- `REFUND` - money returned.",
+                                                    "description": "Legacy status projection: PENDING while the current retail code request is pending or failed, SUCCESS when its code is available. With include=code_request, status describes the durable purchase; code_request describes the current request. REFUND and access rules still apply.",
                                                     "example": "SUCCESS"
                                                 },
                                                 "purchase_type": {
@@ -12126,7 +12416,7 @@
                                                 },
                                                 "verification": {
                                                     "nullable": true,
-                                                    "description": "**Verification Credentials.** Login credentials for the purchased Telegram account. Initially `null` after purchase creation.\n\n**Availability.** Populated after calling `POST /purchases/:id/request-code`. Once received, credentials are permanent and cannot be re-requested.\n\n**Security.** Verification data is only visible to the purchase owner.",
+                                                    "description": "Current verification credentials, or null while waiting/after failure. A completed request returns its stored result. With include=code_request, the current request state is available separately in code_request. Previous verification credentials are internal and are not returned.",
                                                     "type": "object",
                                                     "properties": {
                                                         "code": {
@@ -12146,7 +12436,7 @@
                                                         },
                                                         "received_at": {
                                                             "type": "string",
-                                                            "description": "**Code Retrieval Timestamp.** Marks when verification code was successfully fetched from the provider (not when purchase was created).\n\n**Example timeline.**\n- `created_at`: `2024-11-19T10:00:00Z` (purchase created)\n- `received_at`: `2024-11-19T10:05:02Z` (code requested 5 minutes later)\n\n**Note.** These timestamps may be identical if code is requested immediately after purchase.",
+                                                            "description": "Legacy timestamp retained for compatibility: the purchase creation time. It does not identify a code request.",
                                                             "example": "2024-11-19T07:52:00.000Z"
                                                         }
                                                     },
@@ -12166,6 +12456,11 @@
                                                     "nullable": true,
                                                     "type": "object",
                                                     "properties": {
+                                                        "brand_name": {
+                                                            "nullable": true,
+                                                            "description": "Public shop name, independent of the code page title.",
+                                                            "type": "string"
+                                                        },
                                                         "logo_url": {
                                                             "nullable": true,
                                                             "type": "string"
@@ -12184,6 +12479,7 @@
                                                         }
                                                     },
                                                     "required": [
+                                                        "brand_name",
                                                         "logo_url",
                                                         "title",
                                                         "description",
@@ -12599,6 +12895,18 @@
                             "description": "Unique purchase identifier.",
                             "example": 12345
                         }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "description": "Opt in to durable purchase status and current code_request. Without this option, legacy response fields and status semantics are preserved.",
+                            "type": "string",
+                            "enum": [
+                                "code_request"
+                            ]
+                        }
                     }
                 ],
                 "requestBody": {
@@ -12666,7 +12974,7 @@
         "/v1/purchases/{purchase_id}/refund": {
             "post": {
                 "summary": "Refund purchase",
-                "description": "Refunds an API purchase at its owner’s explicit request.\n\n**Requirements:**\n- The purchase was created through the API (stored source `api`), regardless of the credential used now. Bot and website purchases require support.\n- Status `PENDING`, with no received code or password. `ERROR`, `SUCCESS`, `EXPIRED` and `REFUND` are not eligible.\n- At least 20 minutes since purchase creation; requesting a code first is not required. This timer is independent of the code request window.\n\nCode retrieval failures never trigger an automatic retail refund.",
+                "description": "Refunds an API purchase at its owner’s explicit request.\n\n**Requirements:**\n- The purchase was created through the API (stored source `api`), regardless of the credential used now. Bot and website purchases require support.\n- Status `PENDING`, with no received code or password. `ERROR`, `SUCCESS`, `EXPIRED` and `REFUND` are not eligible.\n- At least 20 minutes since purchase creation; requesting a code first is not required. This timer is independent of the code request window.\n\nCode retrieval failures never trigger an automatic retail refund.\n\n**Concurrent changes:** if the atomic refund loses a race, the error reflects the re-read purchase state: already refunded, ineligible status or channel, or an actually received code/password. A failed transition alone does not mean a code was received. The losing request never credits the balance or repeats refund side effects.",
                 "tags": [
                     "Purchases"
                 ],
@@ -12681,6 +12989,52 @@
                                         "purchase": {
                                             "type": "object",
                                             "properties": {
+                                                "code_request": {
+                                                    "nullable": true,
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "status": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "not_requested",
+                                                                "pending",
+                                                                "success",
+                                                                "failed"
+                                                            ]
+                                                        },
+                                                        "requested_at": {
+                                                            "nullable": true,
+                                                            "type": "string"
+                                                        },
+                                                        "expires_at": {
+                                                            "nullable": true,
+                                                            "type": "string"
+                                                        },
+                                                        "attempt": {
+                                                            "type": "integer",
+                                                            "minimum": 0,
+                                                            "maximum": 9007199254740991
+                                                        },
+                                                        "next_attempt_at": {
+                                                            "nullable": true,
+                                                            "type": "string"
+                                                        },
+                                                        "attempt_finishes_at": {
+                                                            "nullable": true,
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "status",
+                                                        "requested_at",
+                                                        "expires_at",
+                                                        "attempt",
+                                                        "next_attempt_at",
+                                                        "attempt_finishes_at"
+                                                    ],
+                                                    "additionalProperties": false,
+                                                    "description": "Current code request, separate from historical verification. Read-only polling never starts a cycle. / Текущий запрос отдельно от сохранённого кода; чтение не запускает цикл."
+                                                },
                                                 "id": {
                                                     "type": "integer",
                                                     "minimum": 1,
@@ -12761,7 +13115,7 @@
                                                         "REFUND",
                                                         "EXPIRED"
                                                     ],
-                                                    "description": "**Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code request) or `ERROR` (provider failure). Any status can transition to `REFUND` via admin action.\n\n**Important.** Status is immutable once set to `SUCCESS`, `ERROR`, or `REFUND`.\n\n**Filter options**\n- `PENDING` - code not requested.\n- `SUCCESS` - code ready.\n- `ERROR` - provider failed.\n- `REFUND` - money returned.",
+                                                    "description": "Legacy status projection: PENDING while the current retail code request is pending or failed, SUCCESS when its code is available. With include=code_request, status describes the durable purchase; code_request describes the current request. REFUND and access rules still apply.",
                                                     "example": "SUCCESS"
                                                 },
                                                 "purchase_type": {
@@ -12786,7 +13140,7 @@
                                                 },
                                                 "verification": {
                                                     "nullable": true,
-                                                    "description": "**Verification Credentials.** Login credentials for the purchased Telegram account. Initially `null` after purchase creation.\n\n**Availability.** Populated after calling `POST /purchases/:id/request-code`. Once received, credentials are permanent and cannot be re-requested.\n\n**Security.** Verification data is only visible to the purchase owner.",
+                                                    "description": "Current verification credentials, or null while waiting/after failure. A completed request returns its stored result. With include=code_request, the current request state is available separately in code_request. Previous verification credentials are internal and are not returned.",
                                                     "type": "object",
                                                     "properties": {
                                                         "code": {
@@ -12806,7 +13160,7 @@
                                                         },
                                                         "received_at": {
                                                             "type": "string",
-                                                            "description": "**Code Retrieval Timestamp.** Marks when verification code was successfully fetched from the provider (not when purchase was created).\n\n**Example timeline.**\n- `created_at`: `2024-11-19T10:00:00Z` (purchase created)\n- `received_at`: `2024-11-19T10:05:02Z` (code requested 5 minutes later)\n\n**Note.** These timestamps may be identical if code is requested immediately after purchase.",
+                                                            "description": "Legacy timestamp retained for compatibility: the purchase creation time. It does not identify a code request.",
                                                             "example": "2024-11-19T07:52:00.000Z"
                                                         }
                                                     },
@@ -12826,6 +13180,11 @@
                                                     "nullable": true,
                                                     "type": "object",
                                                     "properties": {
+                                                        "brand_name": {
+                                                            "nullable": true,
+                                                            "description": "Public shop name, independent of the code page title.",
+                                                            "type": "string"
+                                                        },
                                                         "logo_url": {
                                                             "nullable": true,
                                                             "type": "string"
@@ -12844,6 +13203,7 @@
                                                         }
                                                     },
                                                     "required": [
+                                                        "brand_name",
                                                         "logo_url",
                                                         "title",
                                                         "description",
@@ -13381,6 +13741,52 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
+                                        "code_request": {
+                                            "nullable": true,
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "not_requested",
+                                                        "pending",
+                                                        "success",
+                                                        "failed"
+                                                    ]
+                                                },
+                                                "requested_at": {
+                                                    "nullable": true,
+                                                    "type": "string"
+                                                },
+                                                "expires_at": {
+                                                    "nullable": true,
+                                                    "type": "string"
+                                                },
+                                                "attempt": {
+                                                    "type": "integer",
+                                                    "minimum": 0,
+                                                    "maximum": 9007199254740991
+                                                },
+                                                "next_attempt_at": {
+                                                    "nullable": true,
+                                                    "type": "string"
+                                                },
+                                                "attempt_finishes_at": {
+                                                    "nullable": true,
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status",
+                                                "requested_at",
+                                                "expires_at",
+                                                "attempt",
+                                                "next_attempt_at",
+                                                "attempt_finishes_at"
+                                            ],
+                                            "additionalProperties": false,
+                                            "description": "Current code request, separate from historical verification. Read-only polling never starts a cycle. / Текущий запрос отдельно от сохранённого кода; чтение не запускает цикл."
+                                        },
                                         "id": {
                                             "type": "integer",
                                             "minimum": 1,
@@ -13461,7 +13867,7 @@
                                                 "REFUND",
                                                 "EXPIRED"
                                             ],
-                                            "description": "**Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code request) or `ERROR` (provider failure). Any status can transition to `REFUND` via admin action.\n\n**Important.** Status is immutable once set to `SUCCESS`, `ERROR`, or `REFUND`.\n\n**Filter options**\n- `PENDING` - code not requested.\n- `SUCCESS` - code ready.\n- `ERROR` - provider failed.\n- `REFUND` - money returned.",
+                                            "description": "Legacy status projection: PENDING while the current retail code request is pending or failed, SUCCESS when its code is available. With include=code_request, status describes the durable purchase; code_request describes the current request. REFUND and access rules still apply.",
                                             "example": "SUCCESS"
                                         },
                                         "purchase_type": {
@@ -13486,7 +13892,7 @@
                                         },
                                         "verification": {
                                             "nullable": true,
-                                            "description": "**Verification Credentials.** Login credentials for the purchased Telegram account. Initially `null` after purchase creation.\n\n**Availability.** Populated after calling `POST /purchases/:id/request-code`. Once received, credentials are permanent and cannot be re-requested.\n\n**Security.** Verification data is only visible to the purchase owner.",
+                                            "description": "Current verification credentials, or null while waiting/after failure. A completed request returns its stored result. With include=code_request, the current request state is available separately in code_request. Previous verification credentials are internal and are not returned.",
                                             "type": "object",
                                             "properties": {
                                                 "code": {
@@ -13506,7 +13912,7 @@
                                                 },
                                                 "received_at": {
                                                     "type": "string",
-                                                    "description": "**Code Retrieval Timestamp.** Marks when verification code was successfully fetched from the provider (not when purchase was created).\n\n**Example timeline.**\n- `created_at`: `2024-11-19T10:00:00Z` (purchase created)\n- `received_at`: `2024-11-19T10:05:02Z` (code requested 5 minutes later)\n\n**Note.** These timestamps may be identical if code is requested immediately after purchase.",
+                                                    "description": "Legacy timestamp retained for compatibility: the purchase creation time. It does not identify a code request.",
                                                     "example": "2024-11-19T07:52:00.000Z"
                                                 }
                                             },
@@ -13526,6 +13932,11 @@
                                             "nullable": true,
                                             "type": "object",
                                             "properties": {
+                                                "brand_name": {
+                                                    "nullable": true,
+                                                    "description": "Public shop name, independent of the code page title.",
+                                                    "type": "string"
+                                                },
                                                 "logo_url": {
                                                     "nullable": true,
                                                     "type": "string"
@@ -13544,6 +13955,7 @@
                                                 }
                                             },
                                             "required": [
+                                                "brand_name",
                                                 "logo_url",
                                                 "title",
                                                 "description",
@@ -13751,6 +14163,18 @@
                             "description": "Unique hash code of the purchase",
                             "example": "abc-def-1234567890"
                         }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "description": "Opt in to durable purchase status and current code_request. Without this option, legacy response fields and status semantics are preserved.",
+                            "type": "string",
+                            "enum": [
+                                "code_request"
+                            ]
+                        }
                     }
                 ],
                 "operationId": "getV1Purchases-by-hashByHash",
@@ -13787,6 +14211,52 @@
                                         "purchase": {
                                             "type": "object",
                                             "properties": {
+                                                "code_request": {
+                                                    "nullable": true,
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "status": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "not_requested",
+                                                                "pending",
+                                                                "success",
+                                                                "failed"
+                                                            ]
+                                                        },
+                                                        "requested_at": {
+                                                            "nullable": true,
+                                                            "type": "string"
+                                                        },
+                                                        "expires_at": {
+                                                            "nullable": true,
+                                                            "type": "string"
+                                                        },
+                                                        "attempt": {
+                                                            "type": "integer",
+                                                            "minimum": 0,
+                                                            "maximum": 9007199254740991
+                                                        },
+                                                        "next_attempt_at": {
+                                                            "nullable": true,
+                                                            "type": "string"
+                                                        },
+                                                        "attempt_finishes_at": {
+                                                            "nullable": true,
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "status",
+                                                        "requested_at",
+                                                        "expires_at",
+                                                        "attempt",
+                                                        "next_attempt_at",
+                                                        "attempt_finishes_at"
+                                                    ],
+                                                    "additionalProperties": false,
+                                                    "description": "Current code request, separate from historical verification. Read-only polling never starts a cycle. / Текущий запрос отдельно от сохранённого кода; чтение не запускает цикл."
+                                                },
                                                 "id": {
                                                     "type": "integer",
                                                     "minimum": 1,
@@ -13867,7 +14337,7 @@
                                                         "REFUND",
                                                         "EXPIRED"
                                                     ],
-                                                    "description": "**Purchase Status Lifecycle.** `PENDING` (initial) → `SUCCESS` (after code request) or `ERROR` (provider failure). Any status can transition to `REFUND` via admin action.\n\n**Important.** Status is immutable once set to `SUCCESS`, `ERROR`, or `REFUND`.\n\n**Filter options**\n- `PENDING` - code not requested.\n- `SUCCESS` - code ready.\n- `ERROR` - provider failed.\n- `REFUND` - money returned.",
+                                                    "description": "Legacy status projection: PENDING while the current retail code request is pending or failed, SUCCESS when its code is available. With include=code_request, status describes the durable purchase; code_request describes the current request. REFUND and access rules still apply.",
                                                     "example": "SUCCESS"
                                                 },
                                                 "purchase_type": {
@@ -13892,7 +14362,7 @@
                                                 },
                                                 "verification": {
                                                     "nullable": true,
-                                                    "description": "**Verification Credentials.** Login credentials for the purchased Telegram account. Initially `null` after purchase creation.\n\n**Availability.** Populated after calling `POST /purchases/:id/request-code`. Once received, credentials are permanent and cannot be re-requested.\n\n**Security.** Verification data is only visible to the purchase owner.",
+                                                    "description": "Current verification credentials, or null while waiting/after failure. A completed request returns its stored result. With include=code_request, the current request state is available separately in code_request. Previous verification credentials are internal and are not returned.",
                                                     "type": "object",
                                                     "properties": {
                                                         "code": {
@@ -13912,7 +14382,7 @@
                                                         },
                                                         "received_at": {
                                                             "type": "string",
-                                                            "description": "**Code Retrieval Timestamp.** Marks when verification code was successfully fetched from the provider (not when purchase was created).\n\n**Example timeline.**\n- `created_at`: `2024-11-19T10:00:00Z` (purchase created)\n- `received_at`: `2024-11-19T10:05:02Z` (code requested 5 minutes later)\n\n**Note.** These timestamps may be identical if code is requested immediately after purchase.",
+                                                            "description": "Legacy timestamp retained for compatibility: the purchase creation time. It does not identify a code request.",
                                                             "example": "2024-11-19T07:52:00.000Z"
                                                         }
                                                     },
@@ -13932,6 +14402,11 @@
                                                     "nullable": true,
                                                     "type": "object",
                                                     "properties": {
+                                                        "brand_name": {
+                                                            "nullable": true,
+                                                            "description": "Public shop name, independent of the code page title.",
+                                                            "type": "string"
+                                                        },
                                                         "logo_url": {
                                                             "nullable": true,
                                                             "type": "string"
@@ -13950,6 +14425,7 @@
                                                         }
                                                     },
                                                     "required": [
+                                                        "brand_name",
                                                         "logo_url",
                                                         "title",
                                                         "description",
@@ -14199,6 +14675,18 @@
                             "minLength": 1,
                             "description": "Unique hash code of the purchase",
                             "example": "abc-def-1234567890"
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "description": "Opt in to durable purchase status and current code_request. Without this option, legacy response fields and status semantics are preserved.",
+                            "type": "string",
+                            "enum": [
+                                "code_request"
+                            ]
                         }
                     }
                 ],
