@@ -142,3 +142,23 @@ test(
     assert.equal(bulk.items[0].bulk_purchase_id, 104)
   },
 )
+
+test('purchase list accepts legacy, expanded and explicit null response fields', async () => {
+  const client = new Gmt({ ...options, apiKey: 'test-api-key' })
+  const query = { page: 1, page_size: 1, sort: 'date_desc' }
+
+  const legacy = await client.purchases.list(query)
+  assert.equal(legacy.items[0].status, 'SUCCESS')
+  assert.equal(legacy.items[0].code_page.title, 'GMT')
+  assert.equal(legacy.items[0].code_page.brand_name, undefined)
+  assert.equal(legacy.items[0].code_request, undefined)
+
+  const current = await client.purchases.list({ ...query, include: 'code_request' })
+  assert.equal(current.items[0].code_page.brand_name, 'GMT Shop')
+  assert.equal(current.items[0].code_request.status, 'pending')
+  assert.equal(current.items[0].code_request.attempt, 1)
+
+  const explicitNull = await client.purchases.list({ ...query, page: 2, include: 'code_request' })
+  assert.equal(explicitNull.items[0].code_page.brand_name, null)
+  assert.equal(explicitNull.items[0].code_request, null)
+})

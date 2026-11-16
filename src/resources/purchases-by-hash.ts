@@ -1,4 +1,4 @@
-import type { CodePage } from '../internal/code-page';
+import type { CodePage, PurchaseResponseFields } from '../internal/code-page';
 import { operations } from '../internal/operations';
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
@@ -64,7 +64,7 @@ export class PurchasesByHash extends APIResource {
   }
 }
 
-export interface PurchasesByHashRetrieveResponse {
+export interface PurchasesByHashRetrieveResponse extends PurchaseResponseFields {
   code_page?: CodePage | null;
 
   /**
@@ -256,7 +256,7 @@ export namespace PurchasesByHashRequestVerificationCodeResponse {
     status: 'not_requested' | 'pending' | 'success' | 'failed';
   }
 
-  export interface Purchase {
+  export interface Purchase extends PurchaseResponseFields {
     code_page?: CodePage | null;
 
     /**

@@ -1,4 +1,4 @@
-import type { CodePage } from '../../internal/code-page';
+import type { CodePage, PurchaseResponseFields } from '../../internal/code-page';
 import { operations } from '../../internal/operations';
 import { APIResource } from '../../core/resource';
 import * as BulkAPI from './bulk';
@@ -160,7 +160,7 @@ export class Purchases extends APIResource {
 
 export type PurchaseListResponsesPageNumber = PageNumber<PurchaseListResponse>;
 
-export interface PurchaseCreateResponse {
+export interface PurchaseCreateResponse extends PurchaseResponseFields {
   code_page?: CodePage | null;
 
   /**
@@ -318,7 +318,7 @@ export namespace PurchaseCreateResponse {
   }
 }
 
-export interface PurchaseRetrieveResponse {
+export interface PurchaseRetrieveResponse extends PurchaseResponseFields {
   code_page?: CodePage | null;
 
   /**
@@ -476,7 +476,7 @@ export namespace PurchaseRetrieveResponse {
   }
 }
 
-export interface PurchaseListResponse {
+export interface PurchaseListResponse extends PurchaseResponseFields {
   code_page?: CodePage | null;
 
   /**
@@ -641,7 +641,7 @@ export interface PurchaseRefundResponse {
 }
 
 export namespace PurchaseRefundResponse {
-  export interface Purchase {
+  export interface Purchase extends PurchaseResponseFields {
     code_page?: CodePage | null;
 
     /**
@@ -868,7 +868,7 @@ export namespace PurchaseRequestVerificationCodeResponse {
     status: 'not_requested' | 'pending' | 'success' | 'failed';
   }
 
-  export interface Purchase {
+  export interface Purchase extends PurchaseResponseFields {
     code_page?: CodePage | null;
 
     /**
@@ -1035,6 +1035,9 @@ export interface PurchaseCreateParams {
 }
 
 export interface PurchaseListParams extends PageNumberParams {
+  /** Opt in to the current verification code request and durable purchase status. */
+  include?: 'code_request';
+
   /**
    * Sort purchases by creation date
    */

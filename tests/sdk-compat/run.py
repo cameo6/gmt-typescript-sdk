@@ -27,6 +27,8 @@ def purchase(id_, status):
         "created_at": NOW,
         "display_name": {"en": "United States", "ru": "США"},
         "emoji": "🇺🇸",
+        "phone_number": None,
+        "verification": None,
         "price": {"amount": "1.00", "currency_code": "USD"},
         "purchase_source": "API",
         "purchase_type": "SINGLE",
@@ -102,8 +104,19 @@ class GmtHandler(BaseHTTPRequestHandler):
             return
 
         page_number = int(page[0])
+        item = purchase(100 + page_number, "SUCCESS")
+        if query.get("include") == ["code_request"]:
+            item["code_page"]["brand_name"] = "GMT Shop" if page_number == 1 else None
+            item["code_request"] = {
+                "status": "pending",
+                "requested_at": NOW,
+                "expires_at": None,
+                "attempt": 1,
+                "next_attempt_at": None,
+                "attempt_finishes_at": None,
+            } if page_number == 1 else None
         self.respond(200, {
-            "items": [purchase(100 + page_number, "SUCCESS")],
+            "items": [item],
             "pagination": {
                 "current_page": page_number,
                 "page_size": 1,
