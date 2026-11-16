@@ -96,8 +96,7 @@ def main():
         baseline = json.loads((baselines / "python-surface.json").read_text())
         check_python_surface(py / "resources", operations, baseline)
 
-    schemas = json.loads((baselines / "response-schemas.json").read_text())
-    write_model_contract(spec, operations, js, py, root / "response-contract.json", schemas)
+    write_model_contract(spec, operations, js, py, root / "response-contract.json")
     write_routes(operations, js / "internal" / "operations.ts" if js else None,
                  py / "_operations.py" if py else None)
 

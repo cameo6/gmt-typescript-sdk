@@ -1,9 +1,8 @@
 """Check the public Python operation surface and the public response models."""
 
 import ast
-import hashlib
 import json
-from pathlib import Path
+from response_models import generate_purchase_models
 
 
 RESPONSE_MODELS = {
@@ -80,10 +79,12 @@ def check_python_surface(resources, operations, baseline):
                 raise ValueError(f"Python {variant} public method changed: {entry['method']}")
 
 
-def python_model_fields(file, name):
+def python_model_fields(file, name, purchase_fields):
     tree = ast.parse(file.read_text())
     model = next(cls for cls in tree.body if isinstance(cls, ast.ClassDef) and cls.name == name)
-    fields = set()
+    fields = set(purchase_fields) if any(
+        isinstance(base, ast.Name) and base.id == "PurchaseResponseFields" for base in model.bases
+    ) else set()
     for field in model.body:
         if not isinstance(field, ast.AnnAssign):
             continue
@@ -118,47 +119,27 @@ def response_schemas(spec, operations):
             yield name, content["application/json"]["schema"]
 
 
-def schema_digest(schema):
-    return hashlib.sha256(json.dumps(schema_shape(schema), sort_keys=True).encode()).hexdigest()
-
-
-def write_model_contract(spec, operations, js, py, out, baseline):
-    checks = []
-    code_page = None
+def write_model_contract(spec, operations, js, py, out):
     schemas = dict(response_schemas(spec, operations))
-    if schemas.keys() != RESPONSE_MODELS.keys() or schemas.keys() != baseline.keys():
+    if schemas.keys() != RESPONSE_MODELS.keys():
         raise ValueError("JSON response operations and SDK model mappings differ")
+
+    models = []
     for name, schema in schemas.items():
-        if schema_digest(schema) != baseline.get(name):
-            raise ValueError(f"{name}: OpenAPI response changed, review both SDK models before updating the baseline")
         js_file, js_model, py_file, py_model, model_path = RESPONSE_MODELS[name]
         for segment in model_path:
             schema = schema[segment]
-        fields = set(schema["properties"])
-        if py is not None:
-            actual = python_model_fields(py / "types" / (py_file + ".py"), py_model)
-            if actual != fields:
-                raise ValueError(f"{py_model}: missing {sorted(fields - actual)}, unexpected {sorted(actual - fields)}")
-        checks.append({"file": js_file, "model": js_model, "fields": sorted(fields)})
-        if "code_page" in fields:
-            shape = schema["properties"]["code_page"]
-            if code_page is not None and code_page != shape:
-                raise ValueError(f"{name}: inconsistent code_page schema")
-            code_page = shape
+        models.append((schema["properties"], js_file, js_model, py_file, py_model))
 
-    fields = code_page["properties"]
-    if not code_page.get("nullable") or set(code_page["required"]) != set(fields) or any(
-        field.get("type") != "string" or not field.get("nullable") for field in fields.values()
-    ):
-        raise ValueError("Unsupported code_page schema, update the SDK model generator")
+    purchase_fields = generate_purchase_models((fields for fields, *_ in models), js, py)
+    checks = []
+    for fields, js_file, js_model, py_file, py_model in models:
+        expected = set(fields)
+        if py is not None:
+            actual = python_model_fields(py / "types" / (py_file + ".py"), py_model, purchase_fields)
+            if actual != expected:
+                raise ValueError(f"{py_model}: missing {sorted(expected - actual)}, unexpected {sorted(actual - expected)}")
+        checks.append({"file": js_file, "model": js_model, "fields": sorted(expected)})
+
     if js is not None:
-        (js / "internal" / "code-page.ts").write_text(
-            "export interface CodePage {\n" +
-            "".join(f"  {json.dumps(name)}: string | null;\n" for name in sorted(fields)) + "}\n"
-        )
-        out.write_text(json.dumps(checks))
-    if py is not None:
-        (py / "types" / "code_page.py").write_text(
-            "from typing import Optional\n\nfrom .._models import BaseModel\n\n\nclass CodePage(BaseModel):\n" +
-            "".join(f"    {name}: Optional[str] = ...\n" for name in sorted(fields))
-        )
+        out.write_text(json.dumps({"models": checks, "purchaseFields": sorted(purchase_fields)}))

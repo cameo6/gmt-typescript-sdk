@@ -25,3 +25,17 @@ export async function useClient(
     throw error
   }
 }
+
+export async function purchaseResponseTypes(client: Gmt) {
+  const result = await client.purchases.list({
+    page: 1,
+    page_size: 1,
+    sort: 'date_desc',
+    include: 'code_request',
+  })
+  const purchase = result.items[0]
+  const brand: string | null | undefined = purchase.code_page?.brand_name
+  const status: 'not_requested' | 'pending' | 'success' | 'failed' | undefined =
+    purchase.code_request?.status
+  return { brand, status }
+}
