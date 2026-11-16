@@ -7415,6 +7415,11 @@
                                                                         "description": "Public shop name, independent of the code page title.",
                                                                         "type": "string"
                                                                     },
+                                                                    "default_locale": {
+                                                                        "nullable": true,
+                                                                        "description": "Default language of the branded code page, as a language code.",
+                                                                        "type": "string"
+                                                                    },
                                                                     "logo_url": {
                                                                         "nullable": true,
                                                                         "type": "string"
@@ -7434,6 +7439,7 @@
                                                                 },
                                                                 "required": [
                                                                     "brand_name",
+                                                                    "default_locale",
                                                                     "logo_url",
                                                                     "title",
                                                                     "description",
@@ -8211,6 +8217,11 @@
                                                                 "description": "Public shop name, independent of the code page title.",
                                                                 "type": "string"
                                                             },
+                                                            "default_locale": {
+                                                                "nullable": true,
+                                                                "description": "Default language of the branded code page, as a language code.",
+                                                                "type": "string"
+                                                            },
                                                             "logo_url": {
                                                                 "nullable": true,
                                                                 "type": "string"
@@ -8230,6 +8241,7 @@
                                                         },
                                                         "required": [
                                                             "brand_name",
+                                                            "default_locale",
                                                             "logo_url",
                                                             "title",
                                                             "description",
@@ -8953,6 +8965,11 @@
                                                     "description": "Public shop name, independent of the code page title.",
                                                     "type": "string"
                                                 },
+                                                "default_locale": {
+                                                    "nullable": true,
+                                                    "description": "Default language of the branded code page, as a language code.",
+                                                    "type": "string"
+                                                },
                                                 "logo_url": {
                                                     "nullable": true,
                                                     "type": "string"
@@ -8972,6 +8989,7 @@
                                             },
                                             "required": [
                                                 "brand_name",
+                                                "default_locale",
                                                 "logo_url",
                                                 "title",
                                                 "description",
@@ -11843,6 +11861,11 @@
                                                     "description": "Public shop name, independent of the code page title.",
                                                     "type": "string"
                                                 },
+                                                "default_locale": {
+                                                    "nullable": true,
+                                                    "description": "Default language of the branded code page, as a language code.",
+                                                    "type": "string"
+                                                },
                                                 "logo_url": {
                                                     "nullable": true,
                                                     "type": "string"
@@ -11862,6 +11885,7 @@
                                             },
                                             "required": [
                                                 "brand_name",
+                                                "default_locale",
                                                 "logo_url",
                                                 "title",
                                                 "description",
@@ -12461,6 +12485,11 @@
                                                             "description": "Public shop name, independent of the code page title.",
                                                             "type": "string"
                                                         },
+                                                        "default_locale": {
+                                                            "nullable": true,
+                                                            "description": "Default language of the branded code page, as a language code.",
+                                                            "type": "string"
+                                                        },
                                                         "logo_url": {
                                                             "nullable": true,
                                                             "type": "string"
@@ -12480,6 +12509,7 @@
                                                     },
                                                     "required": [
                                                         "brand_name",
+                                                        "default_locale",
                                                         "logo_url",
                                                         "title",
                                                         "description",
@@ -13185,6 +13215,11 @@
                                                             "description": "Public shop name, independent of the code page title.",
                                                             "type": "string"
                                                         },
+                                                        "default_locale": {
+                                                            "nullable": true,
+                                                            "description": "Default language of the branded code page, as a language code.",
+                                                            "type": "string"
+                                                        },
                                                         "logo_url": {
                                                             "nullable": true,
                                                             "type": "string"
@@ -13204,6 +13239,7 @@
                                                     },
                                                     "required": [
                                                         "brand_name",
+                                                        "default_locale",
                                                         "logo_url",
                                                         "title",
                                                         "description",
@@ -13937,6 +13973,11 @@
                                                     "description": "Public shop name, independent of the code page title.",
                                                     "type": "string"
                                                 },
+                                                "default_locale": {
+                                                    "nullable": true,
+                                                    "description": "Default language of the branded code page, as a language code.",
+                                                    "type": "string"
+                                                },
                                                 "logo_url": {
                                                     "nullable": true,
                                                     "type": "string"
@@ -13956,6 +13997,7 @@
                                             },
                                             "required": [
                                                 "brand_name",
+                                                "default_locale",
                                                 "logo_url",
                                                 "title",
                                                 "description",
@@ -14407,6 +14449,11 @@
                                                             "description": "Public shop name, independent of the code page title.",
                                                             "type": "string"
                                                         },
+                                                        "default_locale": {
+                                                            "nullable": true,
+                                                            "description": "Default language of the branded code page, as a language code.",
+                                                            "type": "string"
+                                                        },
                                                         "logo_url": {
                                                             "nullable": true,
                                                             "type": "string"
@@ -14426,6 +14473,7 @@
                                                     },
                                                     "required": [
                                                         "brand_name",
+                                                        "default_locale",
                                                         "logo_url",
                                                         "title",
                                                         "description",
