@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.37.4
+
+- Add the optional purchase-list filter `include=code_request` and type the current code request in purchase responses.
+- Add shop name and default language to code-page models. Older responses can still omit either field.
+
 ## 0.37.3
 
 - Clarify the Unix epoch in the public OpenAPI description of the service time response.
