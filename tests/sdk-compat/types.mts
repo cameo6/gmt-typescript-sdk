@@ -39,3 +39,9 @@ export async function purchaseResponseTypes(client: Gmt) {
     purchase.code_request?.status
   return { brand, status }
 }
+
+export async function downloadArchive(client: Gmt): Promise<ArrayBuffer> {
+  const response: Response = await client.purchases.bulk.download(123)
+
+  return response.arrayBuffer()
+}
