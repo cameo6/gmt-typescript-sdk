@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.37.5
+
+- Return a readable binary response from bulk archive downloads.
+
 ## 0.37.4
 
 - Add the optional purchase-list filter `include=code_request` and type the current code request in purchase responses.

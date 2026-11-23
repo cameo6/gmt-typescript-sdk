@@ -162,3 +162,73 @@ test('purchase list accepts legacy, expanded and explicit null response fields',
   assert.equal(explicitNull.items[0].code_page.brand_name, null)
   assert.equal(explicitNull.items[0].code_request, null)
 })
+
+const releaseCandidateOnly = { skip: !process.env.SDK_COMPAT_RELEASE }
+
+for (const [name, Client] of [
+  ['ESM', Gmt],
+  ['CommonJS', createRequire(import.meta.url)('gmt-typescript-sdk').default],
+]) {
+  test(
+    `${name} preserves binary archive bytes and raw response access`,
+    releaseCandidateOnly,
+    async () => {
+      const bytes = Uint8Array.from([80, 75, 3, 4, 0, 255, 128, 13, 10, 42])
+      const client = new Client({
+        ...options,
+        fetch: async (url, init) => {
+          assert.equal(new URL(url).pathname, '/v1/purchases/bulk/123/download')
+          assert.equal(init.method, 'GET')
+          assert.equal(new Headers(init.headers).get('Accept'), 'application/zip')
+
+          return new Response(bytes, { headers: { 'content-type': 'application/octet-stream' } })
+        },
+      })
+      const requestOptions = { headers: { Accept: 'application/zip' } }
+      const response = await client.purchases.bulk.download(123, requestOptions)
+
+      assert.ok(response instanceof Response)
+      assert.equal(response.bodyUsed, false)
+      assert.deepEqual(new Uint8Array(await response.arrayBuffer()), bytes)
+
+      const raw = await client.purchases.bulk.download(123, requestOptions).asResponse()
+
+      assert.deepEqual(new Uint8Array(await raw.arrayBuffer()), bytes)
+
+      const { data, response: metadata } = await client.purchases.bulk
+        .download(123, requestOptions)
+        .withResponse()
+
+      assert.equal(data, metadata)
+      assert.deepEqual(new Uint8Array(await data.arrayBuffer()), bytes)
+    },
+  )
+
+  test(
+    `${name} preserves 409 JSON errors for archive downloads`,
+    releaseCandidateOnly,
+    async () => {
+      const body = {
+        code: 409,
+        status: 'ABORTED',
+        message: 'Archive not ready',
+        details: [{ reason: 'BULK_ARCHIVE_NOT_READY', domain: 'gmt' }],
+      }
+      const client = new Client({
+        ...options,
+        fetch: async () => new Response(JSON.stringify(body), {
+            status: 409,
+            headers: { 'content-type': 'application/json' },
+          }),
+      })
+
+      await assert.rejects(client.purchases.bulk.download(123), error => {
+        assert.equal(error.constructor.name, 'ConflictError')
+        assert.equal(error.status, 409)
+        assert.deepEqual(error.error, body)
+
+        return true
+      })
+    },
+  )
+}
